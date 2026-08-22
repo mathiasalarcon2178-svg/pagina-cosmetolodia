@@ -1,7 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sparkles, Phone, Camera, CheckCircle2, Send, User, Calendar, ShieldCheck, HeartPulse, Sparkle, ChevronDown, Award, Clock } from 'lucide-react';
+import { 
+  Sparkles, Phone, Camera, CheckCircle2, Send, User, 
+  Calendar, ShieldCheck, HeartPulse, Sparkle, ChevronDown, 
+  Award, Clock, Star, MapPin, MessageSquare, Shield, Smile, ArrowRight 
+} from 'lucide-react';
 
 export default function Home() {
   const [selectedGender, setSelectedGender] = useState<'Femenino' | 'Masculino'>('Femenino');
@@ -13,6 +17,7 @@ export default function Home() {
   const [appointmentTime, setAppointmentTime] = useState<string>('Mañana (08:00 - 12:00)');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [sessionEstimate, setSessionEstimate] = useState<string>('1 a 3 sesiones (según profundidad)');
 
   const zonesList = ['Rostro', 'Cuello', 'Pecho', 'Abdomen', 'Espalda', 'Brazos', 'Piernas', 'Glúteos'];
 
@@ -22,40 +27,66 @@ export default function Home() {
       title: 'Camuflaje de Estrías',
       tag: 'Técnica Paramédica',
       duration: '2 - 3 horas',
+      sessions: '1 - 2 Sesiones',
       description: 'Micropigmentación avanzada que iguala el tono de las estrías con la tez natural de tu piel, volviéndolas ópticamente imperceptibles.',
-      image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1512290900673-0498db25446f?w=800&auto=format&fit=crop'
     },
     {
       id: 'camuflaje-cicatrices',
       title: 'Camuflaje de Cicatrices',
       tag: 'Neutralización',
       duration: '1.5 - 2.5 horas',
+      sessions: '1 - 3 Sesiones',
       description: 'Neutralización del tono en cicatrices quirúrgicas o estéticas para integrarlas armónicamente con el tejido circundante.',
-      image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop'
     },
     {
       id: 'regeneracion-estrias',
       title: 'Regeneración con Colágeno (Estrías)',
       tag: 'Sin Pigmentos',
       duration: '1 - 2 horas',
+      sessions: '3 - 4 Sesiones',
       description: 'Inducción percutánea para restructurar la textura, atenuar la profundidad y reactivar la elastina biológica de la piel.',
-      image: 'https://images.unsplash.com/photo-1512290900673-0498db25446f?auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1552693673-1bf958298935?w=800&auto=format&fit=crop'
     },
     {
       id: 'regeneracion-cicatrices',
       title: 'Regeneración con Colágeno (Cicatrices)',
       tag: 'Sin Pigmentos',
       duration: '1 - 2 horas',
+      sessions: '3 - 5 Sesiones',
       description: 'Terapia no invasiva que suaviza relieves, firmeza y rigidez en tejidos cicatriciales antiguos o recientes.',
-      image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop'
     },
     {
       id: 'eliminacion-verrugas',
       title: 'Eliminación de Verrugas y Lunares',
       tag: 'Alta Precisión',
       duration: '30 - 60 min',
+      sessions: '1 Sesión Única',
       description: 'Remoción rápida y estética de verrugas, lunares y acrocordones indeseados sin comprometer la salud cutánea.',
-      image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=800&auto=format&fit=crop'
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: 'Valeria M.',
+      service: 'Camuflaje de Estrías',
+      comment: 'Increíble el cambio. Después de mis embarazos recuperé la confianza total en mi piel. El estudio es sumamente profesional y limpio.',
+      rating: 5
+    },
+    {
+      name: 'Carla R.',
+      service: 'Regeneración con Colágeno',
+      comment: 'La textura de mi piel mejoró notablemente desde la primera sesión. Cami te explica todo con un trato súper cálido y detallista.',
+      rating: 5
+    },
+    {
+      name: 'Lucas G.',
+      service: 'Eliminación de Lunares',
+      comment: 'Muy rápido y sin dolor. Cero marcas ni complicaciones. 100% recomendado para hombres también.',
+      rating: 5
     }
   ];
 
@@ -69,8 +100,8 @@ export default function Home() {
       a: 'El camuflaje utiliza pigmentos a tono con tu piel para disimular la diferencia de color. La regeneración con colágeno no usa pigmentos, sino que estimula a tu propia piel a reparar la textura y profundidad.'
     },
     {
-      q: '¿Puedo tomar sol después del tratamiento?',
-      a: 'Se debe evitar la exposición solar directa durante los primeros 30 a 45 días del proceso de cicatrización para garantizar un tono homogéneo.'
+      q: '¿Puedo hacer vida normal inmediatamente después?',
+      a: 'Sí, son procedimientos ambulatorios. Solo debes seguir cuidados básicos como evitar piscinas, sol directo y saunas durante los primeros días.'
     }
   ];
 
@@ -91,6 +122,12 @@ export default function Home() {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleServiceSelect = (serviceTitle: string, sessions: string) => {
+    setSelectedService(serviceTitle);
+    setSessionEstimate(sessions);
+    scrollToAgenda();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -127,123 +164,123 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfaf8] text-[#2c2825] font-sans antialiased">
-      {/* NAVBAR EDITORIAL */}
-      <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-[#f0e8e3]">
+    <div className="min-h-screen bg-[#fcfaf8] text-[#2c2825] font-sans antialiased selection:bg-[#c59b8a] selection:text-white">
+      
+      {/* BARRA DE AVISO SUPERIOR */}
+      <div className="bg-[#4a3730] text-[#f2e8e5] text-[11px] tracking-wider uppercase py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
+        <Sparkles className="w-3.5 h-3.5 text-[#c59b8a]" /> Agenda Abierta • Turnos limitados por semana • Atención exclusiva en Paraguay
+      </div>
+
+      {/* NAVBAR */}
+      <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-[#f0e8e3] shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 bg-[#c59b8a]/10 rounded-full flex items-center justify-center">
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            <div className="w-10 h-10 bg-[#fdf8f6] border border-[#f2e8e5] rounded-full flex items-center justify-center shadow-sm">
               <Sparkles className="text-[#c59b8a] w-5 h-5" />
             </div>
             <div>
-              <span className="text-xl font-bold text-[#4a3730] tracking-wide block leading-none">CAMI ISLA</span>
-              <span className="text-[10px] uppercase tracking-widest text-[#b08271] font-medium">Estudio Estético</span>
+              <span className="text-xl font-extrabold text-[#4a3730] tracking-wider block leading-none">CAMI ISLA</span>
+              <span className="text-[10px] uppercase tracking-[0.25em] text-[#b08271] font-bold">Estudio Estético</span>
             </div>
           </div>
-          <button
-            onClick={scrollToAgenda}
-            className="bg-[#c59b8a] hover:bg-[#b08271] text-white px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition shadow-sm flex items-center gap-2"
-          >
-            <Calendar className="w-4 h-4" /> Agendar Cita
-          </button>
+
+          <div className="flex items-center gap-4">
+            <a
+              href="https://wa.me/5959713013391"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:flex items-center gap-2 text-xs font-bold text-[#4a3730] hover:text-[#c59b8a] transition"
+            >
+              <Phone className="w-4 h-4 text-[#c59b8a]" /> 0971 3013391
+            </a>
+            <button
+              onClick={scrollToAgenda}
+              className="bg-[#c59b8a] hover:bg-[#b08271] text-white px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition shadow-md hover:shadow-lg flex items-center gap-2"
+            >
+              <Calendar className="w-4 h-4" /> Reservar Cita
+            </button>
+          </div>
         </div>
       </header>
 
       {/* HERO SECTION */}
-      <section className="relative bg-gradient-to-b from-white via-[#fcfaf8] to-[#f7f2ee] py-20 px-6 text-center border-b border-[#f0e8e3]">
-        <div className="max-w-4xl mx-auto">
-          <span className="text-xs uppercase tracking-[0.2em] text-[#b08271] font-bold bg-[#f2e8e5] px-4 py-1.5 rounded-full inline-block mb-6">
-            Especialistas en Micropigmentación Paramédica
-          </span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#4a3730] leading-tight mb-6 tracking-tight">
-            Perfecciona y regenera la apariencia de tu piel
+      <section className="relative bg-gradient-to-b from-white via-[#fcfaf8] to-[#f7f2ee] py-24 px-6 text-center border-b border-[#f0e8e3] overflow-hidden">
+        <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#c59b8a_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#b08271] font-bold bg-white border border-[#e5d8d0] px-5 py-2 rounded-full shadow-sm mb-6">
+            <Shield className="w-3.5 h-3.5 text-[#c59b8a]" /> Estándar Clínico Internacional
+          </div>
+          
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-[#4a3730] leading-[1.1] mb-6 tracking-tight">
+            Devuélvele a tu piel su <span className="text-[#c59b8a] italic font-normal">armonía natural</span>
           </h1>
+          
           <p className="text-[#6b5e57] text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-            Tratamientos avanzados en camuflaje biomédico, inducción de colágeno y remoción estética en un espacio de absoluta confidencialidad y confort.
+            Especialistas en camuflaje biomédico de estrías, regeneración tisular con colágeno y eliminación de imperfecciones con resultados garantizados.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto mb-16">
             <button
               onClick={scrollToAgenda}
-              className="bg-[#c59b8a] hover:bg-[#b08271] text-white font-bold px-8 py-4 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-base"
+              className="bg-[#c59b8a] hover:bg-[#b08271] text-white font-bold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-0.5 flex items-center justify-center gap-3 text-base uppercase tracking-wider"
             >
-              <Calendar className="w-5 h-5" /> Agendar Cita
+              <Calendar className="w-5 h-5" /> Iniciar Cotización en Línea <ArrowRight className="w-4 h-4" />
             </button>
-            <a
-              href="#servicios"
-              className="bg-white border border-[#e5d8d0] hover:border-[#c59b8a] text-[#4a3730] font-semibold px-8 py-4 rounded-2xl transition text-base flex items-center justify-center"
-            >
-              Explorar Servicios
-            </a>
           </div>
-        </div>
-      </section>
 
-      {/* PILARES / POR QUÉ ELEGIRNOS */}
-      <section className="py-14 bg-white border-b border-[#f0e8e3]">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#fdf8f6] border border-[#f2e8e5] flex items-center justify-center text-[#c59b8a] shrink-0">
-              <Award className="w-6 h-6" />
+          {/* ESTADÍSTICAS / MÉTRICAS DE CONFIANZA */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-10 border-t border-[#e5d8d0]/60 max-w-3xl mx-auto">
+            <div className="text-center">
+              <span className="block text-3xl sm:text-4xl font-black text-[#4a3730]">+500</span>
+              <span className="text-xs uppercase tracking-wider text-[#7a6e67] font-medium mt-1 block">Casos Exitosos</span>
             </div>
-            <div>
-              <h4 className="font-bold text-[#4a3730] mb-1">Técnica Especializada</h4>
-              <p className="text-xs text-[#7a6e67] leading-relaxed">Pigmentos hipoalergénicos biomédicos aprobados de alta durabilidad.</p>
+            <div className="text-center">
+              <span className="block text-3xl sm:text-4xl font-black text-[#4a3730]">100%</span>
+              <span className="text-xs uppercase tracking-wider text-[#7a6e67] font-medium mt-1 block">Privacidad Garantizada</span>
             </div>
-          </div>
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#fdf8f6] border border-[#f2e8e5] flex items-center justify-center text-[#c59b8a] shrink-0">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="font-bold text-[#4a3730] mb-1">Valoración Diagnóstica</h4>
-              <p className="text-xs text-[#7a6e67] leading-relaxed">Evaluación del tipo de piel y fototipo antes de iniciar cualquier sesión.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#fdf8f6] border border-[#f2e8e5] flex items-center justify-center text-[#c59b8a] shrink-0">
-              <HeartPulse className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="font-bold text-[#4a3730] mb-1">Resultados Naturales</h4>
-              <p className="text-xs text-[#7a6e67] leading-relaxed">Protocolos diseñados para integrarse orgánicamente con tu piel.</p>
+            <div className="col-span-2 md:col-span-1 text-center">
+              <span className="block text-3xl sm:text-4xl font-black text-[#4a3730]">5.0 ★</span>
+              <span className="text-xs uppercase tracking-wider text-[#7a6e67] font-medium mt-1 block">Valoración de Pacientes</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* GALERÍA DE SERVICIOS */}
-      <section id="servicios" className="py-20 max-w-6xl mx-auto px-6">
+      <section id="servicios" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <span className="text-xs uppercase tracking-widest text-[#b08271] font-bold">Catálogo Clínico</span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#4a3730] mt-2 mb-4">Nuestros Tratamientos Especializados</h2>
-          <p className="text-[#6b5e57] max-w-xl mx-auto text-sm">Selecciona cualquiera de nuestros procedimientos para conocer detalles o solicitar tu presupuesto personalizado.</p>
+          <span className="text-xs uppercase tracking-widest text-[#b08271] font-bold bg-[#f2e8e5] px-3.5 py-1.5 rounded-full">Catálogo Exclusivo</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-[#4a3730] mt-3 mb-4">Tratamientos Avanzados</h2>
+          <p className="text-[#6b5e57] max-w-xl mx-auto text-sm">Elige el procedimiento ideal y obtén una estimación inmediata de las sesiones requeridas.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesList.map((service) => (
-            <div key={service.id} className="bg-white rounded-3xl overflow-hidden border border-[#f0e8e3] flex flex-col hover:shadow-xl transition-all duration-300">
-              <div className="relative h-52 overflow-hidden">
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover hover:scale-105 transition duration-500" />
-                <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#4a3730] text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full shadow-sm">
+            <div key={service.id} className="bg-white rounded-3xl overflow-hidden border border-[#f0e8e3] flex flex-col shadow-sm hover:shadow-2xl transition-all duration-300 group">
+              <div className="relative h-56 overflow-hidden">
+                <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#4a3730] text-[10px] uppercase font-extrabold tracking-wider px-3.5 py-1.5 rounded-full shadow-sm">
                   {service.tag}
                 </span>
+                <span className="absolute bottom-4 left-4 text-white text-xs font-semibold flex items-center gap-1.5 bg-black/30 backdrop-blur-sm px-3 py-1 rounded-lg">
+                  <Clock className="w-3.5 h-3.5 text-[#c59b8a]" /> {service.duration}
+                </span>
               </div>
-              <div className="p-6 flex-1 flex flex-col justify-between">
+              <div className="p-7 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-1.5 text-[11px] text-[#b08271] font-semibold mb-2">
-                    <Clock className="w-3.5 h-3.5" /> {service.duration}
+                  <div className="inline-block bg-[#fdf8f6] text-[#b08271] border border-[#f2e8e5] text-[11px] font-bold px-3 py-1 rounded-lg mb-3">
+                    ✨ Estimación: {service.sessions}
                   </div>
                   <h3 className="text-xl font-bold text-[#4a3730] mb-3">{service.title}</h3>
                   <p className="text-[#6b5e57] text-xs leading-relaxed mb-6">{service.description}</p>
                 </div>
                 <button
-                  onClick={() => {
-                    setSelectedService(service.title);
-                    scrollToAgenda();
-                  }}
-                  className="w-full bg-[#fdf8f6] hover:bg-[#f2e8e5] text-[#b08271] font-bold py-3 rounded-xl border border-[#f0e8e3] transition text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                  onClick={() => handleServiceSelect(service.title, service.sessions)}
+                  className="w-full bg-[#fdf8f6] hover:bg-[#c59b8a] text-[#b08271] hover:text-white font-bold py-3.5 rounded-2xl border border-[#f2e8e5] hover:border-[#c59b8a] transition-all duration-300 text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm"
                 >
-                  <Sparkle className="w-4 h-4" /> Seleccionar y Agendar
+                  <Sparkle className="w-4 h-4" /> Seleccionar Servicio
                 </button>
               </div>
             </div>
@@ -251,60 +288,86 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PREGUNTAS FRECUENTES (FAQ) */}
-      <section className="py-16 bg-[#f7f2ee] border-t border-b border-[#f0e8e3]">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <h3 className="text-2xl font-bold text-[#4a3730]">Preguntas Frecuentes</h3>
-            <p className="text-xs text-[#7a6e67] mt-1">Resolvemos tus dudas antes de iniciar tu tratamiento.</p>
+      {/* TESTIMONIOS DE PACIENTES */}
+      <section className="py-20 bg-[#f7f2ee] border-t border-b border-[#f0e8e3]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="text-xs uppercase tracking-widest text-[#b08271] font-bold">Experiencias Reales</span>
+            <h3 className="text-3xl font-black text-[#4a3730] mt-2">Lo que opinan nuestros pacientes</h3>
           </div>
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className="bg-white rounded-2xl border border-[#e5d8d0] overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full p-5 text-left font-bold text-[#4a3730] text-sm flex justify-between items-center gap-4"
-                >
-                  {faq.q}
-                  <ChevronDown className={`w-4 h-4 text-[#c59b8a] transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
-                </button>
-                {openFaq === idx && (
-                  <div className="px-5 pb-5 text-xs text-[#6b5e57] leading-relaxed border-t border-gray-100 pt-3">
-                    {faq.a}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((t, idx) => (
+              <div key={idx} className="bg-white p-8 rounded-3xl border border-[#e5d8d0] shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex text-amber-400 mb-4">
+                    {[...Array(t.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
                   </div>
-                )}
+                  <p className="text-[#6b5e57] text-xs italic leading-relaxed mb-6">"{t.comment}"</p>
+                </div>
+                <div className="border-t border-gray-100 pt-4">
+                  <span className="font-bold text-[#4a3730] text-sm block">{t.name}</span>
+                  <span className="text-[11px] text-[#b08271] font-semibold">{t.service}</span>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECCIÓN FORMULARIO / AGENDA */}
-      <section id="agendar" className="py-20 bg-white">
+      {/* PREGUNTAS FRECUENTES (FAQ) */}
+      <section className="py-20 max-w-3xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h3 className="text-3xl font-black text-[#4a3730]">Preguntas Frecuentes</h3>
+          <p className="text-xs text-[#7a6e67] mt-1">Todo lo que necesitas saber antes de tu primera sesión de valoración.</p>
+        </div>
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="bg-white rounded-2xl border border-[#e5d8d0] overflow-hidden shadow-sm">
+              <button
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                className="w-full p-6 text-left font-bold text-[#4a3730] text-sm flex justify-between items-center gap-4 hover:bg-[#fcfaf8] transition"
+              >
+                {faq.q}
+                <ChevronDown className={`w-4 h-4 text-[#c59b8a] transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`} />
+              </button>
+              {openFaq === idx && (
+                <div className="px-6 pb-6 text-xs text-[#6b5e57] leading-relaxed border-t border-gray-100 pt-4">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SECCIÓN FORMULARIO / AGENDA INTERACTIVA */}
+      <section id="agendar" className="py-24 bg-gradient-to-b from-[#f7f2ee] to-white border-t border-[#f0e8e3]">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-widest text-[#b08271] font-bold bg-[#f2e8e5] px-4 py-1.5 rounded-full">
-              Reserva de Turno
+            <span className="text-xs uppercase tracking-[0.2em] text-[#b08271] font-bold bg-[#f2e8e5] px-4 py-1.5 rounded-full inline-block">
+              Sistema de Reserva 24/7
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#4a3730] mt-4">Agendar Cita de Valoración</h2>
-            <p className="text-xs sm:text-sm text-[#7a6e67] mt-2">Completa el formulario para enviar tu solicitud directa al equipo de Cami Isla Estudio.</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#4a3730] mt-4">Cotiza y Agenda tu Cita</h2>
+            <p className="text-xs sm:text-sm text-[#7a6e67] mt-2">Configura los detalles de tu tratamiento para coordinar directamente vía WhatsApp.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-[#fdf8f6] rounded-3xl p-6 sm:p-10 shadow-xl border border-[#f0e8e3] space-y-8">
+          <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-6 sm:p-12 shadow-2xl border border-[#e5d8d0] space-y-8">
             
             {/* PASO 1: GÉNERO */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#4a3730] mb-3">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-3">
                 1. Género del Paciente *
               </label>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
                   onClick={() => setSelectedGender('Femenino')}
-                  className={`py-3.5 rounded-2xl border-2 font-semibold text-sm transition flex items-center justify-center gap-2 ${
+                  className={`py-4 rounded-2xl border-2 font-bold text-sm transition flex items-center justify-center gap-2 ${
                     selectedGender === 'Femenino'
-                      ? 'border-[#c59b8a] bg-white text-[#4a3730] shadow-sm'
-                      : 'border-gray-200 bg-white/50 text-gray-500 hover:border-[#f0e8e3]'
+                      ? 'border-[#c59b8a] bg-[#fdf8f6] text-[#4a3730] shadow-sm'
+                      : 'border-gray-200 bg-white text-gray-500 hover:border-[#f0e8e3]'
                   }`}
                 >
                   <User className="w-4 h-4 text-[#c59b8a]" /> Femenino
@@ -312,10 +375,10 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setSelectedGender('Masculino')}
-                  className={`py-3.5 rounded-2xl border-2 font-semibold text-sm transition flex items-center justify-center gap-2 ${
+                  className={`py-4 rounded-2xl border-2 font-bold text-sm transition flex items-center justify-center gap-2 ${
                     selectedGender === 'Masculino'
-                      ? 'border-[#c59b8a] bg-white text-[#4a3730] shadow-sm'
-                      : 'border-gray-200 bg-white/50 text-gray-500 hover:border-[#f0e8e3]'
+                      ? 'border-[#c59b8a] bg-[#fdf8f6] text-[#4a3730] shadow-sm'
+                      : 'border-gray-200 bg-white text-gray-500 hover:border-[#f0e8e3]'
                   }`}
                 >
                   <User className="w-4 h-4 text-[#c59b8a]" /> Masculino
@@ -327,7 +390,7 @@ export default function Home() {
 
             {/* PASO 2: SERVICIO */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#4a3730] mb-3">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-3">
                 2. Selección de Tratamiento *
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -335,28 +398,35 @@ export default function Home() {
                   <button
                     key={s.id}
                     type="button"
-                    onClick={() => setSelectedService(s.title)}
-                    className={`p-4 rounded-2xl border text-left text-xs font-bold transition flex items-center gap-3 ${
+                    onClick={() => handleServiceSelect(s.title, s.sessions)}
+                    className={`p-4 rounded-2xl border text-left text-xs font-bold transition flex items-center justify-between ${
                       selectedService === s.title
-                        ? 'border-[#c59b8a] bg-white text-[#4a3730] shadow-sm'
-                        : 'border-gray-200 bg-white/50 text-gray-600 hover:border-[#f0e8e3]'
+                        ? 'border-[#c59b8a] bg-[#fdf8f6] text-[#4a3730] shadow-md ring-1 ring-[#c59b8a]'
+                        : 'border-gray-200 bg-white text-gray-600 hover:border-[#f0e8e3]'
                     }`}
                   >
-                    <span className={`w-3 h-3 rounded-full border shrink-0 ${selectedService === s.title ? 'bg-[#c59b8a] border-[#c59b8a]' : 'border-gray-300'}`}></span>
-                    {s.title}
+                    <span className="flex items-center gap-2.5">
+                      <span className={`w-3 h-3 rounded-full border shrink-0 ${selectedService === s.title ? 'bg-[#c59b8a] border-[#c59b8a]' : 'border-gray-300'}`}></span>
+                      {s.title}
+                    </span>
                   </button>
                 ))}
               </div>
+              {selectedService && (
+                <div className="mt-3 p-3 bg-[#fdf8f6] border border-[#f2e8e5] rounded-xl text-xs text-[#b08271] font-semibold flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" /> Estimación automática seleccionada: {sessionEstimate}
+                </div>
+              )}
             </div>
 
             <hr className="border-[#f0e8e3]" />
 
             {/* PASO 3: ZONAS CORPORALES */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#4a3730] mb-1">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-1">
                 3. Parte(s) del Cuerpo a Tratar *
               </label>
-              <p className="text-[11px] text-gray-500 mb-3">Puedes seleccionar una o múltiples zonas.</p>
+              <p className="text-[11px] text-gray-500 mb-3">Selecciona una o múltiples zonas corporales.</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {zonesList.map((zone) => {
                   const isSelected = selectedZones.includes(zone);
@@ -365,9 +435,9 @@ export default function Home() {
                       key={zone}
                       type="button"
                       onClick={() => toggleZone(zone)}
-                      className={`py-3 px-2 rounded-xl border text-xs font-semibold transition ${
+                      className={`py-3.5 px-2 rounded-xl border text-xs font-bold transition ${
                         isSelected
-                          ? 'bg-[#c59b8a] text-white border-[#c59b8a] shadow-sm'
+                          ? 'bg-[#c59b8a] text-white border-[#c59b8a] shadow-md'
                           : 'border-gray-200 bg-white text-gray-700 hover:border-[#c59b8a]'
                       }`}
                     >
@@ -382,10 +452,10 @@ export default function Home() {
 
             {/* PASO 4: FOTO DE EVALUACIÓN */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#4a3730] mb-3">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-3">
                 4. Foto de la Zona (Opcional)
               </label>
-              <label className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-[#c59b8a] transition cursor-pointer bg-white block">
+              <label className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-[#c59b8a] transition cursor-pointer bg-[#fcfaf8] block">
                 <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
                 {!imagePreview ? (
                   <div className="space-y-1">
@@ -395,9 +465,9 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="flex flex-col items-center">
-                    <img src={imagePreview} alt="Preview" className="max-h-40 rounded-xl shadow mb-2 object-cover" />
+                    <img src={imagePreview} alt="Preview" className="max-h-40 rounded-xl shadow-md mb-2 object-cover" />
                     <span className="text-xs text-green-600 font-bold flex items-center gap-1">
-                      <CheckCircle2 className="w-4 h-4" /> Fotografía adjuntada
+                      <CheckCircle2 className="w-4 h-4" /> Fotografía adjuntada correctamente
                     </span>
                   </div>
                 )}
@@ -408,51 +478,51 @@ export default function Home() {
 
             {/* PASO 5: DATOS Y HORARIO */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#4a3730] mb-4">
-                5. Datos del Paciente & Preferencia de Cita
+              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-4">
+                5. Tus Datos de Contacto & Preferencia
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-500 mb-1">Nombre Completo *</label>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">Nombre Completo *</label>
                   <input
                     type="text"
                     required
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     placeholder="Ej: María González"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-[#c59b8a] outline-none text-xs font-medium"
+                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-[#fcfaf8] focus:border-[#c59b8a] outline-none text-xs font-medium"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-500 mb-1">Número de WhatsApp *</label>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">Número de WhatsApp *</label>
                   <input
                     type="tel"
                     required
                     value={clientPhone}
                     onChange={(e) => setClientPhone(e.target.value)}
                     placeholder="Ej: 0981 123456"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-[#c59b8a] outline-none text-xs font-medium"
+                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-[#fcfaf8] focus:border-[#c59b8a] outline-none text-xs font-medium"
                   />
-                  <span className="text-[10px] text-gray-400 mt-1 block">Para envío de recordatorios y confirmación.</span>
+                  <span className="text-[10px] text-gray-400 mt-1 block">Para envío de recordatorios y confirmación de turno.</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-500 mb-1">Fecha Sugerida</label>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">Fecha Sugerida</label>
                   <input
                     type="date"
                     value={appointmentDate}
                     onChange={(e) => setAppointmentDate(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-[#c59b8a] outline-none text-xs font-medium"
+                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-[#fcfaf8] focus:border-[#c59b8a] outline-none text-xs font-medium"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-500 mb-1">Franja Horaria Preferida</label>
+                  <label className="block text-[11px] font-bold text-gray-600 mb-1">Franja Horaria Preferida</label>
                   <select
                     value={appointmentTime}
                     onChange={(e) => setAppointmentTime(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-[#c59b8a] outline-none text-xs font-medium"
+                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-[#fcfaf8] focus:border-[#c59b8a] outline-none text-xs font-medium"
                   >
                     <option value="Mañana (08:00 - 12:00)">Mañana (08:00 - 12:00)</option>
                     <option value="Tarde (13:00 - 18:00)">Tarde (13:00 - 18:00)</option>
@@ -464,20 +534,28 @@ export default function Home() {
             {/* BOTÓN ENVIAR */}
             <button
               type="submit"
-              className="w-full bg-[#c59b8a] hover:bg-[#b08271] text-white font-bold py-4 rounded-2xl shadow-xl transition flex items-center justify-center gap-3 text-sm tracking-wider uppercase"
+              className="w-full bg-[#c59b8a] hover:bg-[#b08271] text-white font-black py-4.5 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-0.5 flex items-center justify-center gap-3 text-sm tracking-wider uppercase"
             >
-              <Send className="w-4 h-4" /> Confirmar Consulta por WhatsApp
+              <Send className="w-4 h-4" /> Enviar Cita y Confirmar por WhatsApp
             </button>
           </form>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-white border-t border-[#f0e8e3] py-10 text-center text-xs text-gray-500">
-        <div className="max-w-6xl mx-auto px-6 space-y-2">
-          <p className="font-bold text-[#4a3730] text-sm tracking-wide">CAMI ISLA ESTUDIO</p>
-          <p className="text-[11px]">Estética Avanzada & Micropigmentación Paramédica • WhatsApp: 0971 3013391</p>
-          <p className="text-[10px] text-gray-400 pt-2">© Todos los derechos reservados.</p>
+      <footer className="bg-[#4a3730] text-[#f2e8e5] py-14 text-center text-xs">
+        <div className="max-w-6xl mx-auto px-6 space-y-4">
+          <div className="flex items-center justify-center space-x-2 mb-2">
+            <Sparkles className="text-[#c59b8a] w-5 h-5" />
+            <span className="text-lg font-black tracking-wider text-white">CAMI ISLA ESTUDIO</span>
+          </div>
+          <p className="text-xs text-[#dcd0cb] max-w-md mx-auto leading-relaxed">
+            Especialistas certificados en Estética Avanzada y Micropigmentación Paramédica. Transformamos vidas realzando tu belleza natural.
+          </p>
+          <div className="pt-4 border-t border-[#685047] text-[11px] text-[#bdaea7] space-y-1">
+            <p>📞 WhatsApp Oficial: 0971 3013391 • Paraguay</p>
+            <p>© {new Date().getFullYear()} Cami Isla Estudio. Todos los derechos reservados.</p>
+          </div>
         </div>
       </footer>
     </div>
