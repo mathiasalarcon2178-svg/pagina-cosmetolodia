@@ -6,8 +6,11 @@ export default function Home() {
   const [clientName, setClientName] = useState('');
   const [clientPhone, setClientPhone] = useState('');
   const [selectedGender, setSelectedGender] = useState('Femenino');
-  const [selectedService, setSelectedService] = useState('');
+  
+  // Ahora permitimos múltiples servicios y múltiples zonas
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedZones, setSelectedZones] = useState<string[]>([]);
+  
   const [appointmentDate, setAppointmentDate] = useState('');
   const [appointmentTime, setAppointmentTime] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -98,6 +101,12 @@ export default function Home() {
 
   const zones = ['Rostro', 'Cuello', 'Escote', 'Abdomen', 'Glúteos', 'Piernas', 'Espalda'];
 
+  const handleServiceToggle = (serviceName: string) => {
+    setSelectedServices((prev) =>
+      prev.includes(serviceName) ? prev.filter((s) => s !== serviceName) : [...prev, serviceName]
+    );
+  };
+
   const handleZoneToggle = (zone: string) => {
     setSelectedZones((prev) =>
       prev.includes(zone) ? prev.filter((z) => z !== zone) : [...prev, zone]
@@ -120,8 +129,8 @@ export default function Home() {
       alert('Por favor completa tu nombre y número de teléfono.');
       return;
     }
-    if (!selectedService) {
-      alert('Por favor selecciona un servicio.');
+    if (selectedServices.length === 0) {
+      alert('Por favor selecciona al menos un servicio.');
       return;
     }
     if (selectedZones.length === 0) {
@@ -191,12 +200,14 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => {
-                    setSelectedService(activeModalService.name);
+                    if (!selectedServices.includes(activeModalService.name)) {
+                      setSelectedServices([...selectedServices, activeModalService.name]);
+                    }
                     setActiveModalService(null);
                   }}
                   className="flex-1 bg-[#2c221e] text-white py-4 rounded-2xl font-bold text-sm hover:bg-[#1a1311] transition-colors shadow-lg"
                 >
-                  ✓ Elegir este Tratamiento para mi Cita
+                  ✓ Añadir a mis servicios seleccionados
                 </button>
                 <button
                   type="button"
@@ -244,13 +255,13 @@ export default function Home() {
             <span className="text-xs uppercase tracking-widest text-[#8c6d53] font-bold">Nuestros Tratamientos</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#2c221e]">Excelencia y Cuidado Profesional</h2>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Haz clic en cualquier tratamiento para desplegar la información técnica completa, proceso y cuidados.
+              Puedes seleccionar uno o varios tratamientos para tu sesión. Haz clic en las tarjetas para ver los detalles completos.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((srv) => {
-              const isSelected = selectedService === srv.name;
+              const isSelected = selectedServices.includes(srv.name);
               return (
                 <div
                   key={srv.id}
@@ -292,12 +303,12 @@ export default function Home() {
                     </span>
                     <button
                       type="button"
-                      onClick={() => setSelectedService(srv.name)}
+                      onClick={() => handleServiceToggle(srv.name)}
                       className={`text-xs px-4 py-2 rounded-xl font-semibold transition-all shadow-sm ${
                         isSelected ? 'bg-[#2c221e] text-white shadow-md' : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
                       }`}
                     >
-                      {isSelected ? 'Seleccionado ✓' : 'Elegir Tratamiento'}
+                      {isSelected ? 'Seleccionado ✓' : '+ Añadir Tratamiento'}
                     </button>
                   </div>
                 </div>
@@ -352,6 +363,23 @@ export default function Home() {
                 <option value="Masculino">Masculino</option>
                 <option value="Otro">Otro</option>
               </select>
+            </div>
+
+            {/* RESUMEN DE SERVICIOS SELECCIONADOS */}
+            <div className="bg-stone-50 p-6 rounded-2xl border border-stone-200 space-y-3">
+              <label className="block text-xs font-bold uppercase tracking-wider text-stone-700">Tratamientos Seleccionados *</label>
+              {selectedServices.length === 0 ? (
+                <p className="text-xs text-amber-700 font-medium">Aún no has seleccionado ningún tratamiento. Haz clic arriba en "+ Añadir Tratamiento" o elige varios.</p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {selectedServices.map((srvName) => (
+                    <span key={srvName} className="bg-[#2c221e] text-white text-xs px-3 py-1.5 rounded-xl font-medium flex items-center gap-2 shadow-sm">
+                      {srvName}
+                      <button type="button" onClick={() => handleServiceToggle(srvName)} className="text-stone-300 hover:text-white font-bold">×</button>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div>
