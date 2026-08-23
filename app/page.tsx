@@ -1,16 +1,17 @@
+'app/client'
 'use client'
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
 const SERVICES = [
-  { id: 'camuflaje_estrias', name: 'Camuflaje de Estrías', price: 0, duration: '90 min' },
-  { id: 'regeneracion_estrias', name: 'Regeneración de Estrías', price: 0, duration: '60 min' },
-  { id: 'camuflaje_cicatrices', name: 'Camuflaje de Cicatrices', price: 0, duration: '90 min' },
-  { id: 'regeneracion_cicatrices', name: 'Regeneración de Cicatrices', price: 0, duration: '60 min' },
-  { id: 'verrugas', name: 'Eliminación de Verrugas', price: 0, duration: '30 min' },
-  { id: 'lunares', name: 'Eliminación de Lunares', price: 0, duration: '30 min' },
-  { id: 'acrocordones', name: 'Eliminación de Acrocordones', price: 0, duration: '30 min' }
+  { id: 'camuflaje_estrias', name: 'Camuflaje de Estrías', duration: '90 min', description: 'Técnica especializada para unificar el tono de la piel.' },
+  { id: 'regeneracion_estrias', name: 'Regeneración de Estrías', duration: '60 min', description: 'Estimulación de colágeno para mejorar la textura.' },
+  { id: 'camuflaje_cicatrices', name: 'Camuflaje de Cicatrices', duration: '90 min', description: 'Pigmentación precisa para disimular marcas.' },
+  { id: 'regeneracion_cicatrices', name: 'Regeneración de Cicatrices', duration: '60 min', description: 'Tratamiento profundo para suavizar el tejido.' },
+  { id: 'verrugas', name: 'Eliminación de Verrugas', duration: '30 min', description: 'Procedimiento seguro y rápido.' },
+  { id: 'lunares', name: 'Eliminación de Lunares', duration: '30 min', description: 'Valoración previa y extracción estética.' },
+  { id: 'acrocordones', name: 'Eliminación de Acrocordones', duration: '30 min', description: 'Remoción limpia de fibromas blandos.' }
 ]
 
 const BODY_ZONES = [
@@ -40,7 +41,6 @@ export default function Page() {
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Consultar horarios ocupados en Supabase cuando cambia la fecha
   useEffect(() => {
     if (!selectedDate) return
     
@@ -90,95 +90,122 @@ export default function Page() {
       setClientName('')
       setClientPhone('')
       setSelectedTime('')
-      
-      // Recargar horarios ocupados
       setBookedTimes((prev) => [...prev, selectedTime])
     } catch (err: any) {
-      setErrorMsg('Error al registrar la cita. Verifica la estructura de tu tabla en Supabase.')
+      setErrorMsg('Error al registrar la cita en la base de datos.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-100 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto space-y-8">
+    <main className="min-h-screen bg-[#0d0d0d] text-neutral-100 py-12 px-4 sm:px-6 lg:px-8 selection:bg-pink-500 selection:text-white">
+      <div className="max-w-4xl mx-auto space-y-10">
         
-        {/* Cabecera */}
-        <div className="text-center space-y-2">
-          <h1 className="text-4xl font-extrabold tracking-tight text-pink-400">Cami Isla Studio</h1>
-          <p className="text-neutral-400">Sistema de reservas en línea para tratamientos especializados</p>
+        {/* Cabecera minimalista y elegante */}
+        <div className="text-center space-y-3 border-b border-neutral-800/80 pb-8">
+          <span className="text-xs uppercase tracking-[0.3em] text-pink-400 font-semibold">Estética Avanzada</span>
+          <h1 className="text-4xl sm:text-5xl font-light tracking-tight text-white">
+            Cami Isla <span className="font-normal text-pink-400">Studio</span>
+          </h1>
+          <p className="text-neutral-400 max-w-lg mx-auto text-sm sm:text-base">
+            Selecciona tu tratamiento especializado, elige el horario de tu preferencia y agenda tu cita en línea de forma rápida y sencilla.
+          </p>
         </div>
 
         {successMsg && (
-          <div className="p-4 bg-emerald-900/50 border border-emerald-500 text-emerald-200 rounded-xl text-center font-medium">
+          <div className="p-4 bg-emerald-950/60 border border-emerald-600/50 text-emerald-300 rounded-2xl text-center text-sm font-medium shadow-lg animate-fade-in">
             {successMsg}
           </div>
         )}
 
         {errorMsg && (
-          <div className="p-4 bg-rose-900/50 border border-rose-500 text-rose-200 rounded-xl text-center font-medium">
+          <div className="p-4 bg-rose-950/60 border border-rose-600/50 text-rose-300 rounded-2xl text-center text-sm font-medium shadow-lg animate-fade-in">
             {errorMsg}
           </div>
         )}
 
-        <form onSubmit={handleBooking} className="space-y-8 bg-neutral-900 p-6 sm:p-8 rounded-2xl border border-neutral-800 shadow-xl">
+        <form onSubmit={handleBooking} className="space-y-10 bg-neutral-900/60 backdrop-blur-md p-6 sm:p-10 rounded-3xl border border-neutral-800 shadow-2xl">
           
-          {/* 1. Seleccionar Servicio */}
-          <div>
-            <label className="block text-sm font-semibold text-neutral-300 mb-3">1. Selecciona tu Tratamiento</label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {SERVICES.map((s) => (
-                <div
-                  key={s.id}
-                  onClick={() => setSelectedService(s)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                    selectedService.id === s.id
-                      ? 'border-pink-500 bg-pink-500/10 text-white'
-                      : 'border-neutral-800 bg-neutral-950/50 text-neutral-400 hover:border-neutral-700'
-                  }`}
-                >
-                  <p className="font-semibold text-neutral-100">{s.name}</p>
-                  <div className="flex justify-between items-center mt-2 text-sm">
-                    <span className="text-pink-400 font-bold">{s.price > 0 ? `₲ ${s.price.toLocaleString()}` : 'Consultar precio'}</span>
-                    <span className="text-neutral-500">{s.duration}</span>
+          {/* 1. Selección de Tratamientos */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium uppercase tracking-wider text-pink-400">1. Tratamiento Especializado</label>
+              <span className="text-xs text-neutral-500">Selecciona uno</span>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {SERVICES.map((s) => {
+                const isSelected = selectedService.id === s.id
+                return (
+                  <div
+                    key={s.id}
+                    onClick={() => setSelectedService(s)}
+                    className={`p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between ${
+                      isSelected
+                        ? 'border-pink-500 bg-gradient-to-br from-pink-500/10 to-transparent shadow-lg shadow-pink-500/5'
+                        : 'border-neutral-800/80 bg-neutral-950/40 hover:border-neutral-700 hover:bg-neutral-950/80'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex justify-between items-start gap-2">
+                        <h3 className={`font-medium text-base ${isSelected ? 'text-pink-300' : 'text-white'}`}>
+                          {s.name}
+                        </h3>
+                        <span className="text-xs px-2.5 py-1 rounded-full bg-neutral-800 text-neutral-300 font-mono shrink-0">
+                          {s.duration}
+                        </span>
+                      </div>
+                      <p className="text-xs text-neutral-400 mt-2 line-clamp-2">
+                        {s.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
 
-          {/* 2. Zona del Cuerpo a Tratar */}
-          <div>
-            <label className="block text-sm font-semibold text-neutral-300 mb-3">2. Zona a Tratar</label>
-            <select
-              value={selectedBodyZone}
-              onChange={(e) => setSelectedBodyZone(e.target.value)}
-              className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-neutral-100 focus:outline-none focus:border-pink-500"
-            >
-              {BODY_ZONES.map((zone) => (
-                <option key={zone} value={zone}>{zone}</option>
-              ))}
-            </select>
+          {/* 2. Zona a Tratar */}
+          <div className="space-y-3 pt-4 border-t border-neutral-800/60">
+            <label className="text-sm font-medium uppercase tracking-wider text-pink-400">2. Zona del Cuerpo a Tratar</label>
+            <div className="relative">
+              <select
+                value={selectedBodyZone}
+                onChange={(e) => setSelectedBodyZone(e.target.value)}
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-2xl p-4 text-neutral-100 focus:outline-none focus:border-pink-500 appearance-none cursor-pointer transition-colors"
+              >
+                {BODY_ZONES.map((zone) => (
+                  <option key={zone} value={zone} className="bg-neutral-900 text-neutral-100">{zone}</option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-neutral-400">
+                <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                </svg>
+              </div>
+            </div>
           </div>
 
-          {/* 3. Fecha y Hora */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-semibold text-neutral-300 mb-3">3. Fecha de la Cita</label>
+          {/* 3. Fecha y Horarios */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-neutral-800/60">
+            <div className="space-y-3">
+              <label className="text-sm font-medium uppercase tracking-wider text-pink-400">3. Fecha de la Cita</label>
               <input
                 type="date"
                 min={new Date().toISOString().split('T')[0]}
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-neutral-100 focus:outline-none focus:border-pink-500"
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-2xl p-4 text-neutral-100 focus:outline-none focus:border-pink-500 transition-colors"
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-neutral-300 mb-3">4. Horarios Disponibles</label>
+            <div className="space-y-3">
+              <label className="text-sm font-medium uppercase tracking-wider text-pink-400">4. Horarios Disponibles</label>
               {!selectedDate ? (
-                <p className="text-sm text-neutral-500 italic py-3">Primero selecciona una fecha en el calendario.</p>
+                <div className="h-[58px] flex items-center px-4 bg-neutral-950/40 border border-neutral-800/60 rounded-2xl text-sm text-neutral-500 italic">
+                  Selecciona una fecha primero
+                </div>
               ) : (
                 <div className="grid grid-cols-3 gap-2">
                   {TIME_SLOTS.map((time) => {
@@ -191,12 +218,12 @@ export default function Page() {
                         key={time}
                         disabled={isBooked}
                         onClick={() => setSelectedTime(time)}
-                        className={`py-2 px-3 text-sm rounded-lg font-medium transition-all ${
+                        className={`py-3 text-xs sm:text-sm rounded-xl font-medium transition-all ${
                           isBooked
-                            ? 'bg-neutral-800/40 text-neutral-600 line-through cursor-not-allowed'
+                            ? 'bg-neutral-900/40 text-neutral-600 line-through cursor-not-allowed border border-neutral-800/30'
                             : isSelected
-                            ? 'bg-pink-600 text-white shadow-lg shadow-pink-600/30'
-                            : 'bg-neutral-950 border border-neutral-800 text-neutral-300 hover:border-pink-500'
+                            ? 'bg-pink-600 text-white shadow-lg shadow-pink-600/25 border border-pink-500'
+                            : 'bg-neutral-950 border border-neutral-800 text-neutral-300 hover:border-pink-500/60'
                         }`}
                       >
                         {time}
@@ -209,26 +236,26 @@ export default function Page() {
           </div>
 
           {/* 5. Datos Personales */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-800">
-            <div>
-              <label className="block text-sm font-semibold text-neutral-300 mb-2">Tu Nombre y Apellido</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-neutral-800/60">
+            <div className="space-y-2">
+              <label className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Nombre y Apellido</label>
               <input
                 type="text"
-                placeholder="Ej: María Gómez"
+                placeholder="Ej. Camila Gómez"
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)}
-                className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-neutral-100 focus:outline-none focus:border-pink-500"
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-2xl p-4 text-neutral-100 focus:outline-none focus:border-pink-500 transition-colors text-sm"
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-neutral-300 mb-2">Teléfono / WhatsApp</label>
+            <div className="space-y-2">
+              <label className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Teléfono / WhatsApp</label>
               <input
                 type="tel"
-                placeholder="Ej: 0981 123 456"
+                placeholder="Ej. 0981 123 456"
                 value={clientPhone}
                 onChange={(e) => setClientPhone(e.target.value)}
-                className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-neutral-100 focus:outline-none focus:border-pink-500"
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-2xl p-4 text-neutral-100 focus:outline-none focus:border-pink-500 transition-colors text-sm"
               />
             </div>
           </div>
@@ -237,22 +264,22 @@ export default function Page() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold rounded-xl shadow-lg shadow-pink-600/20 transition-all disabled:opacity-50"
+            className="w-full py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-semibold rounded-2xl shadow-xl shadow-pink-600/20 transition-all duration-300 disabled:opacity-50 tracking-wide text-sm sm:text-base cursor-pointer"
           >
             {loading ? 'Procesando Reserva...' : 'Confirmar y Agendar Cita'}
           </button>
 
         </form>
 
-        {/* Botón de WhatsApp Externo */}
-        <div className="text-center pt-2">
+        {/* Enlace de WhatsApp discreto */}
+        <div className="text-center pb-6">
           <a
             href="https://wa.me/595981123456"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-6 py-3 bg-neutral-900 border border-neutral-800 hover:border-emerald-500 text-neutral-300 hover:text-emerald-400 font-semibold rounded-xl transition-all shadow-md text-sm"
+            className="inline-flex items-center gap-2 text-neutral-400 hover:text-emerald-400 text-sm font-medium transition-colors py-2 px-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60"
           >
-            💬 ¿Tienes dudas? Escríbenos por WhatsApp
+            <span>💬</span> ¿Tienes consultas generales? Escríbenos por WhatsApp
           </a>
         </div>
 
