@@ -164,38 +164,38 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfaf8] text-[#2c2825] font-sans antialiased selection:bg-[#c59b8a] selection:text-white">
+    <div className="min-h-screen bg-[#fcfaf8] text-[#1a1513] font-sans antialiased selection:bg-[#b08271] selection:text-white">
       
       {/* BARRA DE AVISO SUPERIOR */}
-      <div className="bg-[#4a3730] text-[#f2e8e5] text-[11px] tracking-wider uppercase py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
-        <Sparkles className="w-3.5 h-3.5 text-[#c59b8a]" /> Agenda Abierta • Turnos limitados por semana • Atención exclusiva en Paraguay
+      <div className="bg-[#382822] text-[#f7f2ee] text-xs tracking-wider uppercase py-2.5 px-4 text-center font-bold flex items-center justify-center gap-2 shadow-inner">
+        <Sparkles className="w-4 h-4 text-[#d8ab9a]" /> Agenda Abierta • Turnos limitados por semana • Atención exclusiva en Paraguay
       </div>
 
       {/* NAVBAR */}
-      <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-[#f0e8e3] shadow-sm">
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-[#e5d8d0] shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            <div className="w-10 h-10 bg-[#fdf8f6] border border-[#f2e8e5] rounded-full flex items-center justify-center shadow-sm">
-              <Sparkles className="text-[#c59b8a] w-5 h-5" />
+          <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            <div className="w-11 h-11 bg-[#fdf8f6] border border-[#d8ab9a] rounded-full flex items-center justify-center shadow-sm group-hover:bg-[#b08271] transition duration-300">
+              <Sparkles className="text-[#b08271] group-hover:text-white w-5 h-5 transition duration-300" />
             </div>
             <div>
-              <span className="text-xl font-extrabold text-[#4a3730] tracking-wider block leading-none">CAMI ISLA</span>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#b08271] font-bold">Estudio Estético</span>
+              <span className="text-2xl font-black text-[#2c1d18] tracking-wider block leading-none">CAMI ISLA</span>
+              <span className="text-[11px] uppercase tracking-[0.25em] text-[#916252] font-extrabold">Estudio Estético</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-5">
             <a
               href="https://wa.me/5959713013391"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-2 text-xs font-bold text-[#4a3730] hover:text-[#c59b8a] transition"
+              className="hidden sm:flex items-center gap-2 text-xs font-black text-[#2c1d18] bg-[#fdf8f6] border border-[#d8ab9a] px-4 py-2.5 rounded-full hover:bg-[#b08271] hover:text-white hover:border-[#b08271] transition duration-300 shadow-sm"
             >
-              <Phone className="w-4 h-4 text-[#c59b8a]" /> 0971 3013391
+              <Phone className="w-4 h-4 text-[#b08271] group-hover:text-white" /> 0971 3013391
             </a>
             <button
               onClick={scrollToAgenda}
-              className="bg-[#c59b8a] hover:bg-[#b08271] text-white px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition shadow-md hover:shadow-lg flex items-center gap-2"
+              className="bg-[#b08271] hover:bg-[#8f6353] text-white px-6 py-3 rounded-full text-xs font-black tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-xl hover:scale-105 active:scale-95 flex items-center gap-2 ring-2 ring-[#b08271]/20"
             >
               <Calendar className="w-4 h-4" /> Reservar Cita
             </button>
@@ -204,81 +204,84 @@ export default function Home() {
       </header>
 
       {/* HERO SECTION */}
-      <section className="relative bg-gradient-to-b from-white via-[#fcfaf8] to-[#f7f2ee] py-24 px-6 text-center border-b border-[#f0e8e3] overflow-hidden">
-        <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#c59b8a_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      <section className="relative bg-gradient-to-b from-white via-[#fcfaf8] to-[#f5eeea] py-24 px-6 text-center border-b border-[#e5d8d0] overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#b08271_1px,transparent_1px)] [background-size:20px_20px]"></div>
         
         <div className="max-w-4xl mx-auto relative z-10">
-          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#b08271] font-bold bg-white border border-[#e5d8d0] px-5 py-2 rounded-full shadow-sm mb-6">
-            <Shield className="w-3.5 h-3.5 text-[#c59b8a]" /> Estándar Clínico Internacional
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#815141] font-black bg-white border border-[#d8ab9a] px-5 py-2.5 rounded-full shadow-sm mb-6">
+            <Shield className="w-4 h-4 text-[#b08271]" /> Estándar Clínico Internacional
           </div>
           
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-[#4a3730] leading-[1.1] mb-6 tracking-tight">
-            Devuélvele a tu piel su <span className="text-[#c59b8a] italic font-normal">armonía natural</span>
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-[#2c1d18] leading-[1.15] mb-6 tracking-tight">
+            Devuélvele a tu piel su <span className="text-[#b08271] italic font-normal underline decoration-[#d8ab9a]/50 decoration-wavy">armonía natural</span>
           </h1>
           
-          <p className="text-[#6b5e57] text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+          <p className="text-[#40322c] text-lg sm:text-2xl max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
             Especialistas en camuflaje biomédico de estrías, regeneración tisular con colágeno y eliminación de imperfecciones con resultados garantizados.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto mb-16">
             <button
               onClick={scrollToAgenda}
-              className="bg-[#c59b8a] hover:bg-[#b08271] text-white font-bold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-0.5 flex items-center justify-center gap-3 text-base uppercase tracking-wider"
+              className="bg-[#b08271] hover:bg-[#8f6353] text-white font-black px-8 py-4.5 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-3 text-base uppercase tracking-wider ring-4 ring-[#b08271]/20"
             >
-              <Calendar className="w-5 h-5" /> Iniciar Cotización en Línea <ArrowRight className="w-4 h-4" />
+              <Calendar className="w-5 h-5" /> Iniciar Cotización en Línea <ArrowRight className="w-5 h-5" />
             </button>
           </div>
 
           {/* ESTADÍSTICAS / MÉTRICAS DE CONFIANZA */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-10 border-t border-[#e5d8d0]/60 max-w-3xl mx-auto">
-            <div className="text-center">
-              <span className="block text-3xl sm:text-4xl font-black text-[#4a3730]">+500</span>
-              <span className="text-xs uppercase tracking-wider text-[#7a6e67] font-medium mt-1 block">Casos Exitosos</span>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-10 border-t border-[#d8ab9a]/40 max-w-3xl mx-auto">
+            <div className="text-center p-3 rounded-2xl bg-white/60 backdrop-blur-sm border border-[#e5d8d0]/60">
+              <span className="block text-3xl sm:text-4xl font-black text-[#2c1d18]">+500</span>
+              <span className="text-xs uppercase tracking-wider text-[#5c4a43] font-bold mt-1 block">Casos Exitosos</span>
             </div>
-            <div className="text-center">
-              <span className="block text-3xl sm:text-4xl font-black text-[#4a3730]">100%</span>
-              <span className="text-xs uppercase tracking-wider text-[#7a6e67] font-medium mt-1 block">Privacidad Garantizada</span>
+            <div className="text-center p-3 rounded-2xl bg-white/60 backdrop-blur-sm border border-[#e5d8d0]/60">
+              <span className="block text-3xl sm:text-4xl font-black text-[#2c1d18]">100%</span>
+              <span className="text-xs uppercase tracking-wider text-[#5c4a43] font-bold mt-1 block">Privacidad Garantizada</span>
             </div>
-            <div className="col-span-2 md:col-span-1 text-center">
-              <span className="block text-3xl sm:text-4xl font-black text-[#4a3730]">5.0 ★</span>
-              <span className="text-xs uppercase tracking-wider text-[#7a6e67] font-medium mt-1 block">Valoración de Pacientes</span>
+            <div className="col-span-2 md:col-span-1 text-center p-3 rounded-2xl bg-white/60 backdrop-blur-sm border border-[#e5d8d0]/60">
+              <span className="block text-3xl sm:text-4xl font-black text-[#2c1d18]">5.0 ★</span>
+              <span className="text-xs uppercase tracking-wider text-[#5c4a43] font-bold mt-1 block">Valoración de Pacientes</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* GALERÍA DE SERVICIOS */}
+      {/* GALERÍA DE SERVICIOS CON EFECTOS DE INTERACCIÓN Y ALTO CONTRASTE */}
       <section id="servicios" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <span className="text-xs uppercase tracking-widest text-[#b08271] font-bold bg-[#f2e8e5] px-3.5 py-1.5 rounded-full">Catálogo Exclusivo</span>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#4a3730] mt-3 mb-4">Tratamientos Avanzados</h2>
-          <p className="text-[#6b5e57] max-w-xl mx-auto text-sm">Elige el procedimiento ideal y obtén una estimación inmediata de las sesiones requeridas.</p>
+          <span className="text-xs uppercase tracking-widest text-[#815141] font-black bg-[#f2e8e5] border border-[#d8ab9a]/40 px-4 py-2 rounded-full">Catálogo Exclusivo</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-[#2c1d18] mt-4 mb-4">Tratamientos Avanzados</h2>
+          <p className="text-[#40322c] max-w-xl mx-auto text-base font-medium">Elige el procedimiento ideal y obtén una estimación inmediata de las sesiones requeridas.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesList.map((service) => (
-            <div key={service.id} className="bg-white rounded-3xl overflow-hidden border border-[#f0e8e3] flex flex-col shadow-sm hover:shadow-2xl transition-all duration-300 group">
-              <div className="relative h-56 overflow-hidden">
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#4a3730] text-[10px] uppercase font-extrabold tracking-wider px-3.5 py-1.5 rounded-full shadow-sm">
+            <div 
+              key={service.id} 
+              className="bg-white rounded-3xl overflow-hidden border border-[#e5d8d0] flex flex-col shadow-sm hover:shadow-2xl hover:border-[#b08271] transition-all duration-500 transform hover:-translate-y-2 group"
+            >
+              <div className="relative h-60 overflow-hidden">
+                <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 ease-out" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+                <span className="absolute top-4 left-4 bg-white/95 backdrop-blur-md text-[#2c1d18] text-xs uppercase font-black tracking-wider px-4 py-1.5 rounded-full shadow-md">
                   {service.tag}
                 </span>
-                <span className="absolute bottom-4 left-4 text-white text-xs font-semibold flex items-center gap-1.5 bg-black/30 backdrop-blur-sm px-3 py-1 rounded-lg">
-                  <Clock className="w-3.5 h-3.5 text-[#c59b8a]" /> {service.duration}
+                <span className="absolute bottom-4 left-4 text-white text-xs font-bold flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20">
+                  <Clock className="w-4 h-4 text-[#d8ab9a]" /> {service.duration}
                 </span>
               </div>
-              <div className="p-7 flex-1 flex flex-col justify-between">
+              <div className="p-7 flex-1 flex flex-col justify-between bg-white">
                 <div>
-                  <div className="inline-block bg-[#fdf8f6] text-[#b08271] border border-[#f2e8e5] text-[11px] font-bold px-3 py-1 rounded-lg mb-3">
+                  <div className="inline-block bg-[#fdf8f6] text-[#815141] border border-[#d8ab9a]/60 text-xs font-black px-3.5 py-1.5 rounded-xl mb-3 shadow-2xs">
                     ✨ Estimación: {service.sessions}
                   </div>
-                  <h3 className="text-xl font-bold text-[#4a3730] mb-3">{service.title}</h3>
-                  <p className="text-[#6b5e57] text-xs leading-relaxed mb-6">{service.description}</p>
+                  <h3 className="text-2xl font-black text-[#2c1d18] mb-3 group-hover:text-[#b08271] transition-colors">{service.title}</h3>
+                  <p className="text-[#40322c] text-sm leading-relaxed mb-6 font-medium">{service.description}</p>
                 </div>
                 <button
                   onClick={() => handleServiceSelect(service.title, service.sessions)}
-                  className="w-full bg-[#fdf8f6] hover:bg-[#c59b8a] text-[#b08271] hover:text-white font-bold py-3.5 rounded-2xl border border-[#f2e8e5] hover:border-[#c59b8a] transition-all duration-300 text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm"
+                  className="w-full bg-[#fdf8f6] hover:bg-[#b08271] text-[#815141] hover:text-white font-black py-4 rounded-2xl border border-[#d8ab9a] hover:border-[#b08271] transition-all duration-300 text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xs hover:shadow-lg active:scale-98"
                 >
                   <Sparkle className="w-4 h-4" /> Seleccionar Servicio
                 </button>
@@ -289,26 +292,26 @@ export default function Home() {
       </section>
 
       {/* TESTIMONIOS DE PACIENTES */}
-      <section className="py-20 bg-[#f7f2ee] border-t border-b border-[#f0e8e3]">
+      <section className="py-20 bg-[#f5eeea] border-t border-b border-[#e5d8d0]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-xs uppercase tracking-widest text-[#b08271] font-bold">Experiencias Reales</span>
-            <h3 className="text-3xl font-black text-[#4a3730] mt-2">Lo que opinan nuestros pacientes</h3>
+            <span className="text-xs uppercase tracking-widest text-[#815141] font-black">Experiencias Reales</span>
+            <h3 className="text-3xl sm:text-4xl font-black text-[#2c1d18] mt-2">Lo que opinan nuestros pacientes</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-3xl border border-[#e5d8d0] shadow-sm flex flex-col justify-between">
+              <div key={idx} className="bg-white p-8 rounded-3xl border border-[#e5d8d0] shadow-sm flex flex-col justify-between hover:shadow-md transition">
                 <div>
-                  <div className="flex text-amber-400 mb-4">
+                  <div className="flex text-amber-500 mb-4">
                     {[...Array(t.rating)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-current" />
                     ))}
                   </div>
-                  <p className="text-[#6b5e57] text-xs italic leading-relaxed mb-6">"{t.comment}"</p>
+                  <p className="text-[#40322c] text-sm italic leading-relaxed mb-6 font-medium">"{t.comment}"</p>
                 </div>
                 <div className="border-t border-gray-100 pt-4">
-                  <span className="font-bold text-[#4a3730] text-sm block">{t.name}</span>
-                  <span className="text-[11px] text-[#b08271] font-semibold">{t.service}</span>
+                  <span className="font-black text-[#2c1d18] text-base block">{t.name}</span>
+                  <span className="text-xs text-[#815141] font-bold">{t.service}</span>
                 </div>
               </div>
             ))}
@@ -319,21 +322,21 @@ export default function Home() {
       {/* PREGUNTAS FRECUENTES (FAQ) */}
       <section className="py-20 max-w-3xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h3 className="text-3xl font-black text-[#4a3730]">Preguntas Frecuentes</h3>
-          <p className="text-xs text-[#7a6e67] mt-1">Todo lo que necesitas saber antes de tu primera sesión de valoración.</p>
+          <h3 className="text-3xl font-black text-[#2c1d18]">Preguntas Frecuentes</h3>
+          <p className="text-sm text-[#5c4a43] font-medium mt-2">Todo lo que necesitas saber antes de tu primera sesión de valoración.</p>
         </div>
         <div className="space-y-4">
           {faqs.map((faq, idx) => (
             <div key={idx} className="bg-white rounded-2xl border border-[#e5d8d0] overflow-hidden shadow-sm">
               <button
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                className="w-full p-6 text-left font-bold text-[#4a3730] text-sm flex justify-between items-center gap-4 hover:bg-[#fcfaf8] transition"
+                className="w-full p-6 text-left font-black text-[#2c1d18] text-base flex justify-between items-center gap-4 hover:bg-[#fcfaf8] transition"
               >
                 {faq.q}
-                <ChevronDown className={`w-4 h-4 text-[#c59b8a] transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-[#b08271] transition-transform duration-300 shrink-0 ${openFaq === idx ? 'rotate-180' : ''}`} />
               </button>
               {openFaq === idx && (
-                <div className="px-6 pb-6 text-xs text-[#6b5e57] leading-relaxed border-t border-gray-100 pt-4">
+                <div className="px-6 pb-6 text-sm text-[#40322c] leading-relaxed border-t border-gray-100 pt-4 font-medium">
                   {faq.a}
                 </div>
               )}
@@ -343,54 +346,54 @@ export default function Home() {
       </section>
 
       {/* SECCIÓN FORMULARIO / AGENDA INTERACTIVA */}
-      <section id="agendar" className="py-24 bg-gradient-to-b from-[#f7f2ee] to-white border-t border-[#f0e8e3]">
+      <section id="agendar" className="py-24 bg-gradient-to-b from-[#f5eeea] to-white border-t border-[#e5d8d0]">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-[0.2em] text-[#b08271] font-bold bg-[#f2e8e5] px-4 py-1.5 rounded-full inline-block">
+            <span className="text-xs uppercase tracking-[0.2em] text-[#815141] font-black bg-[#f2e8e5] border border-[#d8ab9a]/50 px-4 py-2 rounded-full inline-block">
               Sistema de Reserva 24/7
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#4a3730] mt-4">Cotiza y Agenda tu Cita</h2>
-            <p className="text-xs sm:text-sm text-[#7a6e67] mt-2">Configura los detalles de tu tratamiento para coordinar directamente vía WhatsApp.</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#2c1d18] mt-4">Cotiza y Agenda tu Cita</h2>
+            <p className="text-sm sm:text-base text-[#5c4a43] font-medium mt-2">Configura los detalles de tu tratamiento para coordinar directamente vía WhatsApp.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-6 sm:p-12 shadow-2xl border border-[#e5d8d0] space-y-8">
             
             {/* PASO 1: GÉNERO */}
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-3">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-3">
                 1. Género del Paciente *
               </label>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
                   onClick={() => setSelectedGender('Femenino')}
-                  className={`py-4 rounded-2xl border-2 font-bold text-sm transition flex items-center justify-center gap-2 ${
+                  className={`py-4 rounded-2xl border-2 font-black text-sm transition-all duration-200 flex items-center justify-center gap-2 ${
                     selectedGender === 'Femenino'
-                      ? 'border-[#c59b8a] bg-[#fdf8f6] text-[#4a3730] shadow-sm'
-                      : 'border-gray-200 bg-white text-gray-500 hover:border-[#f0e8e3]'
+                      ? 'border-[#b08271] bg-[#fdf8f6] text-[#2c1d18] shadow-sm ring-2 ring-[#b08271]/20'
+                      : 'border-gray-200 bg-white text-gray-600 hover:border-[#d8ab9a]'
                   }`}
                 >
-                  <User className="w-4 h-4 text-[#c59b8a]" /> Femenino
+                  <User className="w-4 h-4 text-[#b08271]" /> Femenino
                 </button>
                 <button
                   type="button"
                   onClick={() => setSelectedGender('Masculino')}
-                  className={`py-4 rounded-2xl border-2 font-bold text-sm transition flex items-center justify-center gap-2 ${
+                  className={`py-4 rounded-2xl border-2 font-black text-sm transition-all duration-200 flex items-center justify-center gap-2 ${
                     selectedGender === 'Masculino'
-                      ? 'border-[#c59b8a] bg-[#fdf8f6] text-[#4a3730] shadow-sm'
-                      : 'border-gray-200 bg-white text-gray-500 hover:border-[#f0e8e3]'
+                      ? 'border-[#b08271] bg-[#fdf8f6] text-[#2c1d18] shadow-sm ring-2 ring-[#b08271]/20'
+                      : 'border-gray-200 bg-white text-gray-600 hover:border-[#d8ab9a]'
                   }`}
                 >
-                  <User className="w-4 h-4 text-[#c59b8a]" /> Masculino
+                  <User className="w-4 h-4 text-[#b08271]" /> Masculino
                 </button>
               </div>
             </div>
 
-            <hr className="border-[#f0e8e3]" />
+            <hr className="border-[#e5d8d0]" />
 
             {/* PASO 2: SERVICIO */}
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-3">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-3">
                 2. Selección de Tratamiento *
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -399,34 +402,34 @@ export default function Home() {
                     key={s.id}
                     type="button"
                     onClick={() => handleServiceSelect(s.title, s.sessions)}
-                    className={`p-4 rounded-2xl border text-left text-xs font-bold transition flex items-center justify-between ${
+                    className={`p-4 rounded-2xl border-2 text-left text-xs font-black transition-all duration-200 flex items-center justify-between ${
                       selectedService === s.title
-                        ? 'border-[#c59b8a] bg-[#fdf8f6] text-[#4a3730] shadow-md ring-1 ring-[#c59b8a]'
-                        : 'border-gray-200 bg-white text-gray-600 hover:border-[#f0e8e3]'
+                        ? 'border-[#b08271] bg-[#fdf8f6] text-[#2c1d18] shadow-md ring-2 ring-[#b08271]/20'
+                        : 'border-gray-200 bg-white text-gray-700 hover:border-[#d8ab9a]'
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
-                      <span className={`w-3 h-3 rounded-full border shrink-0 ${selectedService === s.title ? 'bg-[#c59b8a] border-[#c59b8a]' : 'border-gray-300'}`}></span>
+                      <span className={`w-3.5 h-3.5 rounded-full border-2 shrink-0 ${selectedService === s.title ? 'bg-[#b08271] border-[#b08271]' : 'border-gray-300'}`}></span>
                       {s.title}
                     </span>
                   </button>
                 ))}
               </div>
               {selectedService && (
-                <div className="mt-3 p-3 bg-[#fdf8f6] border border-[#f2e8e5] rounded-xl text-xs text-[#b08271] font-semibold flex items-center gap-2">
+                <div className="mt-4 p-3.5 bg-[#fdf8f6] border border-[#d8ab9a] rounded-xl text-xs text-[#815141] font-black flex items-center gap-2 shadow-2xs">
                   <Sparkles className="w-4 h-4" /> Estimación automática seleccionada: {sessionEstimate}
                 </div>
               )}
             </div>
 
-            <hr className="border-[#f0e8e3]" />
+            <hr className="border-[#e5d8d0]" />
 
             {/* PASO 3: ZONAS CORPORALES */}
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-1">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-1">
                 3. Parte(s) del Cuerpo a Tratar *
               </label>
-              <p className="text-[11px] text-gray-500 mb-3">Selecciona una o múltiples zonas corporales.</p>
+              <p className="text-xs text-[#5c4a43] font-medium mb-3">Selecciona una o múltiples zonas corporales.</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {zonesList.map((zone) => {
                   const isSelected = selectedZones.includes(zone);
@@ -435,10 +438,10 @@ export default function Home() {
                       key={zone}
                       type="button"
                       onClick={() => toggleZone(zone)}
-                      className={`py-3.5 px-2 rounded-xl border text-xs font-bold transition ${
+                      className={`py-3.5 px-2 rounded-xl border-2 text-xs font-black transition-all duration-200 ${
                         isSelected
-                          ? 'bg-[#c59b8a] text-white border-[#c59b8a] shadow-md'
-                          : 'border-gray-200 bg-white text-gray-700 hover:border-[#c59b8a]'
+                          ? 'bg-[#b08271] text-white border-[#b08271] shadow-md scale-102'
+                          : 'border-gray-200 bg-white text-gray-800 hover:border-[#b08271]'
                       }`}
                     >
                       {zone}
@@ -448,25 +451,25 @@ export default function Home() {
               </div>
             </div>
 
-            <hr className="border-[#f0e8e3]" />
+            <hr className="border-[#e5d8d0]" />
 
             {/* PASO 4: FOTO DE EVALUACIÓN */}
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-3">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-3">
                 4. Foto de la Zona (Opcional)
               </label>
-              <label className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-[#c59b8a] transition cursor-pointer bg-[#fcfaf8] block">
+              <label className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-[#b08271] transition cursor-pointer bg-[#fcfaf8] block">
                 <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
                 {!imagePreview ? (
                   <div className="space-y-1">
-                    <Camera className="w-8 h-8 text-[#c59b8a] mx-auto mb-2" />
-                    <p className="text-xs font-bold text-[#4a3730]">Cargar fotografía para evaluación previa</p>
-                    <p className="text-[11px] text-gray-400">Tratamiento de imágenes bajo estricta confidencialidad médica/estética.</p>
+                    <Camera className="w-8 h-8 text-[#b08271] mx-auto mb-2" />
+                    <p className="text-xs font-black text-[#2c1d18]">Cargar fotografía para evaluación previa</p>
+                    <p className="text-xs text-gray-500 font-medium">Tratamiento de imágenes bajo estricta confidencialidad médica/estética.</p>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center">
                     <img src={imagePreview} alt="Preview" className="max-h-40 rounded-xl shadow-md mb-2 object-cover" />
-                    <span className="text-xs text-green-600 font-bold flex items-center gap-1">
+                    <span className="text-xs text-emerald-700 font-black flex items-center gap-1">
                       <CheckCircle2 className="w-4 h-4" /> Fotografía adjuntada correctamente
                     </span>
                   </div>
@@ -474,55 +477,55 @@ export default function Home() {
               </label>
             </div>
 
-            <hr className="border-[#f0e8e3]" />
+            <hr className="border-[#e5d8d0]" />
 
             {/* PASO 5: DATOS Y HORARIO */}
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-[#4a3730] mb-4">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-4">
                 5. Tus Datos de Contacto & Preferencia
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-[11px] font-bold text-gray-600 mb-1">Nombre Completo *</label>
+                  <label className="block text-xs font-black text-[#40322c] mb-1">Nombre Completo *</label>
                   <input
                     type="text"
                     required
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     placeholder="Ej: María González"
-                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-[#fcfaf8] focus:border-[#c59b8a] outline-none text-xs font-medium"
+                    className="w-full px-4 py-3.5 rounded-xl border border-gray-300 bg-[#fcfaf8] focus:border-[#b08271] focus:ring-2 focus:ring-[#b08271]/20 outline-none text-xs font-bold text-[#2c1d18]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-gray-600 mb-1">Número de WhatsApp *</label>
+                  <label className="block text-xs font-black text-[#40322c] mb-1">Número de WhatsApp *</label>
                   <input
                     type="tel"
                     required
                     value={clientPhone}
                     onChange={(e) => setClientPhone(e.target.value)}
                     placeholder="Ej: 0981 123456"
-                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-[#fcfaf8] focus:border-[#c59b8a] outline-none text-xs font-medium"
+                    className="w-full px-4 py-3.5 rounded-xl border border-gray-300 bg-[#fcfaf8] focus:border-[#b08271] focus:ring-2 focus:ring-[#b08271]/20 outline-none text-xs font-bold text-[#2c1d18]"
                   />
-                  <span className="text-[10px] text-gray-400 mt-1 block">Para envío de recordatorios y confirmación de turno.</span>
+                  <span className="text-[11px] text-gray-500 font-medium mt-1 block">Para envío de recordatorios y confirmación de turno.</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] font-bold text-gray-600 mb-1">Fecha Sugerida</label>
+                  <label className="block text-xs font-black text-[#40322c] mb-1">Fecha Sugerida</label>
                   <input
                     type="date"
                     value={appointmentDate}
                     onChange={(e) => setAppointmentDate(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-[#fcfaf8] focus:border-[#c59b8a] outline-none text-xs font-medium"
+                    className="w-full px-4 py-3.5 rounded-xl border border-gray-300 bg-[#fcfaf8] focus:border-[#b08271] focus:ring-2 focus:ring-[#b08271]/20 outline-none text-xs font-bold text-[#2c1d18]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-gray-600 mb-1">Franja Horaria Preferida</label>
+                  <label className="block text-xs font-black text-[#40322c] mb-1">Franja Horaria Preferida</label>
                   <select
                     value={appointmentTime}
                     onChange={(e) => setAppointmentTime(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-[#fcfaf8] focus:border-[#c59b8a] outline-none text-xs font-medium"
+                    className="w-full px-4 py-3.5 rounded-xl border border-gray-300 bg-[#fcfaf8] focus:border-[#b08271] focus:ring-2 focus:ring-[#b08271]/20 outline-none text-xs font-bold text-[#2c1d18]"
                   >
                     <option value="Mañana (08:00 - 12:00)">Mañana (08:00 - 12:00)</option>
                     <option value="Tarde (13:00 - 18:00)">Tarde (13:00 - 18:00)</option>
@@ -531,28 +534,28 @@ export default function Home() {
               </div>
             </div>
 
-            {/* BOTÓN ENVIAR */}
+            {/* BOTÓN ENVIAR DE ALTO IMPACTO */}
             <button
               type="submit"
-              className="w-full bg-[#c59b8a] hover:bg-[#b08271] text-white font-black py-4.5 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-0.5 flex items-center justify-center gap-3 text-sm tracking-wider uppercase"
+              className="w-full bg-[#b08271] hover:bg-[#8f6353] text-white font-black py-5 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3 text-sm tracking-wider uppercase ring-4 ring-[#b08271]/20"
             >
-              <Send className="w-4 h-4" /> Enviar Cita y Confirmar por WhatsApp
+              <Send className="w-5 h-5" /> Enviar Cita y Confirmar por WhatsApp
             </button>
           </form>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#4a3730] text-[#f2e8e5] py-14 text-center text-xs">
+      <footer className="bg-[#2c1d18] text-[#f7f2ee] py-14 text-center text-xs">
         <div className="max-w-6xl mx-auto px-6 space-y-4">
           <div className="flex items-center justify-center space-x-2 mb-2">
-            <Sparkles className="text-[#c59b8a] w-5 h-5" />
-            <span className="text-lg font-black tracking-wider text-white">CAMI ISLA ESTUDIO</span>
+            <Sparkles className="text-[#d8ab9a] w-5 h-5" />
+            <span className="text-xl font-black tracking-wider text-white">CAMI ISLA ESTUDIO</span>
           </div>
-          <p className="text-xs text-[#dcd0cb] max-w-md mx-auto leading-relaxed">
+          <p className="text-xs text-[#d8ab9a] max-w-md mx-auto leading-relaxed font-medium">
             Especialistas certificados en Estética Avanzada y Micropigmentación Paramédica. Transformamos vidas realzando tu belleza natural.
           </p>
-          <div className="pt-4 border-t border-[#685047] text-[11px] text-[#bdaea7] space-y-1">
+          <div className="pt-4 border-t border-[#4a3730] text-xs text-[#bdaea7] space-y-1 font-medium">
             <p>📞 WhatsApp Oficial: 0971 3013391 • Paraguay</p>
             <p>© {new Date().getFullYear()} Cami Isla Estudio. Todos los derechos reservados.</p>
           </div>
