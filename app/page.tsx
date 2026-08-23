@@ -111,7 +111,6 @@ export default function Page() {
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Consultar horarios ocupados en Supabase
   useEffect(() => {
     if (!selectedDate) return
     
