@@ -37,6 +37,7 @@ export default function Page() {
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
+  // Consultar horarios ocupados en Supabase cuando cambia la fecha
   useEffect(() => {
     if (!selectedDate) return
     
@@ -87,10 +88,10 @@ export default function Page() {
       setClientPhone('')
       setSelectedTime('')
       
+      // Recargar horarios ocupados
       setBookedTimes((prev) => [...prev, selectedTime])
     } catch (err: any) {
-      console.error(err)
-      setErrorMsg(`Error al registrar: ${err.message || 'Revisa la conexión'}`)
+      setErrorMsg('Error al registrar la cita. Verifica que la columna "body_zone" exista en Supabase.')
     } finally {
       setLoading(false)
     }
@@ -229,7 +230,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Botón de Confirmación (Solo guarda en la BD) */}
+          {/* Botón de Confirmación */}
           <button
             type="submit"
             disabled={loading}
@@ -240,15 +241,15 @@ export default function Page() {
 
         </form>
 
-        {/* Botón Independiente de WhatsApp (Separado del formulario) */}
+        {/* Botón Independiente de WhatsApp */}
         <div className="text-center pt-2">
           <a
-            href="https://wa.me/595981123456" 
+            href="https://wa.me/595981123456"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition-all shadow-md"
+            className="inline-block px-6 py-3 bg-neutral-900 border border-neutral-800 hover:border-emerald-500 text-neutral-300 hover:text-emerald-400 font-semibold rounded-xl transition-all shadow-md text-sm"
           >
-            💬 Consultas o dudas por WhatsApp
+            💬 ¿Tienes dudas? Escríbenos por WhatsApp
           </a>
         </div>
 
