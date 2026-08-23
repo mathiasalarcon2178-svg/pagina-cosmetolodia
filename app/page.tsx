@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { 
   Sparkles, Phone, Camera, CheckCircle2, Send, User, 
-  Calendar, Clock, Star, Shield, ArrowRight, X, ChevronRight, Eye, Info, Check
+  Calendar, Clock, Star, Shield, ArrowRight, X, ChevronRight, Eye, Info, Check,
+  Instagram, MessageCircle
 } from 'lucide-react';
 
 interface Service {
@@ -31,9 +32,11 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [sessionEstimate, setSessionEstimate] = useState<string>('1 a 3 sesiones (según profundidad)');
 
-  // Estado para controlar el Modal de Detalles del Servicio
   const [modalService, setModalService] = useState<Service | null>(null);
   const [activeModalImage, setActiveModalImage] = useState<string>('');
+
+  const WHATSAPP_DIRECT_LINK = "https://wa.me/message/3KYVZSN3F3MKC1";
+  const INSTAGRAM_LINK = "https://www.instagram.com/camisla_studio?igsi=MTVwemZ6azQ0b3hiZg==";
 
   const zonesList = ['Rostro', 'Cuello', 'Pecho', 'Abdomen', 'Espalda', 'Brazos', 'Piernas', 'Glúteos'];
 
@@ -254,7 +257,7 @@ export default function Home() {
 
     const hasPhoto = imagePreview ? 'Sí (adjuntada en este chat)' : 'No';
 
-    const message = `Hola Cami Isla Estudio, me gustaría agendar una valoración profesional:
+    const message = `Hola Cami Isla Studio, me gustaría agendar una valoración profesional:
 
 👤 *Nombre:* ${clientName}
 📱 *WhatsApp para recordatorios:* ${clientPhone}
@@ -265,7 +268,7 @@ export default function Home() {
 📅 *Fecha sugerida:* ${appointmentDate || 'A coordinar'} (${appointmentTime})`;
 
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/5959713013391?text=${encodedMessage}`, '_blank');
+    window.open(`https://wa.me/message/3KYVZSN3F3MKC1?text=${encodedMessage}`, '_blank');
   };
 
   const scrollToAgenda = () => {
@@ -274,15 +277,29 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfaf8] text-[#1a1513] font-sans antialiased selection:bg-[#b08271] selection:text-white">
+    <div className="min-h-screen bg-[#fcfaf8] text-[#1a1513] font-sans antialiased selection:bg-[#b08271] selection:text-white relative">
       
+      {/* BOTÓN FLOTANTE DIRECTO A WHATSAPP */}
+      <a
+        href={WHATSAPP_DIRECT_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group ring-4 ring-emerald-500/30"
+        title="Consultar por WhatsApp"
+      >
+        <MessageCircle className="w-7 h-7 fill-current" />
+        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap text-xs font-black uppercase tracking-wider pl-0 group-hover:pl-2">
+          Chat Directo
+        </span>
+      </a>
+
       {/* BARRA DE AVISO SUPERIOR */}
       <div className="bg-[#382822] text-[#f7f2ee] text-xs tracking-wider uppercase py-2.5 px-4 text-center font-bold flex items-center justify-center gap-2 shadow-inner">
         <Sparkles className="w-4 h-4 text-[#d8ab9a]" /> Agenda Abierta • Turnos limitados por semana • Atención exclusiva en Paraguay
       </div>
 
       {/* NAVBAR */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-[#e5d8d0] shadow-sm">
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-[#e5d8d0] shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="w-11 h-11 bg-[#fdf8f6] border border-[#d8ab9a] rounded-full flex items-center justify-center shadow-sm group-hover:bg-[#b08271] transition duration-300">
@@ -290,18 +307,18 @@ export default function Home() {
             </div>
             <div>
               <span className="text-2xl font-black text-[#2c1d18] tracking-wider block leading-none">CAMI ISLA</span>
-              <span className="text-[11px] uppercase tracking-[0.25em] text-[#916252] font-extrabold">Estudio Estético</span>
+              <span className="text-[11px] uppercase tracking-[0.25em] text-[#916252] font-extrabold">Studio Estético</span>
             </div>
           </div>
 
           <div className="flex items-center gap-3 sm:gap-5">
             <a
-              href="https://wa.me/5959713013391"
+              href={WHATSAPP_DIRECT_LINK}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-2 text-xs font-black text-[#2c1d18] bg-[#fdf8f6] border border-[#d8ab9a] px-4 py-2.5 rounded-full hover:bg-[#b08271] hover:text-white hover:border-[#b08271] transition duration-300 shadow-sm"
             >
-              <Phone className="w-4 h-4 text-[#b08271]" /> 0971 3013391
+              <Phone className="w-4 h-4 text-[#b08271]" /> Contactar por WhatsApp
             </a>
             <button
               onClick={scrollToAgenda}
@@ -364,7 +381,7 @@ export default function Home() {
           </span>
           <h2 className="text-3xl sm:text-5xl font-black text-[#2c1d18] mt-4 mb-4">Tratamientos Avanzados</h2>
           <p className="text-[#40322c] max-w-xl mx-auto text-base font-medium">
-            Haz clic en cualquier servicio para ver **fotografías, procedimiento paso a paso y detalles técnicos**.
+            Haz clic en cualquier servicio para ver fotografías, procedimiento paso a paso y detalles técnicos.
           </p>
         </div>
 
@@ -382,7 +399,6 @@ export default function Home() {
                   {service.tag}
                 </span>
                 
-                {/* BOTÓN OVERLAY PARA EXPLORAR FOTOS */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 backdrop-blur-xs">
                   <span className="bg-white text-[#2c1d18] text-xs font-black uppercase tracking-wider px-5 py-2.5 rounded-full shadow-xl flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition">
                     <Eye className="w-4 h-4 text-[#b08271]" /> Ver Fotos y Galería
@@ -431,12 +447,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MODAL / VENTANA EMERGENTE PARA MOSTRAR MÁS FOTOS Y DETALLES */}
+      {/* MODAL PARA MOSTRAR MÁS FOTOS Y DETALLES */}
       {modalService && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
           <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-[#e5d8d0] relative">
-            
-            {/* Botón Cerrar */}
             <button 
               onClick={closeServiceModal}
               className="absolute top-4 right-4 bg-white/90 hover:bg-white text-[#2c1d18] p-2.5 rounded-full z-10 shadow-md transition border border-gray-200"
@@ -445,8 +459,6 @@ export default function Home() {
             </button>
 
             <div className="p-6 sm:p-10 space-y-8">
-              
-              {/* CABECERA MODAL */}
               <div>
                 <span className="text-xs uppercase font-black text-[#815141] bg-[#fdf8f6] border border-[#d8ab9a]/60 px-3.5 py-1.5 rounded-full inline-block mb-3">
                   {modalService.tag}
@@ -455,13 +467,11 @@ export default function Home() {
                 <p className="text-[#40322c] text-sm sm:text-base mt-2 font-medium">{modalService.description}</p>
               </div>
 
-              {/* GALERÍA DE FOTOS INTERACTIVA */}
               <div className="space-y-3">
                 <span className="text-xs uppercase tracking-wider font-black text-[#2c1d18] block">Galería de Imágenes del Tratamiento</span>
                 <div className="h-64 sm:h-80 rounded-2xl overflow-hidden border border-[#e5d8d0] relative bg-black/5">
                   <img src={activeModalImage} alt="Fotos tratamiento" className="w-full h-full object-cover transition-all duration-300" />
                 </div>
-                {/* Miniaturas */}
                 <div className="flex gap-3 overflow-x-auto pb-2">
                   {modalService.gallery.map((imgUrl, i) => (
                     <button
@@ -477,7 +487,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* DETALLES Y PASO A PASO */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#fcfaf8] p-6 rounded-2xl border border-[#e5d8d0]">
                 <div>
                   <h4 className="text-xs font-black uppercase text-[#2c1d18] mb-3 flex items-center gap-1.5">
@@ -508,7 +517,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* PIE DEL MODAL CON BOTÓN DE ACCIÓN */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#e5d8d0]">
                 <div className="text-xs text-[#5c4a43] font-bold">
                   ⏱️ Duración: {modalService.duration} • 📊 Estimación: {modalService.sessions}
@@ -591,8 +599,6 @@ export default function Home() {
           </div>
 
           <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-6 sm:p-12 shadow-2xl border border-[#e5d8d0] space-y-8">
-            
-            {/* PASO 1: GÉNERO */}
             <div>
               <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-3">
                 1. Género del Paciente *
@@ -625,7 +631,6 @@ export default function Home() {
 
             <hr className="border-[#e5d8d0]" />
 
-            {/* PASO 2: SERVICIO */}
             <div>
               <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-3">
                 2. Selección de Tratamiento *
@@ -658,7 +663,6 @@ export default function Home() {
 
             <hr className="border-[#e5d8d0]" />
 
-            {/* PASO 3: ZONAS CORPORALES */}
             <div>
               <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-1">
                 3. Parte(s) del Cuerpo a Tratar *
@@ -687,7 +691,6 @@ export default function Home() {
 
             <hr className="border-[#e5d8d0]" />
 
-            {/* PASO 4: FOTO DE EVALUACIÓN */}
             <div>
               <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-3">
                 4. Foto de la Zona (Opcional)
@@ -713,7 +716,6 @@ export default function Home() {
 
             <hr className="border-[#e5d8d0]" />
 
-            {/* PASO 5: DATOS Y HORARIO */}
             <div>
               <label className="block text-xs font-black uppercase tracking-wider text-[#2c1d18] mb-4">
                 5. Tus Datos de Contacto & Preferencia
@@ -767,7 +769,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* BOTÓN ENVIAR */}
             <button
               type="submit"
               className="w-full bg-[#b08271] hover:bg-[#8f6353] text-white font-black py-5 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3 text-sm tracking-wider uppercase ring-4 ring-[#b08271]/20"
@@ -778,19 +779,40 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* FOOTER CON REDES SOCIALES */}
       <footer className="bg-[#2c1d18] text-[#f7f2ee] py-14 text-center text-xs">
-        <div className="max-w-6xl mx-auto px-6 space-y-4">
+        <div className="max-w-6xl mx-auto px-6 space-y-6">
           <div className="flex items-center justify-center space-x-2 mb-2">
             <Sparkles className="text-[#d8ab9a] w-5 h-5" />
-            <span className="text-xl font-black tracking-wider text-white">CAMI ISLA ESTUDIO</span>
+            <span className="text-xl font-black tracking-wider text-white">CAMI ISLA STUDIO</span>
           </div>
+          
           <p className="text-xs text-[#d8ab9a] max-w-md mx-auto leading-relaxed font-medium">
             Especialistas certificados en Estética Avanzada y Micropigmentación Paramédica. Transformamos vidas realzando tu belleza natural.
           </p>
-          <div className="pt-4 border-t border-[#4a3730] text-xs text-[#bdaea7] space-y-1 font-medium">
-            <p>📞 WhatsApp Oficial: 0971 3013391 • Paraguay</p>
-            <p>© {new Date().getFullYear()} Cami Isla Estudio. Todos los derechos reservados.</p>
+
+          <div className="flex justify-center gap-4 pt-2">
+            <a 
+              href={INSTAGRAM_LINK} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="bg-[#4a3730] hover:bg-[#b08271] text-white p-3 rounded-full transition duration-300 shadow-md flex items-center gap-2 px-5 font-bold"
+            >
+              <Instagram className="w-4 h-4 text-[#d8ab9a]" /> Instagram Oficial (@camisla_studio)
+            </a>
+            <a 
+              href={WHATSAPP_DIRECT_LINK} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="bg-[#4a3730] hover:bg-[#25D366] text-white p-3 rounded-full transition duration-300 shadow-md flex items-center gap-2 px-5 font-bold"
+            >
+              <Phone className="w-4 h-4 text-[#d8ab9a]" /> WhatsApp Directo
+            </a>
+          </div>
+
+          <div className="pt-6 border-t border-[#4a3730] text-xs text-[#bdaea7] space-y-1 font-medium">
+            <p>📍 Asunción, Paraguay</p>
+            <p>© {new Date().getFullYear()} Cami Isla Studio. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>
