@@ -227,13 +227,16 @@ export default function Page() {
                       : 'border-neutral-200 hover:border-neutral-300'
                   }`}
                 >
-                  <div className="relative h-48 w-full overflow-hidden bg-neutral-100">
+                  <div className="relative h-48 w-full overflow-hidden bg-pink-50 flex items-center justify-center">
                     <img 
                       src={s.image} 
                       alt={s.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e: any) => {
+                        e.target.style.display = 'none'
+                      }}
                     />
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-neutral-800 shadow-sm">
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-neutral-800 shadow-sm z-10">
                       {s.duration}
                     </div>
                   </div>
