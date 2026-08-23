@@ -3,9 +3,21 @@
 import React, { useState } from 'react';
 import { 
   Sparkles, Phone, Camera, CheckCircle2, Send, User, 
-  Calendar, ShieldCheck, HeartPulse, Sparkle, ChevronDown, 
-  Award, Clock, Star, MapPin, MessageSquare, Shield, Smile, ArrowRight 
+  Calendar, Clock, Star, Shield, ArrowRight, X, ChevronRight, Eye, Info, Check
 } from 'lucide-react';
+
+interface Service {
+  id: string;
+  title: string;
+  tag: string;
+  duration: string;
+  sessions: string;
+  description: string;
+  image: string;
+  gallery: string[];
+  procedure: string[];
+  benefits: string[];
+}
 
 export default function Home() {
   const [selectedGender, setSelectedGender] = useState<'Femenino' | 'Masculino'>('Femenino');
@@ -19,9 +31,13 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [sessionEstimate, setSessionEstimate] = useState<string>('1 a 3 sesiones (según profundidad)');
 
+  // Estado para controlar el Modal de Detalles del Servicio
+  const [modalService, setModalService] = useState<Service | null>(null);
+  const [activeModalImage, setActiveModalImage] = useState<string>('');
+
   const zonesList = ['Rostro', 'Cuello', 'Pecho', 'Abdomen', 'Espalda', 'Brazos', 'Piernas', 'Glúteos'];
 
-  const servicesList = [
+  const servicesList: Service[] = [
     {
       id: 'camuflaje-estrias',
       title: 'Camuflaje de Estrías',
@@ -29,7 +45,23 @@ export default function Home() {
       duration: '2 - 3 horas',
       sessions: '1 - 2 Sesiones',
       description: 'Micropigmentación avanzada que iguala el tono de las estrías con la tez natural de tu piel, volviéndolas ópticamente imperceptibles.',
-      image: 'https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gallery: [
+        'https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3865712/pexels-photo-3865712.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      procedure: [
+        'Evaluación clínica del tono de piel y fototipo.',
+        'Mezcla y preparación personalizada del pigmento biocompatible.',
+        'Implantación micro-pigmentaria en capa epidérmica.',
+        'Aplicación de sellante regenerador y protocolo post-cuidado.'
+      ],
+      benefits: [
+        'Resultados visibles tras la cicatrización.',
+        'Durabilidad de 3 a 5 años.',
+        'Procedimiento seguro que no destruye el tejido.'
+      ]
     },
     {
       id: 'camuflaje-cicatrices',
@@ -38,7 +70,23 @@ export default function Home() {
       duration: '1.5 - 2.5 horas',
       sessions: '1 - 3 Sesiones',
       description: 'Neutralización del tono en cicatrices quirúrgicas o estéticas para integrarlas armónicamente con el tejido circundante.',
-      image: 'https://images.pexels.com/photos/3985338/pexels-photo-3985338.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://images.pexels.com/photos/3985338/pexels-photo-3985338.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gallery: [
+        'https://images.pexels.com/photos/3985338/pexels-photo-3985338.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      procedure: [
+        'Análisis de madurez del tejido cicatricial (debe ser blanca/plana).',
+        'Prueba de tono e implantación sutil de matices neutralizadores.',
+        'Homogeneización con bordes de la piel sana.',
+        'Instrucciones específicas para regeneración tisular.'
+      ],
+      benefits: [
+        'Disimula cicatrices de cesáreas, cirugías o accidentes.',
+        'Tono personalizado exacto a la piel adyacente.',
+        'Mejora la estética corporal y la confianza.'
+      ]
     },
     {
       id: 'regeneracion-estrias',
@@ -47,7 +95,23 @@ export default function Home() {
       duration: '1 - 2 horas',
       sessions: '3 - 4 Sesiones',
       description: 'Inducción percutánea para restructurar la textura, atenuar la profundidad y reactivar la elastina biológica de la piel.',
-      image: 'https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gallery: [
+        'https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3865712/pexels-photo-3865712.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3985338/pexels-photo-3985338.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      procedure: [
+        'Higienización y preparación de la zona tratada.',
+        'Micro-punción percutánea para estimular colágeno natural.',
+        'Infiltración de sueros y concentrados de factores de crecimiento.',
+        'Máscara o bálsamo calmante e hidratante.'
+      ],
+      benefits: [
+        'Mejora la textura áspera y rehundida de la piel.',
+        'Tratamiento 100% natural sin tinta ni química sintética.',
+        'Estimula la firmeza y elasticidad en la zona.'
+      ]
     },
     {
       id: 'regeneracion-cicatrices',
@@ -56,7 +120,23 @@ export default function Home() {
       duration: '1 - 2 horas',
       sessions: '3 - 5 Sesiones',
       description: 'Terapia no invasiva que suaviza relieves, firmeza y rigidez en tejidos cicatriciales antiguos o recientes.',
-      image: 'https://images.pexels.com/photos/3865712/pexels-photo-3865712.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://images.pexels.com/photos/3865712/pexels-photo-3865712.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gallery: [
+        'https://images.pexels.com/photos/3865712/pexels-photo-3865712.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      procedure: [
+        'Evaluación de la elasticidad de la fibrosis o cicatriz.',
+        'Técnica de microneedling para ablandar fibras rígidas.',
+        'Aplicación de principios activos tensores y regenerantes.',
+        'Fototerapia o sellado protector.'
+      ],
+      benefits: [
+        'Suaviza el relieve y ablanda tejidos fibrosos.',
+        'Estimula la regeneración celular propia del cuerpo.',
+        'Procedimiento altamente tolerable e indoloro.'
+      ]
     },
     {
       id: 'eliminacion-verrugas',
@@ -65,7 +145,23 @@ export default function Home() {
       duration: '30 - 60 min',
       sessions: '1 Sesión Única',
       description: 'Remoción rápida y estética de verrugas, lunares y acrocordones indeseados sin comprometer la salud cutánea.',
-      image: 'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gallery: [
+        'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3985338/pexels-photo-3985338.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      procedure: [
+        'Valoración estética de la lesión benigna.',
+        'Asepsia de la zona y anestesia tópica local si se requiere.',
+        'Cauterización o remoción con equipo de plasmación/alta precisión.',
+        'Aplicación de crema antiséptica cicatrizante.'
+      ],
+      benefits: [
+        'Resultados inmediatos en una sola sesión.',
+        'Minimiza la posibilidad de cicatriz tras el proceso.',
+        'Rápido, limpio y sin sangrado significativo.'
+      ]
     }
   ];
 
@@ -122,6 +218,20 @@ export default function Home() {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const openServiceModal = (service: Service) => {
+    setModalService(service);
+    setActiveModalImage(service.image);
+  };
+
+  const closeServiceModal = () => {
+    setModalService(null);
+  };
+
+  const handleSelectFromModal = (serviceTitle: string, sessions: string) => {
+    handleServiceSelect(serviceTitle, sessions);
+    closeServiceModal();
   };
 
   const handleServiceSelect = (serviceTitle: string, sessions: string) => {
@@ -191,7 +301,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-2 text-xs font-black text-[#2c1d18] bg-[#fdf8f6] border border-[#d8ab9a] px-4 py-2.5 rounded-full hover:bg-[#b08271] hover:text-white hover:border-[#b08271] transition duration-300 shadow-sm"
             >
-              <Phone className="w-4 h-4 text-[#b08271] group-hover:text-white" /> 0971 3013391
+              <Phone className="w-4 h-4 text-[#b08271]" /> 0971 3013391
             </a>
             <button
               onClick={scrollToAgenda}
@@ -229,7 +339,6 @@ export default function Home() {
             </button>
           </div>
 
-          {/* ESTADÍSTICAS / MÉTRICAS DE CONFIANZA */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-10 border-t border-[#d8ab9a]/40 max-w-3xl mx-auto">
             <div className="text-center p-3 rounded-2xl bg-white/60 backdrop-blur-sm border border-[#e5d8d0]/60">
               <span className="block text-3xl sm:text-4xl font-black text-[#2c1d18]">+500</span>
@@ -247,30 +356,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GALERÍA DE SERVICIOS CON EFECTOS DE INTERACCIÓN Y ALTO CONTRASTE */}
+      {/* GALERÍA DE SERVICIOS INTERACTIVA */}
       <section id="servicios" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <span className="text-xs uppercase tracking-widest text-[#815141] font-black bg-[#f2e8e5] border border-[#d8ab9a]/40 px-4 py-2 rounded-full">Catálogo Exclusivo</span>
+          <span className="text-xs uppercase tracking-widest text-[#815141] font-black bg-[#f2e8e5] border border-[#d8ab9a]/40 px-4 py-2 rounded-full">
+            Catálogo Interactivo
+          </span>
           <h2 className="text-3xl sm:text-5xl font-black text-[#2c1d18] mt-4 mb-4">Tratamientos Avanzados</h2>
-          <p className="text-[#40322c] max-w-xl mx-auto text-base font-medium">Elige el procedimiento ideal y obtén una estimación inmediata de las sesiones requeridas.</p>
+          <p className="text-[#40322c] max-w-xl mx-auto text-base font-medium">
+            Haz clic en cualquier servicio para ver **fotografías, procedimiento paso a paso y detalles técnicos**.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesList.map((service) => (
             <div 
               key={service.id} 
-              className="bg-white rounded-3xl overflow-hidden border border-[#e5d8d0] flex flex-col shadow-sm hover:shadow-2xl hover:border-[#b08271] transition-all duration-500 transform hover:-translate-y-2 group"
+              className="bg-white rounded-3xl overflow-hidden border border-[#e5d8d0] flex flex-col shadow-sm hover:shadow-2xl hover:border-[#b08271] transition-all duration-500 transform hover:-translate-y-2 group cursor-pointer"
+              onClick={() => openServiceModal(service)}
             >
               <div className="relative h-60 overflow-hidden">
                 <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 ease-out" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                 <span className="absolute top-4 left-4 bg-white/95 backdrop-blur-md text-[#2c1d18] text-xs uppercase font-black tracking-wider px-4 py-1.5 rounded-full shadow-md">
                   {service.tag}
                 </span>
-                <span className="absolute bottom-4 left-4 text-white text-xs font-bold flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20">
+                
+                {/* BOTÓN OVERLAY PARA EXPLORAR FOTOS */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 backdrop-blur-xs">
+                  <span className="bg-white text-[#2c1d18] text-xs font-black uppercase tracking-wider px-5 py-2.5 rounded-full shadow-xl flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition">
+                    <Eye className="w-4 h-4 text-[#b08271]" /> Ver Fotos y Galería
+                  </span>
+                </div>
+
+                <span className="absolute bottom-4 left-4 text-white text-xs font-bold flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20">
                   <Clock className="w-4 h-4 text-[#d8ab9a]" /> {service.duration}
                 </span>
               </div>
+
               <div className="p-7 flex-1 flex flex-col justify-between bg-white">
                 <div>
                   <div className="inline-block bg-[#fdf8f6] text-[#815141] border border-[#d8ab9a]/60 text-xs font-black px-3.5 py-1.5 rounded-xl mb-3 shadow-2xs">
@@ -279,19 +402,131 @@ export default function Home() {
                   <h3 className="text-2xl font-black text-[#2c1d18] mb-3 group-hover:text-[#b08271] transition-colors">{service.title}</h3>
                   <p className="text-[#40322c] text-sm leading-relaxed mb-6 font-medium">{service.description}</p>
                 </div>
-                <button
-                  onClick={() => handleServiceSelect(service.title, service.sessions)}
-                  className="w-full bg-[#fdf8f6] hover:bg-[#b08271] text-[#815141] hover:text-white font-black py-4 rounded-2xl border border-[#d8ab9a] hover:border-[#b08271] transition-all duration-300 text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xs hover:shadow-lg active:scale-98"
-                >
-                  <Sparkle className="w-4 h-4" /> Seleccionar Servicio
-                </button>
+
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openServiceModal(service);
+                    }}
+                    className="w-full bg-[#fdf8f6] hover:bg-[#f5eeea] text-[#2c1d18] font-black py-3 rounded-2xl border border-[#d8ab9a] transition text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                  >
+                    <Info className="w-4 h-4 text-[#b08271]" /> Ver Información & fotos
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleServiceSelect(service.title, service.sessions);
+                    }}
+                    className="w-full bg-[#b08271] hover:bg-[#8f6353] text-white font-black py-3.5 rounded-2xl transition text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <Sparkles className="w-4 h-4" /> Seleccionar Servicio
+                  </button>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* TESTIMONIOS DE PACIENTES */}
+      {/* MODAL / VENTANA EMERGENTE PARA MOSTRAR MÁS FOTOS Y DETALLES */}
+      {modalService && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
+          <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-[#e5d8d0] relative">
+            
+            {/* Botón Cerrar */}
+            <button 
+              onClick={closeServiceModal}
+              className="absolute top-4 right-4 bg-white/90 hover:bg-white text-[#2c1d18] p-2.5 rounded-full z-10 shadow-md transition border border-gray-200"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="p-6 sm:p-10 space-y-8">
+              
+              {/* CABECERA MODAL */}
+              <div>
+                <span className="text-xs uppercase font-black text-[#815141] bg-[#fdf8f6] border border-[#d8ab9a]/60 px-3.5 py-1.5 rounded-full inline-block mb-3">
+                  {modalService.tag}
+                </span>
+                <h3 className="text-2xl sm:text-4xl font-black text-[#2c1d18]">{modalService.title}</h3>
+                <p className="text-[#40322c] text-sm sm:text-base mt-2 font-medium">{modalService.description}</p>
+              </div>
+
+              {/* GALERÍA DE FOTOS INTERACTIVA */}
+              <div className="space-y-3">
+                <span className="text-xs uppercase tracking-wider font-black text-[#2c1d18] block">Galería de Imágenes del Tratamiento</span>
+                <div className="h-64 sm:h-80 rounded-2xl overflow-hidden border border-[#e5d8d0] relative bg-black/5">
+                  <img src={activeModalImage} alt="Fotos tratamiento" className="w-full h-full object-cover transition-all duration-300" />
+                </div>
+                {/* Miniaturas */}
+                <div className="flex gap-3 overflow-x-auto pb-2">
+                  {modalService.gallery.map((imgUrl, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveModalImage(imgUrl)}
+                      className={`relative w-20 h-20 rounded-xl overflow-hidden shrink-0 border-2 transition ${
+                        activeModalImage === imgUrl ? 'border-[#b08271] scale-105 shadow-md' : 'border-transparent opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <img src={imgUrl} alt={`Thumb ${i}`} className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* DETALLES Y PASO A PASO */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#fcfaf8] p-6 rounded-2xl border border-[#e5d8d0]">
+                <div>
+                  <h4 className="text-xs font-black uppercase text-[#2c1d18] mb-3 flex items-center gap-1.5">
+                    <ChevronRight className="w-4 h-4 text-[#b08271]" /> Procedimiento
+                  </h4>
+                  <ul className="space-y-2 text-xs text-[#40322c] font-medium">
+                    {modalService.procedure.map((step, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 bg-[#b08271] rounded-full mt-1.5 shrink-0"></span>
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="text-xs font-black uppercase text-[#2c1d18] mb-3 flex items-center gap-1.5">
+                    <Check className="w-4 h-4 text-emerald-600" /> Beneficios Principales
+                  </h4>
+                  <ul className="space-y-2 text-xs text-[#40322c] font-medium">
+                    {modalService.benefits.map((b, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full mt-1.5 shrink-0"></span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* PIE DEL MODAL CON BOTÓN DE ACCIÓN */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#e5d8d0]">
+                <div className="text-xs text-[#5c4a43] font-bold">
+                  ⏱️ Duración: {modalService.duration} • 📊 Estimación: {modalService.sessions}
+                </div>
+                <button
+                  onClick={() => handleSelectFromModal(modalService.title, modalService.sessions)}
+                  className="w-full sm:w-auto bg-[#b08271] hover:bg-[#8f6353] text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" /> Cotizar Este Tratamiento
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TESTIMONIOS */}
       <section className="py-20 bg-[#f5eeea] border-t border-b border-[#e5d8d0]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -333,7 +568,6 @@ export default function Home() {
                 className="w-full p-6 text-left font-black text-[#2c1d18] text-base flex justify-between items-center gap-4 hover:bg-[#fcfaf8] transition"
               >
                 {faq.q}
-                <ChevronDown className={`w-5 h-5 text-[#b08271] transition-transform duration-300 shrink-0 ${openFaq === idx ? 'rotate-180' : ''}`} />
               </button>
               {openFaq === idx && (
                 <div className="px-6 pb-6 text-sm text-[#40322c] leading-relaxed border-t border-gray-100 pt-4 font-medium">
@@ -506,7 +740,6 @@ export default function Home() {
                     placeholder="Ej: 0981 123456"
                     className="w-full px-4 py-3.5 rounded-xl border border-gray-300 bg-[#fcfaf8] focus:border-[#b08271] focus:ring-2 focus:ring-[#b08271]/20 outline-none text-xs font-bold text-[#2c1d18]"
                   />
-                  <span className="text-[11px] text-gray-500 font-medium mt-1 block">Para envío de recordatorios y confirmación de turno.</span>
                 </div>
               </div>
 
@@ -534,7 +767,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* BOTÓN ENVIAR DE ALTO IMPACTO */}
+            {/* BOTÓN ENVIAR */}
             <button
               type="submit"
               className="w-full bg-[#b08271] hover:bg-[#8f6353] text-white font-black py-5 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3 text-sm tracking-wider uppercase ring-4 ring-[#b08271]/20"
