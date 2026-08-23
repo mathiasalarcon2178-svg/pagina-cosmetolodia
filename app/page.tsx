@@ -26,7 +26,7 @@ export default function Home() {
       description: 'Es una técnica de micropigmentación paramédica avanzada. Consiste en implantar pigmentos biocompatibles del tono exacto de tu piel en la capa media de la dermis donde se encuentra la estría, logrando que esta se camufle y pase desapercibida de manera permanente ante cualquier tipo de iluminación o exposición solar.',
       process: '1. Evaluación del fototipo de piel y mapeo de estrías. \n2. Aplicación de anestesia tópica para mayor confort. \n3. Imantación y depósito de pigmento a medida.',
       aftercare: 'Evitar exposición solar directa, piscinas y saunas durante los primeros 7 días posteriores al procedimiento.',
-      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'camuflaje-cicatrices',
@@ -37,7 +37,7 @@ export default function Home() {
       description: 'Diseñado específicamente para neutralizar discromías (cambios de coloración) en cicatrices quirúrgicas, accidentales o post-traumáticas. Restaura visualmente la continuidad cromática de la piel mediante la introducción de tonos perfectamente calibrados.',
       process: '1. Diagnóstico de la profundidad y textura del tejido cicatricial. \n2. Selección y mezcla personalizada de pigmentos correctores. \n3. Pigmentación precisa en zonas despigmentadas.',
       aftercare: 'Mantener la zona hidratada con cremas regeneradoras recomendadas y evitar rascar o arrancar costras.',
-      image: 'https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'regen-estrias',
@@ -48,7 +48,7 @@ export default function Home() {
       description: 'Tratamiento bio-regenerativo que no utiliza pigmentos, sino activos concentrados, péptidos y técnicas de inducción percutánea para obligar a la piel a romper la fibrosis de la estría vieja y generar nuevo colágeno natural, mejorando notablemente el grosor, surco y textura.',
       process: '1. Limpieza y desinfección profunda de la zona. \n2. Aplicación de cócteles ricos en colágeno y factores de crecimiento. \n3. Activación mecánica de la regeneración tisular.',
       aftercare: 'Uso obligatorio de protector solar si la zona queda expuesta y evitar exfoliantes fuertes por 5 días.',
-      image: 'https://images.unsplash.com/photo-1512290900722-9a702082b25f?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'regen-cicatrices',
@@ -59,7 +59,7 @@ export default function Home() {
       description: 'Enfocado en cicatrices deprimidas, atróficas o con irregularidades severas. Estimula la proliferación de fibroblastos y la síntesis de nuevas fibras de colágeno y elastina, rellenando y nivelando la superficie de la piel de forma gradual.',
       process: '1. Preparación y antisepsia de la cicatriz. \n2. Aplicación de nutrientes biomédicos de alta pureza. \n3. Estimulación profunda controlada para reestructuración celular.',
       aftercare: 'Aplicar protector solar factor 50+ diariamente y mantener la piel perfectamente hidratada.',
-      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'elim-verrugas',
@@ -70,7 +70,7 @@ export default function Home() {
       description: 'Técnica clínica altamente efectiva orientada a la eliminación controlada y segura de verrugas vulgares o planas, evitando su propagación y garantizando una recuperación limpia de la piel circundante.',
       process: '1. Asepsia y delimitación de la lesión. \n2. Aplicación de método de remoción seguro y localizado. \n3. Curación y protección de la pequeña zona tratada.',
       aftercare: 'No manipular la costra que se forma de manera natural; dejar que caiga por sí sola para evitar marcas.',
-      image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'elim-lunares',
@@ -81,7 +81,7 @@ export default function Home() {
       description: 'Remoción estética de lunares benignos indeseados por motivos estéticos o de fricción. Se realiza bajo rigurosos protocolos de bioseguridad, cuidando que el proceso de cicatrización sea estético y discreto.',
       process: '1. Evaluación visual y control previo de la lesión. \n2. Procedimiento de extracción rápida y precisa. \n3. Protocolo de cuidado post-remoción.',
       aftercare: 'Evitar la exposición solar en la zona en proceso de cicatrización y seguir las pautas de higienización.',
-      image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'elim-acrocordones',
@@ -92,7 +92,7 @@ export default function Home() {
       description: 'Procedimiento exprés y sumamente seguro para eliminar acrocordones (pequeños fibromas blandos o verruguitas colgantes que suelen aparecer en el cuello, axilas o debajo de los pechos debido al roce). Resultado instantáneo sin dolor incapacitante.',
       process: '1. Desinfección de la zona de pliegues o cuello. \n2. Corte o eliminación instantánea y estéril de la lesión. \n3. Aplicación de antiséptico sellador.',
       aftercare: 'Mantener seco y limpio durante los primeros 2 días.',
-      image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
     },
   ];
 
@@ -150,7 +150,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* MODAL AMPLIADO Y DETALLADO CON INFORMACIÓN REAL */}
+      {/* MODAL DETALLADO */}
       {activeModalService && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-stone-200 my-8 animate-in fade-in zoom-in duration-200">
@@ -216,7 +216,7 @@ export default function Home() {
         ✨ Turnos limitados por semana • Atención exclusiva en Asunción, Paraguay
       </div>
 
-      {/* HEADER / HERO SECTION */}
+      {/* HEADER */}
       <header className="bg-gradient-to-b from-[#2c221e] to-[#1f1715] text-[#f4eee6] py-20 px-6 text-center relative overflow-hidden shadow-xl">
         <div className="max-w-4xl mx-auto relative z-10 space-y-4">
           <span className="text-xs uppercase tracking-[0.4em] text-[#d4b996] font-bold block">
