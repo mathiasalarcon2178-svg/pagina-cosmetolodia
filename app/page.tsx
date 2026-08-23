@@ -8,78 +8,78 @@ const SERVICES = [
     id: 'camuflaje_estrias',
     name: 'Camuflaje de Estrías',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?w=800&auto=format&fit=crop&q=80',
     description: 'Técnica especializada para unificar el tono de la piel y disimular estrías de forma permanente.',
     benefits: ['Resultados naturales y duraderos', 'Estimula la producción de colágeno local', 'Técnica segura y con pigmentos hipoalergénicos'],
     gallery: [
-      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80'
+      'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&auto=format&fit=crop&q=80'
     ]
   },
   {
     id: 'regeneracion_estrias',
     name: 'Regeneración de Estrías',
     duration: '60 min',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80',
     description: 'Tratamiento enfocado en mejorar la textura y profundidad de la piel afectada por estrías.',
     benefits: ['Mejora notablemente la textura de la piel', 'Favorece la elasticidad natural', 'Compatible con cualquier tipo de piel'],
     gallery: [
-      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80'
+      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&auto=format&fit=crop&q=80'
     ]
   },
   {
     id: 'camuflaje_cicatrices',
     name: 'Camuflaje de Cicatrices',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop&q=80',
     description: 'Pigmentación milimétrica para integrar cicatrices al tono natural de tu piel.',
     benefits: ['Disimula marcas quirúrgicas o accidentales', 'Acabado estético sumamente natural', 'Procedimiento ambulatorio'],
     gallery: [
-      'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=400&q=80'
+      'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&auto=format&fit=crop&q=80'
     ]
   },
   {
     id: 'regeneracion_cicatrices',
     name: 'Regeneración de Cicatrices',
     duration: '60 min',
-    image: 'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=800&auto=format&fit=crop&q=80',
     description: 'Protocolo de estimulación profunda para suavizar el relieve y rigidez de las cicatrices.',
     benefits: ['Suaviza cicatrices hipertróficas', 'Aumenta la flexibilidad de los tejidos', 'Promueve la sanación estética'],
     gallery: [
-      'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?auto=format&fit=crop&w=400&q=80'
+      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&auto=format&fit=crop&q=80'
     ]
   },
   {
     id: 'verrugas',
     name: 'Eliminación de Verrugas',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=800&auto=format&fit=crop&q=80',
     description: 'Remoción segura y limpia de verrugas bajo estrictos estándares de bioseguridad.',
     benefits: ['Procedimiento rápido y controlado', 'Mínimas molestias', 'Cuidado estético de la zona tratada'],
     gallery: [
-      'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80'
+      'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=600&auto=format&fit=crop&q=80'
     ]
   },
   {
     id: 'lunares',
     name: 'Eliminación de Lunares',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&auto=format&fit=crop&q=80',
     description: 'Evaluación y extracción estética de lunares benignos con excelente resultado visual.',
     benefits: ['Evaluación profesional previa', 'Técnica limpia sin marcas notorias', 'Recuperación rápida'],
     gallery: [
-      'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=400&q=80'
+      'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&auto=format&fit=crop&q=80'
     ]
   },
   {
     id: 'acrocordones',
     name: 'Eliminación de Acrocordones',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&auto=format&fit=crop&q=80',
     description: 'Eliminación indolora de pequeños fibromas blandos en cuello, axilas u otras zonas.',
     benefits: ['Resultados inmediatos', 'Sin tiempo de recuperación prolongado', 'Piel limpia y sin imperfecciones'],
     gallery: [
-      'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80'
+      'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&auto=format&fit=crop&q=80'
     ]
   }
 ]
@@ -111,18 +111,28 @@ export default function Page() {
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
+  // Consultar horarios ocupados en Supabase
   useEffect(() => {
     if (!selectedDate) return
     
     async function fetchBookings() {
-      const { data, error } = await supabase
-        .from('appointments')
-        .select('time_slot')
-        .eq('date', selectedDate)
+      try {
+        const { data, error } = await supabase
+          .from('appointments')
+          .select('time_slot')
+          .eq('date', selectedDate)
 
-      if (!error && data) {
-        setBookedTimes(data.map((item: any) => item.time_slot))
-      } else {
+        if (error) {
+          console.error('Error de Supabase al buscar citas:', error.message)
+          setBookedTimes([])
+          return
+        }
+
+        if (data) {
+          setBookedTimes(data.map((item: any) => item.time_slot))
+        }
+      } catch (err) {
+        console.error('Error inesperado:', err)
         setBookedTimes([])
       }
     }
@@ -154,7 +164,9 @@ export default function Page() {
         }
       ])
 
-      if (error) throw error
+      if (error) {
+        throw new Error(error.message)
+      }
 
       setSuccessMsg('¡Cita reservada con éxito! Te esperamos en Cami Isla Studio.')
       setClientName('')
@@ -162,17 +174,18 @@ export default function Page() {
       setSelectedTime('')
       setBookedTimes((prev) => [...prev, selectedTime])
     } catch (err: any) {
-      setErrorMsg('Error al registrar la cita en la base de datos.')
+      console.error('Error al insertar:', err)
+      setErrorMsg(`Error al guardar en Supabase: ${err.message || 'Verifica la estructura de tu tabla'}`)
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <main className="min-h-screen bg-neutral-50 text-neutral-900 py-12 px-4 sm:px-6 lg:px-8 selection:bg-pink-200 selection:text-pink-900">
+    <main className="min-h-screen bg-neutral-50 text-neutral-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-12">
         
-        {/* Cabecera Clara y Elegante */}
+        {/* Cabecera */}
         <div className="text-center space-y-3 border-b border-neutral-200 pb-8">
           <span className="text-xs uppercase tracking-[0.3em] text-pink-600 font-bold">Estética Avanzada</span>
           <h1 className="text-4xl sm:text-5xl font-light tracking-tight text-neutral-900">
@@ -195,10 +208,10 @@ export default function Page() {
           </div>
         )}
 
-        {/* 1. Selección de Servicios con Fotos e Información Interactiva */}
+        {/* 1. Selección de Servicios con Fotos e Información */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">1. Selecciona y Conoce tu Tratamiento</h2>
+            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">1. Selecciona tu Tratamiento</h2>
             <span className="text-xs text-neutral-500 font-medium">Haz clic para ver beneficios y fotos</span>
           </div>
 
@@ -233,7 +246,7 @@ export default function Page() {
                     <p className="text-sm text-neutral-600 line-clamp-2">
                       {s.description}
                     </p>
-                    <div className="pt-2 flex items-center justify-between">
+                    <div className="pt-2">
                       <span className="text-xs font-bold uppercase tracking-wider text-pink-600">
                         {isSelected ? '✓ Servicio Seleccionado' : 'Ver detalles y agendar →'}
                       </span>
@@ -245,7 +258,7 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Tarjeta de Información Extendida del Servicio Seleccionado */}
+        {/* Detalle del Servicio Seleccionado */}
         <div className="bg-white border border-neutral-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
           <div className="border-b border-neutral-100 pb-4">
             <span className="text-xs font-bold uppercase tracking-widest text-pink-600">Información Detallada</span>
@@ -279,34 +292,27 @@ export default function Page() {
           </div>
         </div>
 
-        {/* 2. Formulario de Reserva Conectado a Supabase */}
+        {/* 2. Formulario de Reserva */}
         <form onSubmit={handleBooking} className="space-y-8 bg-white border border-neutral-200 p-6 sm:p-10 rounded-3xl shadow-sm">
           <h3 className="text-lg font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-4">
             2. Completa los Datos de tu Cita para: <span className="text-pink-600">{selectedService.name}</span>
           </h3>
 
-          {/* Zona del Cuerpo */}
           <div className="space-y-3">
             <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Zona del Cuerpo a Tratar</label>
             <div className="relative">
               <select
                 value={selectedBodyZone}
                 onChange={(e) => setSelectedBodyZone(e.target.value)}
-                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white appearance-none cursor-pointer transition-colors"
+                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white appearance-none cursor-pointer"
               >
                 {BODY_ZONES.map((zone) => (
                   <option key={zone} value={zone}>{zone}</option>
                 ))}
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-neutral-500">
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                </svg>
-              </div>
             </div>
           </div>
 
-          {/* Fecha y Horarios */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Fecha de la Cita</label>
@@ -315,7 +321,7 @@ export default function Page() {
                 min={new Date().toISOString().split('T')[0]}
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white transition-colors"
+                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white"
               />
             </div>
 
@@ -354,7 +360,6 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Datos Personales */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-100">
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-wider text-neutral-600 font-bold">Tu Nombre y Apellido</label>
@@ -363,7 +368,7 @@ export default function Page() {
                 placeholder="Ej. María Gómez"
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)}
-                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white transition-colors text-sm"
+                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 text-sm"
               />
             </div>
 
@@ -374,23 +379,20 @@ export default function Page() {
                 placeholder="Ej. 0981 123 456"
                 value={clientPhone}
                 onChange={(e) => setClientPhone(e.target.value)}
-                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white transition-colors text-sm"
+                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 text-sm"
               />
             </div>
           </div>
 
-          {/* Botón de Confirmación */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold rounded-2xl shadow-lg shadow-pink-600/20 transition-all duration-300 disabled:opacity-50 text-base cursor-pointer"
+            className="w-full py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold rounded-2xl shadow-lg shadow-pink-600/20 transition-all duration-300 disabled:opacity-50 text-base"
           >
             {loading ? 'Procesando Reserva...' : 'Confirmar y Agendar Cita'}
           </button>
-
         </form>
 
-        {/* WhatsApp Footer */}
         <div className="text-center pb-6">
           <a
             href="https://wa.me/595981123456"
