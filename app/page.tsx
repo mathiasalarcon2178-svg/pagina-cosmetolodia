@@ -29,7 +29,7 @@ export default function Home() {
       duration: '2 - 3 horas',
       sessions: '1 - 2 Sesiones',
       description: 'Micropigmentación avanzada que iguala el tono de las estrías con la tez natural de tu piel, volviéndolas ópticamente imperceptibles.',
-      image: 'https://images.unsplash.com/photo-1512290900673-0498db25446f?w=800&auto=format&fit=crop'
+      image: 'https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 'camuflaje-cicatrices',
@@ -38,7 +38,7 @@ export default function Home() {
       duration: '1.5 - 2.5 horas',
       sessions: '1 - 3 Sesiones',
       description: 'Neutralización del tono en cicatrices quirúrgicas o estéticas para integrarlas armónicamente con el tejido circundante.',
-      image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop'
+      image: 'https://images.pexels.com/photos/3985338/pexels-photo-3985338.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 'regeneracion-estrias',
@@ -47,7 +47,7 @@ export default function Home() {
       duration: '1 - 2 horas',
       sessions: '3 - 4 Sesiones',
       description: 'Inducción percutánea para restructurar la textura, atenuar la profundidad y reactivar la elastina biológica de la piel.',
-      image: 'https://images.unsplash.com/photo-1552693673-1bf958298935?w=800&auto=format&fit=crop'
+      image: 'https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 'regeneracion-cicatrices',
@@ -56,7 +56,7 @@ export default function Home() {
       duration: '1 - 2 horas',
       sessions: '3 - 5 Sesiones',
       description: 'Terapia no invasiva que suaviza relieves, firmeza y rigidez en tejidos cicatriciales antiguos o recientes.',
-      image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop'
+      image: 'https://images.pexels.com/photos/3865712/pexels-photo-3865712.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
     {
       id: 'eliminacion-verrugas',
@@ -65,7 +65,7 @@ export default function Home() {
       duration: '30 - 60 min',
       sessions: '1 Sesión Única',
       description: 'Remoción rápida y estética de verrugas, lunares y acrocordones indeseados sin comprometer la salud cutánea.',
-      image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=800&auto=format&fit=crop'
+      image: 'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=800'
     }
   ];
 
