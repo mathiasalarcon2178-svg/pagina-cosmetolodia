@@ -8,12 +8,12 @@ const SERVICES = [
     id: 'camuflaje_estrias',
     name: 'Camuflaje de Estrías',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop&q=80',
     description: 'Técnica especializada para unificar el tono de la piel y disimular estrías de forma permanente.',
     benefits: ['Resultados naturales y duraderos', 'Estimula la producción de colágeno local', 'Técnica segura y con pigmentos hipoalergénicos'],
     gallery: [
-      'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&auto=format&fit=crop&q=80'
+      'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?w=600&auto=format&fit=crop&q=80'
     ]
   },
   {
