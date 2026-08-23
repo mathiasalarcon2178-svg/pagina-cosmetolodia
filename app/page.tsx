@@ -8,78 +8,78 @@ const SERVICES = [
     id: 'camuflaje_estrias',
     name: 'Camuflaje de Estrías',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.pexels.com/photos/3985338/pexels-photo-3985338.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Técnica especializada para unificar el tono de la piel y disimular estrías de forma permanente.',
     benefits: ['Resultados naturales y duraderos', 'Estimula la producción de colágeno local', 'Técnica segura y con pigmentos hipoalergénicos'],
     gallery: [
-      'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?w=600&auto=format&fit=crop&q=80'
+      'https://images.pexels.com/photos/3985338/pexels-photo-3985338.jpeg?auto=compress&cs=tinysrgb&w=600',
+      'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=600'
     ]
   },
   {
     id: 'regeneracion_estrias',
     name: 'Regeneración de Estrías',
     duration: '60 min',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.pexels.com/photos/5069430/pexels-photo-5069430.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Tratamiento enfocado en mejorar la textura y profundidad de la piel afectada por estrías.',
     benefits: ['Mejora notablemente la textura de la piel', 'Favorece la elasticidad natural', 'Compatible con cualquier tipo de piel'],
     gallery: [
-      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&auto=format&fit=crop&q=80'
+      'https://images.pexels.com/photos/5069430/pexels-photo-5069430.jpeg?auto=compress&cs=tinysrgb&w=600'
     ]
   },
   {
     id: 'camuflaje_cicatrices',
     name: 'Camuflaje de Cicatrices',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.pexels.com/photos/5069528/pexels-photo-5069528.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Pigmentación milimétrica para integrar cicatrices al tono natural de tu piel.',
     benefits: ['Disimula marcas quirúrgicas o accidentales', 'Acabado estético sumamente natural', 'Procedimiento ambulatorio'],
     gallery: [
-      'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&auto=format&fit=crop&q=80'
+      'https://images.pexels.com/photos/5069528/pexels-photo-5069528.jpeg?auto=compress&cs=tinysrgb&w=600'
     ]
   },
   {
     id: 'regeneracion_cicatrices',
     name: 'Regeneración de Cicatrices',
     duration: '60 min',
-    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.pexels.com/photos/3985327/pexels-photo-3985327.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Protocolo de estimulación profunda para suavizar el relieve y rigidez de las cicatrices.',
     benefits: ['Suaviza cicatrices hipertróficas', 'Aumenta la flexibilidad de los tejidos', 'Promueve la sanación estética'],
     gallery: [
-      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&auto=format&fit=crop&q=80'
+      'https://images.pexels.com/photos/3985327/pexels-photo-3985327.jpeg?auto=compress&cs=tinysrgb&w=600'
     ]
   },
   {
     id: 'verrugas',
     name: 'Eliminación de Verrugas',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.pexels.com/photos/5069458/pexels-photo-5069458.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Remoción segura y limpia de verrugas bajo estrictos estándares de bioseguridad.',
     benefits: ['Procedimiento rápido y controlado', 'Mínimas molestias', 'Cuidado estético de la zona tratada'],
     gallery: [
-      'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=600&auto=format&fit=crop&q=80'
+      'https://images.pexels.com/photos/5069458/pexels-photo-5069458.jpeg?auto=compress&cs=tinysrgb&w=600'
     ]
   },
   {
     id: 'lunares',
     name: 'Eliminación de Lunares',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.pexels.com/photos/5069559/pexels-photo-5069559.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Evaluación y extracción estética de lunares benignos con excelente resultado visual.',
     benefits: ['Evaluación profesional previa', 'Técnica limpia sin marcas notorias', 'Recuperación rápida'],
     gallery: [
-      'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&auto=format&fit=crop&q=80'
+      'https://images.pexels.com/photos/5069559/pexels-photo-5069559.jpeg?auto=compress&cs=tinysrgb&w=600'
     ]
   },
   {
     id: 'acrocordones',
     name: 'Eliminación de Acrocordones',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.pexels.com/photos/3985336/pexels-photo-3985336.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Eliminación indolora de pequeños fibromas blandos en cuello, axilas u otras zonas.',
     benefits: ['Resultados inmediatos', 'Sin tiempo de recuperación prolongado', 'Piel limpia y sin imperfecciones'],
     gallery: [
-      'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&auto=format&fit=crop&q=80'
+      'https://images.pexels.com/photos/3985336/pexels-photo-3985336.jpeg?auto=compress&cs=tinysrgb&w=600'
     ]
   }
 ]
