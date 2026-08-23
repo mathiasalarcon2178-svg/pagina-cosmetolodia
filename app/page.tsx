@@ -4,19 +4,22 @@ import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
 const SERVICES = [
-  { id: 'limpieza', name: 'Limpieza Facial Profunda', price: 150000, duration: '60 min' },
-  { id: 'lifting', name: 'Lifting de Pestanas', price: 120000, duration: '45 min' },
-  { id: 'cejas', name: 'Diseño y Laminado de Cejas', price: 100000, duration: '45 min' },
-  { id: 'masaje', name: 'Masaje Relajante Facial', price: 130000, duration: '50 min' }
+  { id: 'camuflaje_estrias', name: 'Camuflaje de Estrías', price: 0, duration: '90 min' },
+  { id: 'regeneracion_estrias', name: 'Regeneración de Estrías', price: 0, duration: '60 min' },
+  { id: 'camuflaje_cicatrices', name: 'Camuflaje de Cicatrices', price: 0, duration: '90 min' },
+  { id: 'regeneracion_cicatrices', name: 'Regeneración de Cicatrices', price: 0, duration: '60 min' },
+  { id: 'verrugas', name: 'Eliminación de Verrugas', price: 0, duration: '30 min' },
+  { id: 'lunares', name: 'Eliminación de Lunares', price: 0, duration: '30 min' },
+  { id: 'acrocordones', name: 'Eliminación de Acrocordones', price: 0, duration: '30 min' }
 ]
 
 const BODY_ZONES = [
   'Rostro',
-  'Cejas / Pestañas',
   'Cuello y Escote',
   'Abdomen',
   'Glúteos',
-  'Piernas'
+  'Piernas',
+  'Espalda'
 ]
 
 const TIME_SLOTS = [
@@ -91,7 +94,7 @@ export default function Page() {
       // Recargar horarios ocupados
       setBookedTimes((prev) => [...prev, selectedTime])
     } catch (err: any) {
-      setErrorMsg('Error al registrar la cita. Verifica que la columna "body_zone" exista en Supabase.')
+      setErrorMsg('Error al registrar la cita. Verifica la estructura de tu tabla en Supabase.')
     } finally {
       setLoading(false)
     }
@@ -104,7 +107,7 @@ export default function Page() {
         {/* Cabecera */}
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-extrabold tracking-tight text-pink-400">Cami Isla Studio</h1>
-          <p className="text-neutral-400">Sistema de reservas en línea para tratamientos estéticos</p>
+          <p className="text-neutral-400">Sistema de reservas en línea para tratamientos especializados</p>
         </div>
 
         {successMsg && (
@@ -137,7 +140,7 @@ export default function Page() {
                 >
                   <p className="font-semibold text-neutral-100">{s.name}</p>
                   <div className="flex justify-between items-center mt-2 text-sm">
-                    <span className="text-pink-400 font-bold">₲ {s.price.toLocaleString()}</span>
+                    <span className="text-pink-400 font-bold">{s.price > 0 ? `₲ ${s.price.toLocaleString()}` : 'Consultar precio'}</span>
                     <span className="text-neutral-500">{s.duration}</span>
                   </div>
                 </div>
@@ -241,7 +244,7 @@ export default function Page() {
 
         </form>
 
-        {/* Botón Independiente de WhatsApp */}
+        {/* Botón de WhatsApp Externo */}
         <div className="text-center pt-2">
           <a
             href="https://wa.me/595981123456"
