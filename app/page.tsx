@@ -13,7 +13,7 @@ export default function Home() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
   
-  // Estado para el modal de detalles de tratamientos
+  // Estado para el modal detallado
   const [activeModalService, setActiveModalService] = useState<any | null>(null);
 
   const services = [
@@ -23,8 +23,10 @@ export default function Home() {
       price: 'Consultar',
       duration: '90 min',
       benefit: 'Unifica el tono de la piel de forma duradera, disimulando las estrías visiblemente con pigmentación especializada.',
-      description: 'Técnica avanzada de micropigmentación estética paramédica diseñada para camuflar estrías adaptándose perfectamente al tono natural de tu piel. Logra un aspecto homogéneo y unificado de larga duración.',
-      image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
+      description: 'Es una técnica de micropigmentación paramédica avanzada. Consiste en implantar pigmentos biocompatibles del tono exacto de tu piel en la capa media de la dermis donde se encuentra la estría, logrando que esta se camufle y pase desapercibida de manera permanente ante cualquier tipo de iluminación o exposición solar.',
+      process: '1. Evaluación del fototipo de piel y mapeo de estrías. \n2. Aplicación de anestesia tópica para mayor confort. \n3. Imantación y depósito de pigmento a medida.',
+      aftercare: 'Evitar exposición solar directa, piscinas y saunas durante los primeros 7 días posteriores al procedimiento.',
+      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'camuflaje-cicatrices',
@@ -32,8 +34,10 @@ export default function Home() {
       price: 'Consultar',
       duration: '90 min',
       benefit: 'Disimulación estética avanzada para devolver la armonía natural y el tono uniforme a tu dermis.',
-      image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
-      description: 'Procedimiento especializado para neutralizar y disimular marcas y cicatrices corporales o faciales, reintegrándolas visualmente al color natural de la piel circundante con resultados estéticos profesionales.',
+      description: 'Diseñado específicamente para neutralizar discromías (cambios de coloración) en cicatrices quirúrgicas, accidentales o post-traumáticas. Restaura visualmente la continuidad cromática de la piel mediante la introducción de tonos perfectamente calibrados.',
+      process: '1. Diagnóstico de la profundidad y textura del tejido cicatricial. \n2. Selección y mezcla personalizada de pigmentos correctores. \n3. Pigmentación precisa en zonas despigmentadas.',
+      aftercare: 'Mantener la zona hidratada con cremas regeneradoras recomendadas y evitar rascar o arrancar costras.',
+      image: 'https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'regen-estrias',
@@ -41,8 +45,10 @@ export default function Home() {
       price: 'Consultar',
       duration: '60 min',
       benefit: 'Estimulación profunda de colágeno y elastina para mejorar significativamente la textura y firmeza.',
-      image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
-      description: 'Tratamiento bio-estimulante que promueve la producción natural de colágeno y elastina en las zonas afectadas, reparando la ruptura de fibras de la piel y mejorando notablemente su textura y grosor.',
+      description: 'Tratamiento bio-regenerativo que no utiliza pigmentos, sino activos concentrados, péptidos y técnicas de inducción percutánea para obligar a la piel a romper la fibrosis de la estría vieja y generar nuevo colágeno natural, mejorando notablemente el grosor, surco y textura.',
+      process: '1. Limpieza y desinfección profunda de la zona. \n2. Aplicación de cócteles ricos en colágeno y factores de crecimiento. \n3. Activación mecánica de la regeneración tisular.',
+      aftercare: 'Uso obligatorio de protector solar si la zona queda expuesta y evitar exfoliantes fuertes por 5 días.',
+      image: 'https://images.unsplash.com/photo-1512290900722-9a702082b25f?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'regen-cicatrices',
@@ -50,8 +56,10 @@ export default function Home() {
       price: 'Consultar',
       duration: '60 min',
       benefit: 'Reparación tisular avanzada y activación celular para alisar cicatrices profundas o atróficas.',
-      image: 'https://images.unsplash.com/photo-1512290900722-9a702082b25f?auto=format&fit=crop&w=800&q=80',
-      description: 'Terapia de inducción y regeneración tisular profunda que acelera la recuperación de la piel dañada, suavizando irregularidades y devolviendo la elasticidad en zonas con cicatrices atróficas o hipertróficas.',
+      description: 'Enfocado en cicatrices deprimidas, atróficas o con irregularidades severas. Estimula la proliferación de fibroblastos y la síntesis de nuevas fibras de colágeno y elastina, rellenando y nivelando la superficie de la piel de forma gradual.',
+      process: '1. Preparación y antisepsia de la cicatriz. \n2. Aplicación de nutrientes biomédicos de alta pureza. \n3. Estimulación profunda controlada para reestructuración celular.',
+      aftercare: 'Aplicar protector solar factor 50+ diariamente y mantener la piel perfectamente hidratada.',
+      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'elim-verrugas',
@@ -59,8 +67,10 @@ export default function Home() {
       price: 'Consultar',
       duration: '30 min',
       benefit: 'Procedimiento seguro, clínico y rápido sin marcas invasivas ni molestias prolongadas.',
-      image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
-      description: 'Remoción profesional de verrugas mediante técnicas seguras y controladas, asegurando una rápida cicatrización de la zona tratada bajo estrictas normas de bioseguridad e higiene.',
+      description: 'Técnica clínica altamente efectiva orientada a la eliminación controlada y segura de verrugas vulgares o planas, evitando su propagación y garantizando una recuperación limpia de la piel circundante.',
+      process: '1. Asepsia y delimitación de la lesión. \n2. Aplicación de método de remoción seguro y localizado. \n3. Curación y protección de la pequeña zona tratada.',
+      aftercare: 'No manipular la costra que se forma de manera natural; dejar que caiga por sí sola para evitar marcas.',
+      image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'elim-lunares',
@@ -68,8 +78,10 @@ export default function Home() {
       price: 'Consultar',
       duration: '45 min',
       benefit: 'Evaluación y remoción estética precisa bajo estrictos estándares de cuidado.',
-      image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
-      description: 'Extracción estética de lunares benignos con métodos precisos que priorizan la estética de la piel y minimizan cualquier tipo de marca residual.',
+      description: 'Remoción estética de lunares benignos indeseados por motivos estéticos o de fricción. Se realiza bajo rigurosos protocolos de bioseguridad, cuidando que el proceso de cicatrización sea estético y discreto.',
+      process: '1. Evaluación visual y control previo de la lesión. \n2. Procedimiento de extracción rápida y precisa. \n3. Protocolo de cuidado post-remoción.',
+      aftercare: 'Evitar la exposición solar en la zona en proceso de cicatrización y seguir las pautas de higienización.',
+      image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
     },
     {
       id: 'elim-acrocordones',
@@ -77,8 +89,10 @@ export default function Home() {
       price: 'Consultar',
       duration: '30 min',
       benefit: 'Limpieza impecable, segura y definitiva de pequeños fibromas blandos en cuello o cuerpo.',
-      image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
-      description: 'Tratamiento rápido y efectivo para la eliminación limpia de acrocordones (pequeños fibromas blandos frecuentes en cuello, axilas o pliegues), con resultados inmediatos y sin dolor severo.',
+      description: 'Procedimiento exprés y sumamente seguro para eliminar acrocordones (pequeños fibromas blandos o verruguitas colgantes que suelen aparecer en el cuello, axilas o debajo de los pechos debido al roce). Resultado instantáneo sin dolor incapacitante.',
+      process: '1. Desinfección de la zona de pliegues o cuello. \n2. Corte o eliminación instantánea y estéril de la lesión. \n3. Aplicación de antiséptico sellador.',
+      aftercare: 'Mantener seco y limpio durante los primeros 2 días.',
+      image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=800&q=80',
     },
   ];
 
@@ -136,44 +150,58 @@ export default function Home() {
         </div>
       )}
 
-      {/* MODAL DETALLADO DE TRATAMIENTO */}
+      {/* MODAL AMPLIADO Y DETALLADO CON INFORMACIÓN REAL */}
       {activeModalService && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-stone-200 animate-in fade-in zoom-in duration-200">
-            <div className="h-64 relative">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-stone-200 my-8 animate-in fade-in zoom-in duration-200">
+            <div className="h-72 relative">
               <img src={activeModalService.image} alt={activeModalService.name} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
               <button
                 onClick={() => setActiveModalService(null)}
                 className="absolute top-4 right-4 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold hover:bg-black transition-colors"
               >
                 ✕
               </button>
-              <span className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md text-white text-xs px-3.5 py-1.5 rounded-full font-medium">
+              <span className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white text-xs px-3.5 py-1.5 rounded-full font-medium">
                 ⏱ Duración: {activeModalService.duration}
               </span>
+              <h3 className="absolute bottom-4 left-6 right-6 font-serif font-bold text-2xl text-white">
+                {activeModalService.name}
+              </h3>
             </div>
-            <div className="p-6 sm:p-8 space-y-4">
-              <h3 className="text-2xl font-serif font-bold text-[#2c221e]">{activeModalService.name}</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{activeModalService.description}</p>
-              <div className="bg-[#faf8f5] p-4 rounded-2xl border border-stone-200">
-                <span className="text-xs font-bold text-[#8c6d53] uppercase tracking-wider block mb-1">Beneficio Principal</span>
-                <p className="text-gray-600 text-xs">{activeModalService.benefit}</p>
+            
+            <div className="p-6 sm:p-8 space-y-6 max-h-[60vh] overflow-y-auto">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-widest text-[#8c6d53] block mb-2">Descripción del Procedimiento</span>
+                <p className="text-gray-700 text-sm leading-relaxed">{activeModalService.description}</p>
               </div>
-              <div className="pt-2 flex gap-3">
+
+              <div className="bg-[#faf8f5] p-5 rounded-2xl border border-stone-200 space-y-2">
+                <span className="text-xs font-bold uppercase tracking-widest text-[#8c6d53] block">Paso a Paso de la Sesión</span>
+                <p className="text-gray-600 text-xs whitespace-pre-line leading-relaxed">{activeModalService.process}</p>
+              </div>
+
+              <div className="bg-stone-50 p-5 rounded-2xl border border-stone-200 space-y-2">
+                <span className="text-xs font-bold uppercase tracking-widest text-[#8c6d53] block">Cuidados Posteriores (Post-Tratamiento)</span>
+                <p className="text-gray-600 text-xs leading-relaxed">{activeModalService.aftercare}</p>
+              </div>
+
+              <div className="pt-4 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onClick={() => {
                     setSelectedService(activeModalService.name);
                     setActiveModalService(null);
                   }}
-                  className="flex-1 bg-[#2c221e] text-white py-3 rounded-xl font-medium text-sm hover:bg-[#1a1311] transition-colors"
+                  className="flex-1 bg-[#2c221e] text-white py-4 rounded-2xl font-bold text-sm hover:bg-[#1a1311] transition-colors shadow-lg"
                 >
-                  Seleccionar este Servicio
+                  ✓ Elegir este Tratamiento para mi Cita
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveModalService(null)}
-                  className="px-5 py-3 bg-stone-100 text-stone-700 rounded-xl font-medium text-sm hover:bg-stone-200 transition-colors"
+                  className="px-6 py-4 bg-stone-100 text-stone-700 rounded-2xl font-bold text-sm hover:bg-stone-200 transition-colors"
                 >
                   Cerrar
                 </button>
@@ -210,13 +238,13 @@ export default function Home() {
       {/* CONTENIDO PRINCIPAL */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-16 space-y-20">
         
-        {/* SECCIÓN DE SERVICIOS CON BOTÓN DE DETALLES */}
+        {/* SECCIÓN DE SERVICIOS */}
         <section>
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs uppercase tracking-widest text-[#8c6d53] font-bold">Nuestros Tratamientos</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#2c221e]">Excelencia y Cuidado Profesional</h2>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Haz clic en cualquier tarjeta para ver información detallada, beneficios completos y especificaciones de cada tratamiento.
+              Haz clic en cualquier tratamiento para desplegar la información técnica completa, proceso y cuidados.
             </p>
           </div>
 
@@ -251,9 +279,9 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={() => setActiveModalService(srv)}
-                        className="text-xs font-semibold text-[#8c6d53] hover:underline flex items-center gap-1"
+                        className="text-xs font-bold text-[#8c6d53] hover:underline flex items-center gap-1"
                       >
-                        🔍 Ver información y fotos detalladas →
+                        🔍 Ver información detallada y pasos →
                       </button>
                     </div>
                   </div>
@@ -278,7 +306,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FORMULARIO DE AGENDAMIENTO ROBUSTO */}
+        {/* FORMULARIO DE AGENDAMIENTO */}
         <section className="bg-white rounded-3xl shadow-2xl border border-stone-200 p-8 sm:p-14 max-w-4xl mx-auto relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#2c221e] via-[#8c6d53] to-[#d4b996]"></div>
           
@@ -290,7 +318,6 @@ export default function Home() {
 
           <div className="space-y-8">
             
-            {/* Nombre y Teléfono */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Nombre y Apellido *</label>
@@ -314,7 +341,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Género */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Género</label>
               <select
@@ -328,7 +354,6 @@ export default function Home() {
               </select>
             </div>
 
-            {/* Zonas a tratar */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-3">Zonas a Tratar (Selecciona una o varias) *</label>
               <div className="flex flex-wrap gap-2.5">
@@ -352,7 +377,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Fecha y Hora */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Fecha Preferida</label>
@@ -374,7 +398,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Foto de referencia */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Foto de Referencia / Zona a Tratar (Opcional)</label>
               <input
@@ -390,9 +413,7 @@ export default function Home() {
               )}
             </div>
 
-            {/* BOTONES SEPARADOS Y DIFERENCIADOS */}
             <div className="pt-8 space-y-4 border-t border-stone-100">
-              {/* Botón 1: Confirmar Cita */}
               <button
                 type="button"
                 onClick={handleBookAppointment}
@@ -401,7 +422,6 @@ export default function Home() {
                 ✨ Confirmar y Registrar Cita en el Sistema
               </button>
 
-              {/* Botón 2: Consultas Generales por WhatsApp (Independiente) */}
               <button
                 type="button"
                 onClick={handleDirectWhatsApp}
@@ -419,9 +439,8 @@ export default function Home() {
 
       </main>
 
-      {/* BURBUJAS FLOTANTES (WIDGETS DE REDES) */}
+      {/* BURBUJAS FLOTANTES */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
-        {/* Instagram */}
         <a
           href="https://www.instagram.com/camisla_studio?igsi=MTVwemZ6azQ0b3hiZg=="
           target="_blank"
@@ -434,7 +453,6 @@ export default function Home() {
           </svg>
         </a>
 
-        {/* WhatsApp */}
         <a
           href="https://wa.me/message/3KYVZSN3F3MKC1"
           target="_blank"
@@ -448,7 +466,6 @@ export default function Home() {
         </a>
       </div>
 
-      {/* FOOTER */}
       <footer className="bg-[#1a1311] text-[#dcd6ce] py-14 px-6 text-center border-t border-[#3d302a]">
         <div className="max-w-4xl mx-auto space-y-4">
           <p className="font-serif text-2xl text-[#f4eee6] tracking-wide">Cami Isla Studio</p>
