@@ -1,3 +1,4 @@
+'test client'
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -16,6 +17,7 @@ interface Appointment {
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorLogin, setErrorLogin] = useState('')
 
@@ -23,17 +25,18 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState<'all' | 'pending' | 'confirmed'>('all')
 
-  // Contraseña de acceso (puedes cambiarla aquí mismo cuando gustes)
+  // Credenciales de acceso (puedes cambiarlas aquí cuando gustes)
+  const ADMIN_USER = 'admin'
   const ADMIN_PASSWORD = 'cami123'
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    if (password === ADMIN_PASSWORD) {
+    if (username === ADMIN_USER && password === ADMIN_PASSWORD) {
       setIsAuthenticated(true)
       setErrorLogin('')
       fetchAppointments()
     } else {
-      setErrorLogin('Contraseña incorrecta')
+      setErrorLogin('Usuario o contraseña incorrectos')
     }
   }
 
@@ -98,11 +101,23 @@ export default function AdminPage() {
             <h1 className="text-2xl font-light tracking-tight text-neutral-900">
               Cami Isla <span className="font-semibold text-pink-600">Admin</span>
             </h1>
-            <p className="text-sm text-neutral-500">Ingresa la contraseña para gestionar las citas.</p>
+            <p className="text-sm text-neutral-500">Ingresa tus credenciales para gestionar las citas.</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
+              <label className="text-xs uppercase tracking-wider text-neutral-600 font-bold">Usuario</label>
+              <input
+                type="text"
+                placeholder="Ej. admin"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 text-sm"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs uppercase tracking-wider text-neutral-600 font-bold">Contraseña</label>
               <input
                 type="password"
                 placeholder="Contraseña"
@@ -111,12 +126,14 @@ export default function AdminPage() {
                 className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 text-sm"
               />
             </div>
+
             {errorLogin && (
               <p className="text-xs text-rose-600 font-medium text-center">{errorLogin}</p>
             )}
+
             <button
               type="submit"
-              className="w-full py-4 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-2xl shadow-lg shadow-pink-600/20 transition-all text-sm"
+              className="w-full py-4 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-2xl shadow-lg shadow-pink-600/20 transition-all text-sm mt-2"
             >
               Entrar al Panel
             </button>
@@ -147,7 +164,11 @@ export default function AdminPage() {
               🔄 Actualizar Lista
             </button>
             <button
-              onClick={() => setIsAuthenticated(false)}
+              onClick={() => {
+                setIsAuthenticated(false)
+                setUsername('')
+                setPassword('')
+              }}
               className="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl transition-all"
             >
               Cerrar Sesión
