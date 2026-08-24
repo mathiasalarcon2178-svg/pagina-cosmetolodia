@@ -8,7 +8,7 @@ const SERVICES = [
     id: 'camuflaje_estrias',
     name: 'Camuflaje de Estrías',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?auto=format&fit=crop&w=800&q=80',
+    image: '', // Dejado vacío a propósito para activar el contenedor estético garantizado
     description: 'Técnica especializada para unificar el tono de la piel y disimular estrías de forma permanente.',
     benefits: ['Resultados naturales y duraderos', 'Estimula la producción de colágeno local', 'Técnica segura y con pigmentos hipoalergénicos'],
     gallery: [
@@ -227,15 +227,19 @@ export default function Page() {
                       : 'border-neutral-200 hover:border-neutral-300'
                   }`}
                 >
-                  <div className="relative h-48 w-full overflow-hidden bg-pink-50 flex items-center justify-center">
-                    <img 
-                      src={s.image} 
-                      alt={s.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={(e: any) => {
-                        e.target.style.display = 'none'
-                      }}
-                    />
+                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-pink-100 via-rose-50 to-neutral-100 flex items-center justify-center">
+                    {s.image ? (
+                      <img 
+                        src={s.image} 
+                        alt={s.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                    ) : (
+                      <div className="text-center p-4 space-y-1">
+                        <span className="text-3xl">✨</span>
+                        <p className="text-xs font-bold uppercase tracking-widest text-pink-600">Cami Isla Studio</p>
+                      </div>
+                    )}
                     <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-neutral-800 shadow-sm z-10">
                       {s.duration}
                     </div>
