@@ -31,11 +31,11 @@ const SERVICES = [
     id: 'camuflaje_cicatrices',
     name: 'Camuflaje de Cicatrices',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
     description: 'Pigmentación milimétrica para integrar cicatrices al tono natural de tu piel.',
     benefits: ['Disimula marcas quirúrgicas o accidentales', 'Acabado estético sumamente natural', 'Procedimiento ambulatorio'],
     gallery: [
-      'https://images.unsplash.com/photo-1512290900722-9a7f9b8c4618?auto=format&fit=crop&w=600&q=80'
+      'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80'
     ]
   },
   {
