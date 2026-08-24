@@ -168,7 +168,7 @@ export default function Page() {
     setSuccessMsg('')
 
     try {
-      const { error } = await supabase.from('appointments'].insert([
+      const { error } = await supabase.from('appointments').insert([
         {
           service_name: selectedServices.join(', '),
           body_zone: selectedBodyZones.join(', '),
