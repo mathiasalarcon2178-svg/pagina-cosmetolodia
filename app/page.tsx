@@ -104,6 +104,7 @@ export default function Page() {
   const [selectedDate, setSelectedDate] = useState('')
   const [bookedTimes, setBookedTimes] = useState<string[]>([])
   const [selectedTime, setSelectedTime] = useState('')
+  const [appointmentStatus, setAppointmentStatus] = useState<'confirmed' | 'pending'>('confirmed')
   
   const [clientName, setClientName] = useState('')
   const [clientPhone, setClientPhone] = useState('')
@@ -167,7 +168,7 @@ export default function Page() {
     setSuccessMsg('')
 
     try {
-      const { error } = await supabase.from('appointments').insert([
+      const { error } = await supabase.from('appointments'].insert([
         {
           service_name: selectedServices.join(', '),
           body_zone: selectedBodyZones.join(', '),
@@ -175,7 +176,7 @@ export default function Page() {
           time_slot: selectedTime,
           client_name: clientName,
           client_phone: clientPhone,
-          status: 'confirmed'
+          status: appointmentStatus
         }
       ])
 
@@ -183,7 +184,7 @@ export default function Page() {
         throw new Error(error.message)
       }
 
-      setSuccessMsg('¡Cita múltiple reservada con éxito! Te esperamos en Cami Isla Studio.')
+      setSuccessMsg(`¡Cita guardada con estado: ${appointmentStatus === 'confirmed' ? 'Confirmada' : 'Pendiente'}!`)
       setClientName('')
       setClientPhone('')
       setSelectedTime('')
@@ -207,7 +208,7 @@ export default function Page() {
             Cami Isla <span className="font-semibold text-pink-600">Studio</span>
           </h1>
           <p className="text-neutral-600 max-w-lg mx-auto text-sm sm:text-base">
-            Selecciona uno o varios tratamientos, marca tus zonas de interés y agenda tu cita en línea.
+            Selecciona tus tratamientos, zonas corporales, estado de la cita y agenda en línea.
           </p>
         </div>
 
@@ -300,10 +301,10 @@ export default function Page() {
           </div>
         </div>
 
-        {/* 3. Formulario de Reserva y Horarios */}
+        {/* 3. Formulario de Reserva, Horarios y Estado */}
         <form onSubmit={handleBooking} className="space-y-8 bg-white border border-neutral-200 p-6 sm:p-10 rounded-3xl shadow-sm">
           <h3 className="text-lg font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-4">
-            3. Fecha, Horario y Datos de Contacto
+            3. Fecha, Horario, Estado y Datos de Contacto
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -353,6 +354,36 @@ export default function Page() {
             </div>
           </div>
 
+          {/* Selector de Estado de la Cita */}
+          <div className="space-y-3 pt-4 border-t border-neutral-100">
+            <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Estado Inicial de la Cita</label>
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                type="button"
+                onClick={() => setAppointmentStatus('confirmed')}
+                className={`p-4 rounded-2xl border text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                  appointmentStatus === 'confirmed'
+                    ? 'bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm'
+                    : 'bg-neutral-50 border-neutral-200 text-neutral-600 hover:border-neutral-300'
+                }`}
+              >
+                <span>🟢</span> Confirmada
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setAppointmentStatus('pending')}
+                className={`p-4 rounded-2xl border text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                  appointmentStatus === 'pending'
+                    ? 'bg-amber-50 border-amber-500 text-amber-800 shadow-sm'
+                    : 'bg-neutral-50 border-neutral-200 text-neutral-600 hover:border-neutral-300'
+                }`}
+              >
+                <span>⏳</span> Pendiente de Confirmación
+              </button>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-100">
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-wider text-neutral-600 font-bold">Tu Nombre y Apellido</label>
@@ -382,7 +413,7 @@ export default function Page() {
             disabled={loading}
             className="w-full py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold rounded-2xl shadow-lg shadow-pink-600/20 transition-all duration-300 disabled:opacity-50 text-base"
           >
-            {loading ? 'Procesando Reserva...' : 'Confirmar y Agendar Cita Múltiple'}
+            {loading ? 'Procesando Reserva...' : 'Confirmar y Guardar Cita'}
           </button>
         </form>
 
