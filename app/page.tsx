@@ -99,8 +99,8 @@ const TIME_SLOTS = [
 ]
 
 export default function Page() {
-  const [selectedService, setSelectedService] = useState(SERVICES[0])
-  const [selectedBodyZone, setSelectedBodyZone] = useState(BODY_ZONES[0])
+  const [selectedServices, setSelectedServices] = useState<string[]>([SERVICES[0].name])
+  const [selectedBodyZones, setSelectedBodyZones] = useState<string[]>([BODY_ZONES[0]])
   const [selectedDate, setSelectedDate] = useState('')
   const [bookedTimes, setBookedTimes] = useState<string[]>([])
   const [selectedTime, setSelectedTime] = useState('')
@@ -139,10 +139,26 @@ export default function Page() {
     fetchBookings()
   }, [selectedDate])
 
+  const toggleService = (serviceName: string) => {
+    setSelectedServices(prev => 
+      prev.includes(serviceName) 
+        ? prev.filter(s => s !== serviceName)
+        : [...prev, serviceName]
+    )
+  }
+
+  const toggleBodyZone = (zone: string) => {
+    setSelectedBodyZones(prev => 
+      prev.includes(zone) 
+        ? prev.filter(z => z !== zone)
+        : [...prev, zone]
+    )
+  }
+
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedDate || !selectedTime || !clientName || !clientPhone) {
-      setErrorMsg('Por favor completa todos los campos obligatorios.')
+    if (selectedServices.length === 0 || selectedBodyZones.length === 0 || !selectedDate || !selectedTime || !clientName || !clientPhone) {
+      setErrorMsg('Por favor selecciona al menos un servicio, una zona, y completa todos los campos.')
       return
     }
 
@@ -153,8 +169,8 @@ export default function Page() {
     try {
       const { error } = await supabase.from('appointments').insert([
         {
-          service_name: selectedService.name,
-          body_zone: selectedBodyZone,
+          service_name: selectedServices.join(', '),
+          body_zone: selectedBodyZones.join(', '),
           date: selectedDate,
           time_slot: selectedTime,
           client_name: clientName,
@@ -167,7 +183,7 @@ export default function Page() {
         throw new Error(error.message)
       }
 
-      setSuccessMsg('¡Cita reservada con éxito! Te esperamos en Cami Isla Studio.')
+      setSuccessMsg('¡Cita múltiple reservada con éxito! Te esperamos en Cami Isla Studio.')
       setClientName('')
       setClientPhone('')
       setSelectedTime('')
@@ -191,7 +207,7 @@ export default function Page() {
             Cami Isla <span className="font-semibold text-pink-600">Studio</span>
           </h1>
           <p className="text-neutral-600 max-w-lg mx-auto text-sm sm:text-base">
-            Descubre nuestros tratamientos especializados, conoce sus beneficios en detalle y agenda tu cita en línea.
+            Selecciona uno o varios tratamientos, marca tus zonas de interés y agenda tu cita en línea.
           </p>
         </div>
 
@@ -207,20 +223,20 @@ export default function Page() {
           </div>
         )}
 
-        {/* 1. Selección de Servicios con Fotos e Información */}
+        {/* 1. Selección Múltiple de Servicios */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">1. Selecciona tu Tratamiento</h2>
-            <span className="text-xs text-neutral-500 font-medium">Haz clic para ver beneficios y fotos</span>
+            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">1. Selecciona tus Tratamientos (Múltiples)</h2>
+            <span className="text-xs text-pink-600 font-bold">Seleccionados: {selectedServices.length}</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {SERVICES.map((s) => {
-              const isSelected = selectedService.id === s.id
+              const isSelected = selectedServices.includes(s.name)
               return (
                 <div
                   key={s.id}
-                  onClick={() => setSelectedService(s)}
+                  onClick={() => toggleService(s.name)}
                   className={`group rounded-3xl border overflow-hidden cursor-pointer transition-all duration-300 bg-white shadow-sm hover:shadow-md flex flex-col justify-between ${
                     isSelected
                       ? 'border-pink-500 ring-2 ring-pink-500/20 bg-pink-50/20'
@@ -236,6 +252,9 @@ export default function Page() {
                     <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-neutral-800 shadow-sm z-10">
                       {s.duration}
                     </div>
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-pink-600 shadow-sm z-10">
+                      {isSelected ? '✓ Seleccionado' : '+ Agregar'}
+                    </div>
                   </div>
 
                   <div className="p-6 space-y-3">
@@ -245,11 +264,6 @@ export default function Page() {
                     <p className="text-sm text-neutral-600 line-clamp-2">
                       {s.description}
                     </p>
-                    <div className="pt-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-pink-600">
-                        {isSelected ? '✓ Servicio Seleccionado' : 'Ver detalles y agendar →'}
-                      </span>
-                    </div>
                   </div>
                 </div>
               )
@@ -257,60 +271,40 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Detalle del Servicio Seleccionado */}
-        <div className="bg-white border border-neutral-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
-          <div className="border-b border-neutral-100 pb-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-pink-600">Información Detallada</span>
-            <h3 className="text-2xl font-bold text-neutral-900 mt-1">{selectedService.name}</h3>
-            <p className="text-neutral-600 text-sm mt-2">{selectedService.description}</p>
+        {/* 2. Selección Múltiple de Zonas del Cuerpo */}
+        <div className="space-y-6 bg-white border border-neutral-200 p-6 sm:p-10 rounded-3xl shadow-sm">
+          <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">2. Zonas del Cuerpo a Tratar (Múltiples)</h2>
+            <span className="text-xs text-pink-600 font-bold">Seleccionadas: {selectedBodyZones.length}</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-semibold text-neutral-900 text-sm mb-3 uppercase tracking-wide">Beneficios Principales</h4>
-              <ul className="space-y-2">
-                {selectedService.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-neutral-700">
-                    <span className="text-pink-600 font-bold">•</span>
-                    <span>{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-neutral-900 text-sm mb-3 uppercase tracking-wide">Galería del Procedimiento</h4>
-              <div className="grid grid-cols-2 gap-2">
-                {selectedService.gallery.map((imgUrl, index) => (
-                  <div key={index} className="h-24 rounded-xl overflow-hidden bg-neutral-100 border border-neutral-200">
-                    <img src={imgUrl} alt="Procedimiento" className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {BODY_ZONES.map((zone) => {
+              const isSelected = selectedBodyZones.includes(zone)
+              return (
+                <button
+                  type="button"
+                  key={zone}
+                  onClick={() => toggleBodyZone(zone)}
+                  className={`p-4 rounded-2xl border text-sm font-semibold transition-all text-left flex items-center justify-between ${
+                    isSelected
+                      ? 'border-pink-500 bg-pink-50 text-pink-900 ring-1 ring-pink-500/20'
+                      : 'border-neutral-200 bg-neutral-50 text-neutral-700 hover:border-neutral-300'
+                  }`}
+                >
+                  <span>{zone}</span>
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${isSelected ? 'bg-pink-600 text-white' : 'border border-neutral-300 text-transparent'}`}>✓</span>
+                </button>
+              )
+            })}
           </div>
         </div>
 
-        {/* 2. Formulario de Reserva */}
+        {/* 3. Formulario de Reserva y Horarios */}
         <form onSubmit={handleBooking} className="space-y-8 bg-white border border-neutral-200 p-6 sm:p-10 rounded-3xl shadow-sm">
           <h3 className="text-lg font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-4">
-            2. Completa los Datos de tu Cita para: <span className="text-pink-600">{selectedService.name}</span>
+            3. Fecha, Horario y Datos de Contacto
           </h3>
-
-          <div className="space-y-3">
-            <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Zona del Cuerpo a Tratar</label>
-            <div className="relative">
-              <select
-                value={selectedBodyZone}
-                onChange={(e) => setSelectedBodyZone(e.target.value)}
-                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white appearance-none cursor-pointer"
-              >
-                {BODY_ZONES.map((zone) => (
-                  <option key={zone} value={zone}>{zone}</option>
-                ))}
-              </select>
-            </div>
-          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
@@ -388,7 +382,7 @@ export default function Page() {
             disabled={loading}
             className="w-full py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold rounded-2xl shadow-lg shadow-pink-600/20 transition-all duration-300 disabled:opacity-50 text-base"
           >
-            {loading ? 'Procesando Reserva...' : 'Confirmar y Agendar Cita'}
+            {loading ? 'Procesando Reserva...' : 'Confirmar y Agendar Cita Múltiple'}
           </button>
         </form>
 
