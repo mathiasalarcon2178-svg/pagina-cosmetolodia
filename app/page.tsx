@@ -1,288 +1,409 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { supabase } from '@/lib/supabase';
+import { useState, useEffect } from 'react'
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 const SERVICES = [
-  { id: 'camuflaje', name: 'Camuflaje de Estrías y Cicatrices', price: '350.000 Gs.', duration: '1h 30m' },
-  { id: 'labios', name: 'Hidralips / Micropigmentación de Labios', price: '400.000 Gs.', duration: '2h' },
-  { id: 'cejas', name: 'Microblading / Shadow Brows', price: '350.000 Gs.', duration: '2h' },
-  { id: 'pestanas', name: 'Lifting de Pestañas', price: '150.000 Gs.', duration: '1h' },
-];
+  {
+    id: 'camuflaje_estrias',
+    name: 'Camuflaje de Estrías',
+    duration: '90 min',
+    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80',
+    description: 'Técnica especializada para unificar el tono de la piel y disimular estrías de forma permanente.',
+  },
+  {
+    id: 'regeneracion_estrias',
+    name: 'Regeneración de Estrías',
+    duration: '60 min',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
+    description: 'Tratamiento enfocado en mejorar la textura y profundidad de la piel afectada por estrías.',
+  },
+  {
+    id: 'camuflaje_cicatrices',
+    name: 'Camuflaje de Cicatrices',
+    duration: '90 min',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
+    description: 'Pigmentación milimétrica para integrar cicatrices al tono natural de tu piel.',
+  },
+  {
+    id: 'regeneracion_cicatrices',
+    name: 'Regeneración de Cicatrices',
+    duration: '60 min',
+    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
+    description: 'Protocolo de estimulación profunda para suavizar el relieve y rigidez de las cicatrices.',
+  },
+  {
+    id: 'verrugas',
+    name: 'Eliminación de Verrugas',
+    duration: '30 min',
+    image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=80',
+    description: 'Remoción segura y limpia de verrugas bajo estrictos estándares de bioseguridad.',
+  },
+  {
+    id: 'lunares',
+    name: 'Eliminación de Lunares',
+    duration: '30 min',
+    image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80',
+    description: 'Evaluación y extracción estética de lunares benignos con excelente resultado visual.',
+  },
+  {
+    id: 'acrocordones',
+    name: 'Eliminación de Acrocordones',
+    duration: '30 min',
+    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
+    description: 'Eliminación indolora de pequeños fibromas blandos en cuello, axilas u otras zonas.',
+  }
+]
 
-const TIME_SLOTS = ['09:00', '10:30', '13:00', '15:00', '17:00'];
+const BODY_ZONES = [
+  'Rostro',
+  'Cuello y Escote',
+  'Abdomen',
+  'Glúteos',
+  'Piernas',
+  'Espalda'
+]
 
-export default function Home() {
-  const [selectedService, setSelectedService] = useState(SERVICES[0]);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const [clientName, setClientName] = useState('');
-  const [clientPhone, setClientPhone] = useState('');
-  const [blockedSlots, setBlockedSlots] = useState<string[]>([]);
-  const [policies, setPolicies] = useState({
-    deposit: '50.000',
-    noticeHours: '24',
-    toleranceMinutes: '15'
-  });
-  const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
+const TIME_SLOTS = [
+  '09:00', '10:00', '11:00', '12:00', 
+  '14:00', '15:00', '16:00', '17:00', '18:00'
+]
+
+export default function Page() {
+  const [selectedServices, setSelectedServices] = useState<string[]>([SERVICES[0].name])
+  const [selectedBodyZones, setSelectedBodyZones] = useState<string[]>([BODY_ZONES[0]])
+  const [selectedDate, setSelectedDate] = useState('')
+  const [bookedTimes, setBookedTimes] = useState<string[]>([])
+  const [selectedTime, setSelectedTime] = useState('')
+  const [appointmentStatus, setAppointmentStatus] = useState<'confirmed' | 'pending'>('confirmed')
+  
+  const [clientName, setClientName] = useState('')
+  const [clientPhone, setClientPhone] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [successMsg, setSuccessMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {
-    fetchInitialData();
-  }, []);
+    if (!selectedDate) return
+    
+    async function fetchBookings() {
+      try {
+        const { data, error } = await supabase
+          .from('appointments')
+          .select('time_slot')
+          .eq('date', selectedDate)
 
-  async function fetchInitialData() {
+        if (error) {
+          console.error('Error de Supabase al buscar citas:', error.message)
+          setBookedTimes([])
+          return
+        }
+
+        if (data) {
+          setBookedTimes(data.map((item: any) => item.time_slot))
+        }
+      } catch (err) {
+        console.error('Error inesperado:', err)
+        setBookedTimes([])
+      }
+    }
+
+    fetchBookings()
+  }, [selectedDate])
+
+  const toggleService = (serviceName: string) => {
+    setSelectedServices(prev => 
+      prev.includes(serviceName) 
+        ? prev.filter(s => s !== serviceName)
+        : [...prev, serviceName]
+    )
+  }
+
+  const toggleBodyZone = (zone: string) => {
+    setSelectedBodyZones(prev => 
+      prev.includes(zone) 
+        ? prev.filter(z => z !== zone)
+        : [...prev, zone]
+    )
+  }
+
+  const handleBooking = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (selectedServices.length === 0 || selectedBodyZones.length === 0 || !selectedDate || !selectedTime || !clientName || !clientPhone) {
+      setErrorMsg('Por favor selecciona al menos un servicio, una zona, y completa todos los campos.')
+      return
+    }
+
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
+
     try {
-      const { data: bData } = await supabase.from('blocked_slots').select('*');
-      if (bData) {
-        setBlockedSlots(bData.map((item: any) => item.slot_key));
+      const { error } = await supabase.from('appointments').insert([
+        {
+          service_name: selectedServices.join(', '),
+          body_zone: selectedBodyZones.join(', '),
+          date: selectedDate,
+          time_slot: selectedTime,
+          client_name: clientName,
+          client_phone: clientPhone,
+          status: appointmentStatus
+        }
+      ])
+
+      if (error) {
+        throw new Error(error.message)
       }
 
-      const { data: pData } = await supabase.from('site_policies').select('*').eq('id', 1).single();
-      if (pData) {
-        setPolicies({
-          deposit: pData.deposit,
-          noticeHours: pData.notice_hours,
-          toleranceMinutes: pData.tolerance_minutes
-        });
-      }
-    } catch (err) {
-      console.error("Error al cargar datos iniciales:", err);
+      setSuccessMsg(`¡Cita guardada con estado: ${appointmentStatus === 'confirmed' ? 'Confirmada' : 'Pendiente'}!`)
+      setClientName('')
+      setClientPhone('')
+      setSelectedTime('')
+      setBookedTimes((prev) => [...prev, selectedTime])
+    } catch (err: any) {
+      console.error('Error al insertar:', err)
+      setErrorMsg(`Error al guardar en Supabase: ${err.message || 'Verifica la estructura de tu tabla'}`)
+    } finally {
+      setLoading(false)
     }
   }
 
-  const handleBookingSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedDate || !selectedTime || !clientName || !clientPhone) {
-      alert('Por favor, completá todos los campos.');
-      return;
-    }
-
-    setLoading(true);
-
-    const { error } = await supabase.from('bookings').insert([
-      {
-        client_name: clientName,
-        client_phone: clientPhone,
-        service_name: selectedService.name,
-        date: selectedDate,
-        time_slot: selectedTime
-      }
-    ]);
-
-    setLoading(false);
-
-    if (!error) {
-      setStep(3);
-    } else {
-      alert('Hubo un error al registrar la reserva. Intentalo de nuevo.');
-      console.error(error);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#faf8f5] text-[#2c2c2c] font-sans selection:bg-[#e6dfd5]">
-      {/* HEADER */}
-      <header className="border-b border-[#e6dfd5] bg-white/90 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex justify-between items-center">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-serif text-[#4a3b32] tracking-wide">Cami Isla Studio</h1>
-            <p className="text-[10px] text-[#8c7a6b] uppercase tracking-widest">Estética & Micropigmentación</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <a 
-              href="https://instagram.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-xs text-[#6b5b52] hover:text-[#4a3b32] hidden sm:inline-block"
-            >
-              Instagram
-            </a>
-            <Link 
-              href="/admin" 
-              className="text-xs text-[#4a3b32] bg-[#f0ebe3] hover:bg-[#e6dfd5] border border-[#d6ccbe] px-3.5 py-2 rounded-xl transition-all font-medium"
-            >
-              Panel Admin
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* HERO & RESERVATION SECTION */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-6">
-          <span className="bg-[#f0ebe3] text-[#4a3b32] text-xs px-3.5 py-1.5 rounded-full uppercase tracking-wider font-medium inline-block">
-            ✨ Especialista Certificada
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-serif text-[#4a3b32] leading-tight">
-            Realza tu belleza natural con total confianza.
-          </h2>
-          <p className="text-sm text-[#6b5b52] leading-relaxed">
-            Transformá tu piel y recupera tu seguridad con tratamientos avanzados en camuflaje de estrías, micropigmentación de labios, cejas y más. Elegí tu servicio y agendá tu espacio en segundos.
+    <main className="min-h-screen bg-neutral-50 text-neutral-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto space-y-12">
+        
+        {/* Cabecera */}
+        <div className="text-center space-y-3 border-b border-neutral-200 pb-8">
+          <span className="text-xs uppercase tracking-[0.3em] text-pink-600 font-bold">Estética Avanzada</span>
+          <h1 className="text-4xl sm:text-5xl font-light tracking-tight text-neutral-900">
+            Cami Isla <span className="font-semibold text-pink-600">Studio</span>
+          </h1>
+          <p className="text-neutral-600 max-w-lg mx-auto text-sm sm:text-base">
+            Selecciona tus tratamientos, zonas corporales, estado de la cita y agenda en línea.
           </p>
-          <div className="pt-2 flex flex-wrap gap-4 text-xs text-[#6b5b52]">
-            <div className="bg-white px-4 py-2.5 rounded-2xl border border-[#e6dfd5] shadow-xs">
-              Seña de reserva: <strong className="text-[#4a3b32]">{policies.deposit} Gs.</strong>
-            </div>
-            <div className="bg-white px-4 py-2.5 rounded-2xl border border-[#e6dfd5] shadow-xs">
-              Tolerancia de llegada: <strong className="text-[#4a3b32]">{policies.toleranceMinutes} min</strong>
-            </div>
+        </div>
+
+        {successMsg && (
+          <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-2xl text-center text-sm font-medium shadow-md">
+            {successMsg}
+          </div>
+        )}
+
+        {errorMsg && (
+          <div className="p-4 bg-rose-50 border border-rose-300 text-rose-800 rounded-2xl text-center text-sm font-medium shadow-md">
+            {errorMsg}
+          </div>
+        )}
+
+        {/* 1. Selección Múltiple de Servicios */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">1. Selecciona tus Tratamientos (Múltiples)</h2>
+            <span className="text-xs text-pink-600 font-bold">Seleccionados: {selectedServices.length}</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {SERVICES.map((s) => {
+              const isSelected = selectedServices.includes(s.name)
+              return (
+                <div
+                  key={s.id}
+                  onClick={() => toggleService(s.name)}
+                  className={`group rounded-3xl border overflow-hidden cursor-pointer transition-all duration-300 bg-white shadow-sm hover:shadow-md flex flex-col justify-between ${
+                    isSelected
+                      ? 'border-pink-500 ring-2 ring-pink-500/20 bg-pink-50/20'
+                      : 'border-neutral-200 hover:border-neutral-300'
+                  }`}
+                >
+                  <div className="relative h-48 w-full overflow-hidden bg-neutral-100">
+                    <img 
+                      src={s.image} 
+                      alt={s.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-neutral-800 shadow-sm z-10">
+                      {s.duration}
+                    </div>
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-pink-600 shadow-sm z-10">
+                      {isSelected ? '✓ Seleccionado' : '+ Agregar'}
+                    </div>
+                  </div>
+
+                  <div className="p-6 space-y-3">
+                    <h3 className="font-bold text-lg text-neutral-900 group-hover:text-pink-600 transition-colors">
+                      {s.name}
+                    </h3>
+                    <p className="text-sm text-neutral-600 line-clamp-2">
+                      {s.description}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
 
-        {/* WIDGET DE RESERVAS */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#e6dfd5] shadow-xl">
-          {step === 1 && (
-            <div className="space-y-6">
-              <h3 className="text-lg font-serif text-[#4a3b32]">1. Selecciona un Servicio</h3>
-              <div className="space-y-3">
-                {SERVICES.map((s) => (
-                  <div
-                    key={s.id}
-                    onClick={() => setSelectedService(s)}
-                    className={`p-4 rounded-2xl border cursor-pointer transition-all flex justify-between items-center ${
-                      selectedService.id === s.id
-                        ? 'border-[#4a3b32] bg-[#faf8f5] shadow-xs'
-                        : 'border-[#e6dfd5] hover:border-[#d6ccbe]'
-                    }`}
-                  >
-                    <div>
-                      <h4 className="text-xs font-semibold text-[#4a3b32]">{s.name}</h4>
-                      <p className="text-[11px] text-[#8c7a6b]">Duración: {s.duration}</p>
-                    </div>
-                    <span className="text-xs font-bold text-[#4a3b32]">{s.price}</span>
-                  </div>
-                ))}
-              </div>
-              <button
-                onClick={() => setStep(2)}
-                className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-3 rounded-xl text-xs font-medium transition-all"
-              >
-                Continuar con la fecha y hora →
-              </button>
-            </div>
-          )}
+        {/* 2. Selección Múltiple de Zonas del Cuerpo */}
+        <div className="space-y-6 bg-white border border-neutral-200 p-6 sm:p-10 rounded-3xl shadow-sm">
+          <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
+            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">2. Zonas del Cuerpo a Tratar (Múltiples)</h2>
+            <span className="text-xs text-pink-600 font-bold">Seleccionadas: {selectedBodyZones.length}</span>
+          </div>
 
-          {step === 2 && (
-            <form onSubmit={handleBookingSubmit} className="space-y-5">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-serif text-[#4a3b32]">2. Fecha y Tus Datos</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {BODY_ZONES.map((zone) => {
+              const isSelected = selectedBodyZones.includes(zone)
+              return (
                 <button
                   type="button"
-                  onClick={() => setStep(1)}
-                  className="text-xs text-[#b88686] hover:underline"
+                  key={zone}
+                  onClick={() => toggleBodyZone(zone)}
+                  className={`p-4 rounded-2xl border text-sm font-semibold transition-all text-left flex items-center justify-between ${
+                    isSelected
+                      ? 'border-pink-500 bg-pink-50 text-pink-900 ring-1 ring-pink-500/20'
+                      : 'border-neutral-200 bg-neutral-50 text-neutral-700 hover:border-neutral-300'
+                  }`}
                 >
-                  ← Volver
+                  <span>{zone}</span>
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${isSelected ? 'bg-pink-600 text-white' : 'border border-neutral-300 text-transparent'}`}>✓</span>
                 </button>
-              </div>
+              )
+            })}
+          </div>
+        </div>
 
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-xs font-medium text-[#4a3b32] mb-1">Fecha de la cita</label>
-                  <input
-                    type="date"
-                    required
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    className="w-full bg-[#faf8f5] border border-[#d6ccbe] rounded-xl p-3 text-xs text-[#4a3b32]"
-                  />
+        {/* 3. Formulario de Reserva, Horarios y Estado */}
+        <form onSubmit={handleBooking} className="space-y-8 bg-white border border-neutral-200 p-6 sm:p-10 rounded-3xl shadow-sm">
+          <h3 className="text-lg font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-4">
+            3. Fecha, Horario, Estado y Datos de Contacto
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Fecha de la Cita</label>
+              <input
+                type="date"
+                min={new Date().toISOString().split('T')[0]}
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Horarios Disponibles</label>
+              {!selectedDate ? (
+                <div className="h-[58px] flex items-center px-4 bg-neutral-50 border border-neutral-300 rounded-2xl text-sm text-neutral-500 italic">
+                  Selecciona una fecha primero
                 </div>
+              ) : (
+                <div className="grid grid-cols-3 gap-2">
+                  {TIME_SLOTS.map((time) => {
+                    const isBooked = bookedTimes.includes(time)
+                    const isSelected = selectedTime === time
 
-                <div>
-                  <label className="block text-xs font-medium text-[#4a3b32] mb-1">Horario disponible</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {TIME_SLOTS.map((slot) => {
-                      const isBlocked = blockedSlots.includes(`${selectedDate}_${slot}`);
-                      return (
-                        <button
-                          key={slot}
-                          type="button"
-                          disabled={isBlocked || !selectedDate}
-                          onClick={() => setSelectedTime(slot)}
-                          className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all ${
-                            isBlocked
-                              ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed line-through'
-                              : selectedTime === slot
-                              ? 'bg-[#4a3b32] text-white border-[#4a3b32]'
-                              : 'bg-[#faf8f5] text-[#4a3b32] border-[#d6ccbe] hover:border-[#4a3b32]'
-                          }`}
-                        >
-                          {slot} {isBlocked && '(Ocupado)'}
-                        </button>
-                      );
-                    })}
-                  </div>
+                    return (
+                      <button
+                        type="button"
+                        key={time}
+                        disabled={isBooked}
+                        onClick={() => setSelectedTime(time)}
+                        className={`py-3 text-xs sm:text-sm rounded-xl font-semibold transition-all ${
+                          isBooked
+                            ? 'bg-neutral-100 text-neutral-400 line-through cursor-not-allowed border border-neutral-200'
+                            : isSelected
+                            ? 'bg-pink-600 text-white shadow-md shadow-pink-600/30 border border-pink-600'
+                            : 'bg-neutral-50 border border-neutral-300 text-neutral-700 hover:border-pink-500 hover:bg-white'
+                        }`}
+                      >
+                        {time}
+                      </button>
+                    )
+                  })}
                 </div>
+              )}
+            </div>
+          </div>
 
-                <div>
-                  <label className="block text-xs font-medium text-[#4a3b32] mb-1">Nombre y Apellido</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Tu nombre completo"
-                    value={clientName}
-                    onChange={(e) => setClientName(e.target.value)}
-                    className="w-full bg-[#faf8f5] border border-[#d6ccbe] rounded-xl p-3 text-xs text-[#4a3b32]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-[#4a3b32] mb-1">Teléfono / WhatsApp</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="0981 123 456"
-                    value={clientPhone}
-                    onChange={(e) => setClientPhone(e.target.value)}
-                    className="w-full bg-[#faf8f5] border border-[#d6ccbe] rounded-xl p-3 text-xs text-[#4a3b32]"
-                  />
-                </div>
-              </div>
-
+          {/* Selector de Estado de la Cita */}
+          <div className="space-y-3 pt-4 border-t border-neutral-100">
+            <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Estado Inicial de la Cita</label>
+            <div className="grid grid-cols-2 gap-4">
               <button
-                type="submit"
-                disabled={loading || !selectedTime}
-                className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-3 rounded-xl text-xs font-medium transition-all disabled:opacity-50"
+                type="button"
+                onClick={() => setAppointmentStatus('confirmed')}
+                className={`p-4 rounded-2xl border text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                  appointmentStatus === 'confirmed'
+                    ? 'bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm'
+                    : 'bg-neutral-50 border-neutral-200 text-neutral-600 hover:border-neutral-300'
+                }`}
               >
-                {loading ? 'Confirmando...' : 'Confirmar y Agendar Turno'}
+                <span>🟢</span> Confirmada
               </button>
-            </form>
-          )}
 
-          {step === 3 && (
-            <div className="text-center space-y-5 py-4">
-              <div className="w-14 h-14 bg-[#e6dfd5] text-[#4a3b32] rounded-full flex items-center justify-center mx-auto text-xl font-bold">
-                ✓
-              </div>
-              <h3 className="text-xl font-serif text-[#4a3b32]">¡Turno Solicitado con Éxito!</h3>
-              <p className="text-xs text-[#6b5b52] leading-relaxed">
-                Gracias <strong>{clientName}</strong>. Tu solicitud para <strong>{selectedService.name}</strong> el día <strong>{selectedDate}</strong> a las <strong>{selectedTime} HS</strong> fue registrada correctamente.
-              </p>
-              <div className="bg-[#faf8f5] p-3.5 rounded-2xl border border-[#e6dfd5] text-xs text-[#6b5b52]">
-                ⚠️ Recuerda abonar la seña de <strong>{policies.deposit} Gs.</strong> para asegurar tu espacio de forma definitiva.
-              </div>
               <button
-                onClick={() => {
-                  setStep(1);
-                  setSelectedTime('');
-                  setClientName('');
-                  setClientPhone('');
-                }}
-                className="w-full bg-[#4a3b32] text-white py-3 rounded-xl text-xs font-medium"
+                type="button"
+                onClick={() => setAppointmentStatus('pending')}
+                className={`p-4 rounded-2xl border text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                  appointmentStatus === 'pending'
+                    ? 'bg-amber-50 border-amber-500 text-amber-800 shadow-sm'
+                    : 'bg-neutral-50 border-neutral-200 text-neutral-600 hover:border-neutral-300'
+                }`}
               >
-                Agendar otro turno
+                <span>⏳</span> Pendiente de Confirmación
               </button>
             </div>
-          )}
-        </div>
-      </section>
+          </div>
 
-      {/* FOOTER */}
-      <footer className="border-t border-[#e6dfd5] py-8 mt-16 text-center text-xs text-[#8c7a6b]">
-        <p>© 2026 Cami Isla Studio. Todos los derechos reservados.</p>
-      </footer>
-    </div>
-  );
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-100">
+            <div className="space-y-2">
+              <label className="text-xs uppercase tracking-wider text-neutral-600 font-bold">Tu Nombre y Apellido</label>
+              <input
+                type="text"
+                placeholder="Ej. María Gómez"
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 text-sm"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs uppercase tracking-wider text-neutral-600 font-bold">Teléfono / WhatsApp</label>
+              <input
+                type="tel"
+                placeholder="Ej. 0981 123 456"
+                value={clientPhone}
+                onChange={(e) => setClientPhone(e.target.value)}
+                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 text-sm"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold rounded-2xl shadow-lg shadow-pink-600/20 transition-all duration-300 disabled:opacity-50 text-base"
+          >
+            {loading ? 'Procesando Reserva...' : 'Confirmar y Guardar Cita'}
+          </button>
+        </form>
+
+        <div className="text-center pb-6">
+          <a
+            href="https://wa.me/595981123456"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-neutral-700 hover:text-emerald-600 text-sm font-semibold transition-colors py-3 px-6 rounded-2xl bg-white border border-neutral-200 shadow-sm"
+          >
+            <span>💬</span> ¿Tienes dudas o necesitas atención personalizada? Escríbenos por WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </main>
+  )
 }
