@@ -12,93 +12,59 @@ const SERVICES = [
     id: 'camuflaje_estrias',
     name: 'Camuflaje de Estrías',
     category: 'ESTÉTICA CORPORAL',
-    duration: '90 min',
+    duration: '30-90 min',
     image: '/resultado.jpg',
-    description: 'Disimula visualmente las estrías aplicando pigmentos adaptados al tono exacto de tu piel por zonas corporales.',
-    zonesText: 'Glúteos, caderas, abdomen, piernas, busto'
-  },
-  {
-    id: 'camuflaje_cicatrices',
-    name: 'Camuflaje de Cicatrices',
-    category: 'REPARACIÓN CUTÁNEA',
-    duration: '90 min',
-    image: '/resultado.jpg',
-    description: 'Técnica especializada para unificar el color y disimular marcas o cicatrices quirúrgicas o accidentales.',
-    zonesText: 'Pequeñas, medianas o extensas'
+    description: 'Procedimiento estético que busca disimular visualmente las estrías aplicando pigmentos seleccionados de acuerdo al tono de piel.',
+    zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
   },
   {
     id: 'regeneracion_estrias',
-    name: 'Regeneración de Estrías',
+    name: 'Estimulación de Colágeno (Estrías)',
     category: 'BIOESTIMULACIÓN',
     duration: '60 min',
     image: '/resultado.jpg',
-    description: 'Tratamiento profundo para mejorar la textura, profundidad y elasticidad de la piel con colágeno.',
-    zonesText: 'Áreas localizadas o amplias'
+    description: 'Tratamiento orientado a mejorar la textura y apariencia de las estrías estimulando la producción natural de colágeno y elastina.',
+    zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
   },
   {
-    id: 'regeneracion_cicatrices',
-    name: 'Regeneración de Cicatrices',
-    category: 'TRATAMIENTO AVANZADO',
-    duration: '60 min',
+    id: 'eliminacion_lesiones',
+    name: 'Eliminación de Lunares, Verrugas y Acrocordones',
+    category: 'ELECTROCAUTERIO / PLASMA',
+    duration: '10-15 min',
     image: '/resultado.jpg',
-    description: 'Mejora visible de la textura de la piel en zonas con cicatrices para suavizar su relieve y aspecto.',
-    zonesText: 'Localizadas o múltiples'
-  },
-  {
-    id: 'lunares',
-    name: 'Eliminación de Lunares',
-    category: 'TECNOLOGÍA SEGURA',
-    duration: '30 min',
-    image: '/resultado.jpg',
-    description: 'Remoción estética y controlada de lunares benignos con equipo especializado.',
-    zonesText: 'Paquetes por cantidad de lesiones'
-  },
-  {
-    id: 'verrugas',
-    name: 'Eliminación de Verrugas',
-    category: 'PLASMA PEN / LESIONES',
-    duration: '30 min',
-    image: '/resultado.jpg',
-    description: 'Extracción higiénica y estética de verrugas cutáneas sin marcas invasivas.',
-    zonesText: 'Paquetes por cantidad de lesiones'
-  },
-  {
-    id: 'acrocordones',
-    name: 'Eliminación de Acrocordones',
-    category: 'CUIDADO DE LA PIEL',
-    duration: '30 min',
-    image: '/resultado.jpg',
-    description: 'Remoción rápida y sin dolor de pequeños fibromas blandos (acrocordones) en cuello, axilas u otras zonas.',
-    zonesText: 'Paquetes por cantidad de lesiones'
+    description: 'Remoción estética de pequeñas lesiones cutáneas benignas de forma precisa, mediante calor controlado y anestesia tópica.',
+    zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
   }
 ]
 
-const PRICING_DATA: Record<string, { zones: Record<string, number> }> = {
+// Precios basados en los mensajes de Cami:
+// - Estrías/Colágeno (por sesiones): 1 ses: 350k, 2 ses: 500k, 3 ses: 850k
+// - Lunares/Verrugas/Acrocordones (por zona corporal): Cuello y escote 200k, Rostro 250k, Zona íntima 350k, Manos/pies 150k, Espalda 250k, Cabeza 200k, Piernas 150k
+const PRICING_DATA: Record<string, { type: 'sessions' | 'zones', options: Record<string, number> }> = {
   'Camuflaje de Estrías': {
-    zones: { 'Glúteos': 450000, 'Abdomen': 400000, 'Piernas': 500000, 'Caderas': 450000, 'Busto': 350000 }
+    type: 'sessions',
+    options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
   },
-  'Camuflaje de Cicatrices': {
-    zones: { 'Pequeñas': 250000, 'Medianas': 400000, 'Extensas': 600000 }
+  'Estimulación de Colágeno (Estrías)': {
+    type: 'sessions',
+    options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
   },
-  'Regeneración de Estrías': {
-    zones: { 'Áreas localizadas': 300000, 'Áreas amplias': 500000 }
-  },
-  'Regeneración de Cicatrices': {
-    zones: { 'Localizadas': 250000, 'Múltiples': 450000 }
-  },
-  'Eliminación de Lunares': {
-    zones: { '1 a 3 lesiones': 200000, 'Paquete hasta 5 lesiones': 350000 }
-  },
-  'Eliminación de Verrugas': {
-    zones: { '1 a 3 lesiones': 200000, 'Paquete hasta 5 lesiones': 350000 }
-  },
-  'Eliminación de Acrocordones': {
-    zones: { 'Zona cuello / axilas (Sesión)': 250000 }
+  'Eliminación de Lunares, Verrugas y Acrocordones': {
+    type: 'zones',
+    options: {
+      'Cuello y escote': 200000,
+      'Rostro': 250000,
+      'Zona íntima (pelvis e ingle)': 350000,
+      'Manos o pies': 150000,
+      'Espalda': 250000,
+      'Cabeza': 200000,
+      'Piernas': 150000
+    }
   }
 }
 
 const TIME_SLOTS = [
-  '09:00', '10:00', '11:00', '12:00', 
+  '10:00', '11:00', '12:00', '13:00', 
   '14:00', '15:00', '16:00', '17:00', '18:00'
 ]
 
@@ -108,8 +74,15 @@ export default function Page() {
   const [bookedTimes, setBookedTimes] = useState<string[]>([])
   const [selectedTime, setSelectedTime] = useState('')
   
+  // Cotizador interactivo
   const [cotizadorService, setCotizadorService] = useState(SERVICES[0].name)
-  const [cotizadorZone, setCotizadorZone] = useState('Glúteos')
+  const [cotizadorOption, setCotizadorOption] = useState('1 Sesión')
+
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Modal policies state
+  const [isPoliciesOpen, setIsPoliciesOpen] = useState(false)
 
   const [clientName, setClientName] = useState('')
   const [clientPhone, setClientPhone] = useState('')
@@ -117,10 +90,11 @@ export default function Page() {
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
+  // Actualizar opciones del cotizador al cambiar de servicio
   useEffect(() => {
-    const zonesKeys = Object.keys(PRICING_DATA[cotizadorService]?.zones || {})
-    if (zonesKeys.length > 0) {
-      setCotizadorZone(zonesKeys[0])
+    const optionKeys = Object.keys(PRICING_DATA[cotizadorService]?.options || {})
+    if (optionKeys.length > 0) {
+      setCotizadorOption(optionKeys[0])
     }
   }, [cotizadorService])
 
@@ -174,7 +148,7 @@ export default function Page() {
     try {
       const payload = {
         service_name: selectedServices.join(', '),
-        body_zone: cotizadorZone,
+        body_zone: cotizadorOption,
         date: selectedDate,
         time_slot: selectedTime,
         client_name: clientName,
@@ -188,7 +162,7 @@ export default function Page() {
         throw new Error(error.message)
       }
 
-      setSuccessMsg('¡Cita agendada con éxito! Ya se encuentra registrada en el sistema y visible para el administrador.')
+      setSuccessMsg('¡Cita agendada con éxito! Ya se encuentra registrada en el sistema. Recuerda abonar la seña de 50.000 Gs para confirmar.')
       setClientName('')
       setClientPhone('')
       setSelectedTime('')
@@ -201,7 +175,8 @@ export default function Page() {
     }
   }
 
-  const currentPrice = PRICING_DATA[cotizadorService]?.zones[cotizadorZone] || 0
+  const currentPrice = PRICING_DATA[cotizadorService]?.options[cotizadorOption] || 0
+  const isPricingByZone = PRICING_DATA[cotizadorService]?.type === 'zones'
 
   return (
     <main className="min-h-screen bg-[#FDFBF7] text-[#3F3A36] selection:bg-[#D4B59E]/30 font-sans">
@@ -218,15 +193,21 @@ export default function Page() {
             <a href="#sobre-mi" className="hover:text-[#3F3A36] transition-colors">Sobre Mí</a>
             <a href="#servicios" className="hover:text-[#3F3A36] transition-colors">Servicios</a>
             <a href="#cotizador" className="hover:text-[#3F3A36] transition-colors">Cotizador</a>
+            <button 
+              onClick={() => setIsPoliciesOpen(true)}
+              className="hover:text-[#3F3A36] transition-colors uppercase tracking-widest text-sm font-medium text-[#6B635B] bg-transparent border-none cursor-pointer"
+            >
+              Políticas
+            </button>
             <a href="#contacto" className="hover:text-[#3F3A36] transition-colors">Contacto</a>
           </nav>
 
-          <a
-            href="#reserva"
-            className="bg-[#C5A880] hover:bg-[#B3966E] text-white px-6 py-3 rounded-full text-sm font-medium tracking-wide shadow-sm transition-all duration-300"
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-[#C5A880] hover:bg-[#B3966E] text-white px-6 py-3 rounded-full text-sm font-medium tracking-wide shadow-sm transition-all duration-300 cursor-pointer"
           >
             Reservar Cita
-          </a>
+          </button>
         </div>
       </header>
 
@@ -240,20 +221,20 @@ export default function Page() {
             Realza tu belleza natural y recupera la confianza en tu piel
           </h1>
           <p className="text-base sm:text-lg text-[#6B635B] font-light max-w-lg">
-            Especialista en camuflaje de estrías, cicatrices y eliminación estética de lesiones cutáneas con tecnología de vanguardia en Asunción.
+            Especialista en camuflaje de estrías, estimulación de colágeno y eliminación estética de lunares, verrugas y acrocordones en Asunción.
           </p>
           <div className="flex flex-wrap gap-4 pt-2">
-            <a
-              href="#reserva"
-              className="bg-[#4E443F] hover:bg-[#3F3A36] text-white px-8 py-4 rounded-full text-sm font-medium tracking-wide shadow-md transition-all"
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-[#4E443F] hover:bg-[#3F3A36] text-white px-8 py-4 rounded-full text-sm font-medium tracking-wide shadow-md transition-all cursor-pointer"
             >
               Reservar Turno Ahora
-            </a>
+            </button>
             <a
-              href="https://maps.google.com/?q=Overava+674,+Asuncion"
+              href="https://maps.google.com/maps?q=-25.27239227294922%2C-57.551177978515625&z=17&hl=es"
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-[#D4C5B9] hover:border-[#4E443F] text-[#4E443F] px-8 py-4 rounded-full text-sm font-medium tracking-wide transition-all"
+              className="border border-[#D4C5B9] hover:border-[#4E443F] text-[#4E443F] px-8 py-4 rounded-full text-sm font-medium tracking-wide transition-all inline-flex items-center justify-center"
             >
               Cómo Llegar (Overava 674)
             </a>
@@ -287,10 +268,10 @@ export default function Page() {
               Me especializo en tratamientos estéticos avanzados con un enfoque altamente profesional, riguroso y personalizado para cada paciente. Mi objetivo principal es brindarte un espacio seguro donde puedas mejorar la salud y apariencia de tu piel.
             </p>
             <p>
-              Cuento con especialización avanzada en camuflaje de estrías y cicatrices, regeneración cutánea y eliminación segura de lunares, verrugas y acrocordones.
+              Cuento con especialización en camuflaje de estrías y cicatrices, así como en la eliminación estética de lunares, verrugas y acrocordones.
             </p>
             <div className="p-4 bg-[#F3EDE2]/60 rounded-2xl border border-[#E9E1D4] text-[#4E443F] text-sm font-medium">
-              ✨ Atención personalizada en Barrio Salvador del Mundo, Asunción.
+              ✨ Atención personalizada en Barrio Salvador del Mundo, Asunción (Overava 674).
             </div>
           </div>
 
@@ -304,10 +285,10 @@ export default function Page() {
                 <span className="text-[#C5A880] font-bold">✓</span> Estrictos protocolos de higiene, bioseguridad y confort.
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-[#C5A880] font-bold">✓</span> Tarifas transparentes adaptadas por zona corporal.
+                <span className="text-[#C5A880] font-bold">✓</span> Precios claros adaptados por zonas del cuerpo o sesiones.
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-[#C5A880] font-bold">✓</span> Tecnología y pigmentos seguros para tu piel.
+                <span className="text-[#C5A880] font-bold">✓</span> Tecnología segura y evaluación previa profesional.
               </li>
             </ul>
           </div>
@@ -318,11 +299,11 @@ export default function Page() {
       <section id="servicios" className="max-w-7xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-16">
           <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Nuestros Servicios</h2>
-          <p className="text-[#6B635B] font-light">Tratamientos totalmente separados y especializados para cada necesidad de tu piel.</p>
+          <p className="text-[#6B635B] font-light">Tratamientos especializados para cada necesidad de tu piel.</p>
           <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {SERVICES.map((s) => (
             <div key={s.id} className="bg-white rounded-3xl border border-[#EFECE6] shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
@@ -335,15 +316,18 @@ export default function Page() {
 
               <div className="space-y-4 pt-4 border-t border-[#F5F2EC]">
                 <div className="text-xs text-[#7A7067] bg-[#FAF8F5] p-3 rounded-xl border border-[#EFECE6]">
-                  <strong className="text-[#4E443F]">Zonas:</strong> {s.zonesText}
+                  <strong className="text-[#4E443F]">Zonas / Áreas:</strong> {s.zonesText}
                 </div>
-                <a
-                  href="#reserva"
-                  onClick={() => setSelectedServices([s.name])}
-                  className="w-full block text-center bg-[#4E443F] hover:bg-[#3F3A36] text-white py-3 rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors"
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedServices([s.name])
+                    setIsModalOpen(true)
+                  }}
+                  className="w-full block text-center bg-[#4E443F] hover:bg-[#3F3A36] text-white py-3 rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
                 >
                   Agendar Turno
-                </a>
+                </button>
               </div>
             </div>
           ))}
@@ -353,8 +337,8 @@ export default function Page() {
       {/* COTIZADOR INTERACTIVO */}
       <section id="cotizador" className="max-w-4xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-12">
-          <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Cotizador Interactivo por Zona y Tratamiento</h2>
-          <p className="text-[#6B635B] font-light">Selecciona el tratamiento específico y la parte del cuerpo para conocer el estimado.</p>
+          <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Cotizador Interactivo</h2>
+          <p className="text-[#6B635B] font-light">Calcula el valor de tu tratamiento según la modalidad o zona del cuerpo.</p>
           <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
         </div>
 
@@ -374,14 +358,16 @@ export default function Page() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">2. Selecciona la Parte del Cuerpo / Cantidad:</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">
+                {isPricingByZone ? '2. Selecciona la Zona Corporal:' : '2. Selecciona la Cantidad de Sesiones:'}
+              </label>
               <select
-                value={cotizadorZone}
-                onChange={(e) => setCotizadorZone(e.target.value)}
+                value={cotizadorOption}
+                onChange={(e) => setCotizadorOption(e.target.value)}
                 className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-2xl p-4 text-sm text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
               >
-                {Object.keys(PRICING_DATA[cotizadorService]?.zones || {}).map((zone) => (
-                  <option key={zone} value={zone}>{zone}</option>
+                {Object.keys(PRICING_DATA[cotizadorService]?.options || {}).map((opt) => (
+                  <option key={opt} value={opt}>{opt}</option>
                 ))}
               </select>
             </div>
@@ -389,9 +375,11 @@ export default function Page() {
 
           <div className="bg-[#FAF8F5] p-6 rounded-2xl border border-[#EFECE6] flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
-              <span className="text-[10px] font-bold tracking-widest text-[#8C7355] uppercase block mb-1">Cotización Estimada</span>
-              <h4 className="text-lg font-serif text-[#3F3A36]">Zona de {cotizadorZone} (por sesión)</h4>
-              <p className="text-xs text-[#7A7067] font-light">Tarifa calculada según zona o cantidad seleccionada.</p>
+              <span className="text-[10px] font-bold tracking-widest text-[#8C7355] uppercase block mb-1">Inversión Estimada</span>
+              <h4 className="text-lg font-serif text-[#3F3A36]">{cotizadorOption} — {cotizadorService}</h4>
+              <p className="text-xs text-[#7A7067] font-light">
+                {isPricingByZone ? 'Precio por zona específica de tratamiento.' : 'Paquete de sesiones recomendadas.'}
+              </p>
             </div>
             <div className="text-right">
               <span className="text-3xl font-serif font-normal text-[#4E443F]">
@@ -401,13 +389,16 @@ export default function Page() {
           </div>
 
           <div className="text-center pt-2">
-            <a
-              href="#reserva"
-              onClick={() => setSelectedServices([cotizadorService])}
-              className="inline-block bg-[#4E443F] hover:bg-[#3F3A36] text-white px-8 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors"
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedServices([cotizadorService])
+                setIsModalOpen(true)
+              }}
+              className="inline-block bg-[#4E443F] hover:bg-[#3F3A36] text-white px-8 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
             >
               Reservar con esta cotización
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -430,7 +421,7 @@ export default function Page() {
           </div>
           <div className="p-6 text-center bg-[#FAF8F5] border-t border-[#EFECE6]">
             <p className="text-sm font-light text-[#6B635B]">
-              Camuflaje de estrías — Resultado visible después de sesión en zona corporal.
+              Camuflaje de estrías y mejora de piel — Resultado profesional visible.
             </p>
           </div>
         </div>
@@ -457,175 +448,6 @@ export default function Page() {
         </div>
       </section>
 
-      {/* POLÍTICAS */}
-      <section className="max-w-4xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
-        <div className="text-center space-y-3 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Políticas de Reserva y Citas</h2>
-          <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
-        </div>
-
-        <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#EFECE6] shadow-sm">
-          <ul className="space-y-4 text-sm text-[#6B635B] font-light leading-relaxed">
-            <li className="flex items-start gap-3">
-              <span className="text-[#C5A880] font-bold">•</span> Para confirmar la cita, se deberá abonar una <strong className="text-[#3F3A36] font-medium">reserva de Gs. 50.000</strong>.
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#C5A880] font-bold">•</span> El monto abonado en concepto de reserva <strong className="text-[#3F3A36] font-medium">no es reembolsable</strong>.
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#C5A880] font-bold">•</span> Si necesitás cancelar o reprogramar tu cita, solicitamos avisar <strong className="text-[#3F3A36] font-medium">con al menos 24 horas de anticipación</strong> para reagendar según disponibilidad.
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#C5A880] font-bold">•</span> Las cancelaciones con menos de 24 horas o inasistencia implican la pérdida de los Gs. 50.000.
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#C5A880] font-bold">•</span> Se establece un <strong className="text-[#3F3A36] font-medium">tiempo máximo de tolerancia de 15 minutos</strong> desde el horario reservado.
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      {/* SECCIÓN DE RESERVA */}
-      <section id="reserva" className="max-w-4xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
-        <div className="text-center space-y-3 mb-12">
-          <span className="text-xs uppercase tracking-[0.3em] text-[#8C7355] font-bold">Agenda en Línea</span>
-          <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Reserva tu Cita</h2>
-          <p className="text-[#6B635B] font-light text-sm">Selecciona tus tratamientos, fecha, hora y completa tus datos para registrar tu cita directamente en la base de datos.</p>
-          <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
-        </div>
-
-        {successMsg && (
-          <div className="mb-6 p-4 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-2xl text-center text-sm font-medium shadow-sm">
-            {successMsg}
-          </div>
-        )}
-
-        {errorMsg && (
-          <div className="mb-6 p-4 bg-rose-50 border border-rose-300 text-rose-800 rounded-2xl text-center text-sm font-medium shadow-sm">
-            {errorMsg}
-          </div>
-        )}
-
-        <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#EFECE6] shadow-sm space-y-8">
-          
-          <div className="space-y-4">
-            <div className="flex items-center justify-between border-b border-[#FAF8F5] pb-3">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-[#3F3A36]">1. Selecciona Tratamiento(s)</h3>
-              <span className="text-xs text-[#8C7355] font-bold">{selectedServices.length} seleccionado(s)</span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {SERVICES.map((s) => {
-                const isSelected = selectedServices.includes(s.name)
-                return (
-                  <button
-                    type="button"
-                    key={s.id}
-                    onClick={() => toggleService(s.name)}
-                    className={`p-4 rounded-2xl border text-left text-sm font-medium transition-all flex items-center justify-between ${
-                      isSelected
-                        ? 'border-[#4E443F] bg-[#FAF8F5] text-[#3F3A36] shadow-sm'
-                        : 'border-[#EFECE6] bg-white text-[#6B635B] hover:border-[#D4C5B9]'
-                    }`}
-                  >
-                    <span>{s.name}</span>
-                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${isSelected ? 'bg-[#4E443F] text-white' : 'border border-[#D4C5B9] text-transparent'}`}>✓</span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
-          <form onSubmit={handleBooking} className="space-y-8 pt-6 border-t border-[#EFECE6]">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-[#3F3A36]">2. Fecha y Horario Disponible</h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">Fecha de la Cita</label>
-                <input
-                  type="date"
-                  min={new Date().toISOString().split('T')[0]}
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-2xl p-4 text-sm text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">Horarios</label>
-                {!selectedDate ? (
-                  <div className="h-[54px] flex items-center px-4 bg-[#FAF8F5] border border-[#D4C5B9] rounded-2xl text-xs text-[#7A7067] italic">
-                    Selecciona una fecha primero
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-3 gap-2">
-                    {TIME_SLOTS.map((time) => {
-                      const isBooked = bookedTimes.includes(time)
-                      const isSelected = selectedTime === time
-
-                      return (
-                        <button
-                          type="button"
-                          key={time}
-                          disabled={isBooked}
-                          onClick={() => setSelectedTime(time)}
-                          className={`py-3 text-xs rounded-xl font-semibold transition-all ${
-                            isBooked
-                              ? 'bg-neutral-100 text-neutral-400 line-through cursor-not-allowed border border-neutral-200'
-                              : isSelected
-                              ? 'bg-[#4E443F] text-white shadow-sm border border-[#4E443F]'
-                              : 'bg-[#FAF8F5] border border-[#D4C5B9] text-[#6B635B] hover:border-[#4E443F]'
-                          }`}
-                        >
-                          {time}
-                        </button>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="pt-6 border-t border-[#EFECE6] space-y-6">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-[#3F3A36]">3. Tus Datos de Contacto</h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">Nombre y Apellido</label>
-                  <input
-                    type="text"
-                    placeholder="Ej. María Gómez"
-                    value={clientName}
-                    onChange={(e) => setClientName(e.target.value)}
-                    className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-2xl p-4 text-sm text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">Teléfono / WhatsApp</label>
-                  <input
-                    type="tel"
-                    placeholder="Ej. 0981 123 456"
-                    value={clientPhone}
-                    onChange={(e) => setClientPhone(e.target.value)}
-                    className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-2xl p-4 text-sm text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-4 bg-[#4E443F] hover:bg-[#3F3A36] text-white font-bold rounded-2xl shadow-md transition-all duration-300 disabled:opacity-50 text-sm tracking-widest uppercase"
-            >
-              {loading ? 'Registrando en la Base de Datos...' : 'Confirmar Reserva en el Sistema'}
-            </button>
-          </form>
-
-        </div>
-      </section>
-
       {/* FOOTER */}
       <footer id="contacto" className="bg-[#2D2825] text-[#D4C5B9] py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -643,7 +465,7 @@ export default function Page() {
               Asunción, Paraguay
             </p>
             <a
-              href="https://maps.google.com/?q=Overava+674,+Asuncion"
+              href="https://maps.google.com/maps?q=-25.27239227294922%2C-57.551177978515625&z=17&hl=es"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block text-xs font-semibold text-[#C5A880] hover:underline pt-1"
@@ -655,7 +477,7 @@ export default function Page() {
           <div className="space-y-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-white">Contacto y Consultas</h3>
             <p className="text-sm font-light text-[#A69B92]">
-              Canales oficiales de atención directa.
+              Atención de lunes a sábados de 10:00 a 19:00 hs.
             </p>
             <a
               href="https://wa.me/595981123456"
@@ -668,6 +490,212 @@ export default function Page() {
           </div>
         </div>
       </footer>
+
+      {/* MODAL DE RESERVA EMERGENTE */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <div className="bg-[#FDFBF7] w-full max-w-2xl rounded-3xl shadow-2xl border border-[#EFECE6] p-6 sm:p-8 relative my-8 max-h-[90vh] overflow-y-auto">
+            
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#FAF8F5] border border-[#D4C5B9] text-[#3F3A36] flex items-center justify-center hover:bg-[#EFECE6] transition-colors font-bold cursor-pointer"
+            >
+              ✕
+            </button>
+
+            <div className="text-center space-y-2 mb-8 pr-10">
+              <span className="text-xs uppercase tracking-[0.3em] text-[#8C7355] font-bold">Agenda en Línea</span>
+              <h2 className="text-2xl sm:text-3xl font-serif text-[#3F3A36]">Reserva tu Cita</h2>
+              <p className="text-[#6B635B] font-light text-xs">Completa los pasos para registrar tu turno en el sistema.</p>
+            </div>
+
+            {successMsg && (
+              <div className="mb-6 p-4 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-2xl text-center text-sm font-medium shadow-sm">
+                {successMsg}
+              </div>
+            )}
+
+            {errorMsg && (
+              <div className="mb-6 p-4 bg-rose-50 border border-rose-300 text-rose-800 rounded-2xl text-center text-sm font-medium shadow-sm">
+                {errorMsg}
+              </div>
+            )}
+
+            <div className="space-y-6">
+              
+              {/* 1. Selección de Servicios */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between border-b border-[#FAF8F5] pb-2">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">1. Tratamiento(s)</h3>
+                  <span className="text-xs text-[#8C7355] font-bold">{selectedServices.length} seleccionado(s)</span>
+                </div>
+
+                <div className="grid grid-cols-1 gap-2">
+                  {SERVICES.map((s) => {
+                    const isSelected = selectedServices.includes(s.name)
+                    return (
+                      <button
+                        type="button"
+                        key={s.id}
+                        onClick={() => toggleService(s.name)}
+                        className={`p-3 rounded-2xl border text-left text-xs font-medium transition-all flex items-center justify-between cursor-pointer ${
+                          isSelected
+                            ? 'border-[#4E443F] bg-[#FAF8F5] text-[#3F3A36] shadow-sm'
+                            : 'border-[#EFECE6] bg-white text-[#6B635B] hover:border-[#D4C5B9]'
+                        }`}
+                      >
+                        <span>{s.name}</span>
+                        <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${isSelected ? 'bg-[#4E443F] text-white' : 'border border-[#D4C5B9] text-transparent'}`}>✓</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              <form onSubmit={handleBooking} className="space-y-6 pt-4 border-t border-[#EFECE6]">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">2. Fecha y Horario Disponible</h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Fecha</label>
+                    <input
+                      type="date"
+                      min={new Date().toISOString().split('T')[0]}
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-xl p-3 text-xs text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Horarios</label>
+                    {!selectedDate ? (
+                      <div className="h-[46px] flex items-center px-4 bg-[#FAF8F5] border border-[#D4C5B9] rounded-xl text-xs text-[#7A7067] italic">
+                        Elige fecha primero
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-3 gap-1.5">
+                        {TIME_SLOTS.map((time) => {
+                          const isBooked = bookedTimes.includes(time)
+                          const isSelected = selectedTime === time
+
+                          return (
+                            <button
+                              type="button"
+                              key={time}
+                              disabled={isBooked}
+                              onClick={() => setSelectedTime(time)}
+                              className={`py-2 text-[11px] rounded-lg font-semibold transition-all cursor-pointer ${
+                                isBooked
+                                  ? 'bg-neutral-100 text-neutral-400 line-through cursor-not-allowed border border-neutral-200'
+                                  : isSelected
+                                  ? 'bg-[#4E443F] text-white shadow-sm border border-[#4E443F]'
+                                  : 'bg-[#FAF8F5] border border-[#D4C5B9] text-[#6B635B] hover:border-[#4E443F]'
+                              }`}
+                            >
+                              {time}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-[#EFECE6] space-y-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">3. Tus Datos de Contacto</h3>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Nombre y Apellido</label>
+                      <input
+                        type="text"
+                        placeholder="Ej. María Gómez"
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                        className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-xl p-3 text-xs text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Teléfono / WhatsApp</label>
+                      <input
+                        type="tel"
+                        placeholder="Ej. 0981 123 456"
+                        value={clientPhone}
+                        onChange={(e) => setClientPhone(e.target.value)}
+                        className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-xl p-3 text-xs text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-[#8C7355] italic text-center">
+                  * Para confirmar el turno se requiere abonar una seña de Gs. 50.000 (no reembolsable).
+                </p>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3.5 bg-[#4E443F] hover:bg-[#3F3A36] text-white font-bold rounded-xl shadow-md transition-all duration-300 disabled:opacity-50 text-xs tracking-widest uppercase cursor-pointer"
+                >
+                  {loading ? 'Registrando...' : 'Confirmar Reserva en el Sistema'}
+                </button>
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE POLÍTICAS */}
+      {isPoliciesOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <div className="bg-[#FDFBF7] w-full max-w-xl rounded-3xl shadow-2xl border border-[#EFECE6] p-6 sm:p-8 relative my-8 max-h-[90vh] overflow-y-auto">
+            
+            <button 
+              onClick={() => setIsPoliciesOpen(false)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#FAF8F5] border border-[#D4C5B9] text-[#3F3A36] flex items-center justify-center hover:bg-[#EFECE6] transition-colors font-bold cursor-pointer"
+            >
+              ✕
+            </button>
+
+            <div className="text-center space-y-2 mb-6 pr-10">
+              <span className="text-xs uppercase tracking-[0.3em] text-[#8C7355] font-bold">Información Importante</span>
+              <h2 className="text-2xl sm:text-3xl font-serif text-[#3F3A36]">Políticas de Reserva y Citas</h2>
+            </div>
+
+            <div className="space-y-4 text-xs sm:text-sm text-[#6B635B] font-light leading-relaxed bg-[#FAF8F5] p-6 rounded-2xl border border-[#EFECE6]">
+              <p className="flex items-start gap-2.5">
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Para confirmar la cita, se deberá abonar una <strong>reserva de Gs. 50.000</strong> Cami Isla].
+              </p>
+              <p className="flex items-start gap-2.5">
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> El monto abonado en concepto de reserva <strong>no es reembolsable</strong> Cami Isla].
+              </p>
+              <p className="flex items-start gap-2.5">
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Si necesitás cancelar o reprogramar tu cita, solicitamos avisar <strong>con al menos 24 horas de anticipación</strong> Cami Isla].
+              </p>
+              <p className="flex items-start gap-2.5">
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Las cancelaciones con menos de 24 horas o inasistencia implican la <strong>pérdida de los Gs. 50.000</strong> Cami Isla].
+              </p>
+              <p className="flex items-start gap-2.5">
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Se establece un <strong>tiempo máximo de tolerancia de 15 minutos</strong> desde el horario reservado Cami Isla].
+              </p>
+            </div>
+
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setIsPoliciesOpen(false)}
+                className="bg-[#4E443F] hover:bg-[#3F3A36] text-white px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
+              >
+                Entendido
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </main>
   )
