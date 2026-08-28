@@ -132,12 +132,14 @@ export default function Home() {
       return;
     }
 
+    // Inserción mapeada exactamente a los nombres de tus columnas en Supabase
     const { error } = await supabase.from('bookings').insert([{
       client_name: clientName,
       client_phone: clientPhone,
-      client_date: clientDate,
-      client_time: timeOnly,
-      selected_services: selectedServices,
+      service_name: selectedServices.join(', '),
+      body_zone: 'General',
+      date: clientDate,
+      time_slot: timeOnly,
       status: 'Confirmado'
     }]);
 
@@ -409,7 +411,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER CON EL ENLACE UNIVERSAL DE WHATSAPP Y EL DE INSTAGRAM */}
+      {/* FOOTER */}
       <footer id="contacto" className="bg-[#2c2c2c] text-[#d6d6d6] py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
           <div className="space-y-3">
@@ -460,7 +462,7 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* MODAL DE RESERVA CON CHECKBOXES MÚLTIPLES */}
+      {/* MODAL DE RESERVA */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white max-w-lg w-full rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
