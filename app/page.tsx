@@ -12,24 +12,49 @@ const SERVICES = [
     id: 'camuflaje_estrias',
     name: 'Camuflaje de Estrías',
     category: 'ESTÉTICA CORPORAL',
-    duration: '30-90 min',
-    description: 'Procedimiento estético que busca disimular visualmente las estrías aplicando pigmentos seleccionados de acuerdo al tono de piel.',
+    description: 'Procedimiento estético que busca disimular visualmente las estrías aplicando pigmentos seleccionados según el tono de piel.',
     zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
+  },
+  {
+    id: 'camuflaje_cicatrices',
+    name: 'Camuflaje de Cicatrices',
+    category: 'ESTÉTICA CORPORAL',
+    description: 'Técnica especializada para neutralizar y difuminar visualmente la diferencia de color en cicatrices.',
+    zonesText: 'Abdomen, piernas, glúteos, caderas, rostro, brazos, espalda'
   },
   {
     id: 'regeneracion_estrias',
     name: 'Estimulación de Colágeno (Estrías)',
     category: 'BIOESTIMULACIÓN',
-    duration: '60 min',
-    description: 'Tratamiento orientado a mejorar la textura y apariencia de las estrías estimulando la producción natural de colágeno y elastina.',
+    description: 'Tratamiento orientado a mejorar la textura y profundidad de las estrías estimulando la producción natural de colágeno.',
     zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
   },
   {
-    id: 'eliminacion_lesiones',
-    name: 'Eliminación de Lunares, Verrugas y Acrocordones',
+    id: 'regeneracion_cicatrices',
+    name: 'Estimulación de Colágeno (Cicatrices)',
+    category: 'BIOESTIMULACIÓN',
+    description: 'Inducción de colágeno para mejorar la textura, relieve y aspecto general de las cicatrices.',
+    zonesText: 'Rostro, cuerpo, espalda, extremidades'
+  },
+  {
+    id: 'eliminacion_lunares',
+    name: 'Eliminación de Lunares',
     category: 'ELECTROCAUTERIO / PLASMA',
-    duration: '10-15 min',
-    description: 'Remoción estética de pequeñas lesiones cutáneas benignas de forma precisa, mediante calor controlado y anestesia tópica.',
+    description: 'Remoción estética precisa de lunares benignos mediante tecnología de calor controlado y anestesia tópica.',
+    zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
+  },
+  {
+    id: 'eliminacion_verrugas',
+    name: 'Eliminación de Verrugas',
+    category: 'ELECTROCAUTERIO / PLASMA',
+    description: 'Eliminación segura y estética de verrugas cutáneas por zonas corporales.',
+    zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
+  },
+  {
+    id: 'eliminacion_acrocordones',
+    name: 'Eliminación de Acrocordones',
+    category: 'ELECTROCAUTERIO / PLASMA',
+    description: 'Extracción rápida y limpia de pequeños fibromas blandos o acrocordones (verruguitas de cuello/axilas).',
     zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
   }
 ]
@@ -39,11 +64,43 @@ const PRICING_DATA: Record<string, { type: 'sessions' | 'zones', options: Record
     type: 'sessions',
     options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
   },
+  'Camuflaje de Cicatrices': {
+    type: 'sessions',
+    options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
+  },
   'Estimulación de Colágeno (Estrías)': {
     type: 'sessions',
     options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
   },
-  'Eliminación de Lunares, Verrugas y Acrocordones': {
+  'Estimulación de Colágeno (Cicatrices)': {
+    type: 'sessions',
+    options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
+  },
+  'Eliminación de Lunares': {
+    type: 'zones',
+    options: {
+      'Cuello y escote': 200000,
+      'Rostro': 250000,
+      'Zona íntima (pelvis e ingle)': 350000,
+      'Manos o pies': 150000,
+      'Espalda': 250000,
+      'Cabeza': 200000,
+      'Piernas': 150000
+    }
+  },
+  'Eliminación de Verrugas': {
+    type: 'zones',
+    options: {
+      'Cuello y escote': 200000,
+      'Rostro': 250000,
+      'Zona íntima (pelvis e ingle)': 350000,
+      'Manos o pies': 150000,
+      'Espalda': 250000,
+      'Cabeza': 200000,
+      'Piernas': 150000
+    }
+  },
+  'Eliminación de Acrocordones': {
     type: 'zones',
     options: {
       'Cuello y escote': 200000,
@@ -63,7 +120,6 @@ const TIME_SLOTS = [
 ]
 
 export default function Page() {
-  // Servicio seleccionado individualmente para el agendador
   const [selectedService, setSelectedService] = useState<string>(SERVICES[0].name)
   const [selectedOption, setSelectedOption] = useState<string>('1 Sesión')
 
@@ -71,11 +127,9 @@ export default function Page() {
   const [bookedTimes, setBookedTimes] = useState<string[]>([])
   const [selectedTime, setSelectedTime] = useState('')
   
-  // Cotizador interactivo
   const [cotizadorService, setCotizadorService] = useState(SERVICES[0].name)
   const [cotizadorOption, setCotizadorOption] = useState('1 Sesión')
 
-  // Modals state
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isPoliciesOpen, setIsPoliciesOpen] = useState(false)
 
@@ -85,7 +139,6 @@ export default function Page() {
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Actualizar opciones del agendador al cambiar de servicio
   useEffect(() => {
     const optionKeys = Object.keys(PRICING_DATA[selectedService]?.options || {})
     if (optionKeys.length > 0) {
@@ -93,7 +146,6 @@ export default function Page() {
     }
   }, [selectedService])
 
-  // Actualizar opciones del cotizador al cambiar de servicio
   useEffect(() => {
     const optionKeys = Object.keys(PRICING_DATA[cotizadorService]?.options || {})
     if (optionKeys.length > 0) {
@@ -112,7 +164,6 @@ export default function Page() {
           .eq('date', selectedDate)
 
         if (error) {
-          console.error('Error de Supabase al buscar citas:', error.message)
           setBookedTimes([])
           return
         }
@@ -121,7 +172,6 @@ export default function Page() {
           setBookedTimes(data.map((item: any) => item.time_slot))
         }
       } catch (err) {
-        console.error('Error inesperado:', err)
         setBookedTimes([])
       }
     }
@@ -163,8 +213,7 @@ export default function Page() {
       setSelectedTime('')
       setBookedTimes((prev) => [...prev, selectedTime])
     } catch (err: any) {
-      console.error('Error al insertar:', err)
-      setErrorMsg(`Error al guardar en Supabase: ${err.message || 'Verifica la conexión con la base de datos'}`)
+      setErrorMsg(`Error al guardar en Supabase: ${err.message || 'Verifica la conexión'}`)
     } finally {
       setLoading(false)
     }
@@ -219,7 +268,7 @@ export default function Page() {
             Realza tu belleza natural y recupera la confianza en tu piel
           </h1>
           <p className="text-base sm:text-lg text-[#6B635B] font-light max-w-lg">
-            Especialista en camuflaje de estrías, estimulación de colágeno y eliminación estética de lunares, verrugas y acrocordones en Asunción.
+            Tratamientos especializados e individualizados de camuflaje, bioestimulación y remoción estética en Asunción.
           </p>
           <div className="flex flex-wrap gap-4 pt-2">
             <button
@@ -263,10 +312,7 @@ export default function Page() {
               Hola, soy Camila Isla, Licenciada en Cosmetología.
             </p>
             <p>
-              Me especializo en tratamientos estéticos avanzados con un enfoque altamente profesional, riguroso y personalizado para cada paciente. Mi objetivo principal es brindarte un espacio seguro donde puedas mejorar la salud y apariencia de tu piel.
-            </p>
-            <p>
-              Cuento con especialización en camuflaje de estrías y cicatrices, así como en la eliminación estética de lunares, verrugas y acrocordones.
+              Me especializo en tratamientos estéticos avanzados con un enfoque altamente profesional y personalizado. Cada procedimiento cuenta con su protocolo específico y cotización detallada según la zona o sesiones requeridas.
             </p>
             <div className="p-4 bg-[#F3EDE2]/60 rounded-2xl border border-[#E9E1D4] text-[#4E443F] text-sm font-medium">
               ✨ Atención personalizada en Barrio Salvador del Mundo, Asunción (Overava 674).
@@ -283,25 +329,22 @@ export default function Page() {
                 <span className="text-[#C5A880] font-bold">✓</span> Estrictos protocolos de higiene, bioseguridad y confort.
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-[#C5A880] font-bold">✓</span> Precios claros adaptados por zonas del cuerpo o sesiones.
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-[#C5A880] font-bold">✓</span> Tecnología segura y evaluación previa profesional.
+                <span className="text-[#C5A880] font-bold">✓</span> Cotizaciones diferenciadas y transparentes por cada servicio.
               </li>
             </ul>
           </div>
         </div>
       </section>
 
-      {/* NUESTROS SERVICIOS */}
+      {/* NUESTROS SERVICIOS INDEPENDIENTES */}
       <section id="servicios" className="max-w-7xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-16">
           <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Nuestros Servicios</h2>
-          <p className="text-[#6B635B] font-light">Tratamientos especializados para cada necesidad de tu piel.</p>
+          <p className="text-[#6B635B] font-light">Tratamientos totalmente independientes con cotizaciones específicas.</p>
           <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES.map((s) => (
             <div key={s.id} className="bg-white rounded-3xl border border-[#EFECE6] shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
@@ -332,18 +375,18 @@ export default function Page() {
         </div>
       </section>
 
-      {/* COTIZADOR INTERACTIVO */}
+      {/* COTIZADOR INTERACTIVO SEPARADO */}
       <section id="cotizador" className="max-w-4xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-12">
           <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Cotizador Interactivo</h2>
-          <p className="text-[#6B635B] font-light">Calcula el valor de tu tratamiento según la modalidad o zona del cuerpo.</p>
+          <p className="text-[#6B635B] font-light">Calcula el valor exacto según el tratamiento independiente y su zona o sesiones.</p>
           <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
         </div>
 
         <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#EFECE6] shadow-sm space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">1. Selecciona el Tratamiento:</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">1. Selecciona el Servicio:</label>
               <select
                 value={cotizadorService}
                 onChange={(e) => setCotizadorService(e.target.value)}
@@ -376,7 +419,7 @@ export default function Page() {
               <span className="text-[10px] font-bold tracking-widest text-[#8C7355] uppercase block mb-1">Inversión Estimada</span>
               <h4 className="text-lg font-serif text-[#3F3A36]">{cotizadorOption} — {cotizadorService}</h4>
               <p className="text-xs text-[#7A7067] font-light">
-                {isCotizadorByZone ? 'Precio por zona específica de tratamiento.' : 'Paquete de sesiones recomendadas.'}
+                {isCotizadorByZone ? 'Precio cotizado por zona corporal específica.' : 'Precio cotizado por paquete de sesiones.'}
               </p>
             </div>
             <div className="text-right">
@@ -402,11 +445,11 @@ export default function Page() {
         </div>
       </section>
 
-      {/* RESULTADOS REALES (CORREGIDO CONTENEDOR DE IMAGEN) */}
+      {/* RESULTADOS REALES */}
       <section className="max-w-5xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-16">
           <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Resultados Reales</h2>
-          <p className="text-[#6B635B] font-light">Así se ve la evolución de nuestros tratamientos profesionales.</p>
+          <p className="text-[#6B635B] font-light">Evolución real en tratamientos corporales profesionales.</p>
           <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
         </div>
 
@@ -414,35 +457,14 @@ export default function Page() {
           <div className="w-full bg-[#FAF8F5] flex items-center justify-center p-4">
             <img 
               src="/resultado.jpg" 
-              alt="Resultado de Camuflaje de Estrías Antes y Después"
+              alt="Resultado antes y después"
               className="w-full h-auto max-h-[500px] object-contain rounded-2xl"
             />
           </div>
           <div className="p-6 text-center bg-[#FAF8F5] border-t border-[#EFECE6]">
             <p className="text-sm font-light text-[#6B635B]">
-              Camuflaje de estrías y mejora de piel — Resultado profesional visible.
+              Tratamiento especializado — Resultado profesional visible.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIOS */}
-      <section className="max-w-4xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
-        <div className="text-center space-y-3 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Lo que dicen nuestras clientas</h2>
-          <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
-        </div>
-
-        <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#EFECE6] shadow-sm space-y-6">
-          <p className="text-lg font-serif italic text-[#4E443F] leading-relaxed">
-            &quot;Buenas Tardes. Quedó súper bien la eliminación que me habías hecho. A los 7 días ya estaba súper bien ya 😄😄😄&quot;
-          </p>
-          <div className="flex items-center gap-3 pt-4 border-t border-[#FAF8F5]">
-            <div className="w-8 h-8 rounded-full bg-[#C5A880] text-white flex items-center justify-center text-xs font-bold">✓</div>
-            <div>
-              <h5 className="text-sm font-bold text-[#3F3A36]">Clienta Verificada</h5>
-              <span className="text-xs text-[#7A7067] font-light">Reseña verificada</span>
-            </div>
           </div>
         </div>
       </section>
@@ -490,7 +512,7 @@ export default function Page() {
         </div>
       </footer>
 
-      {/* MODAL DE RESERVA EMERGENTE (CORREGIDO PARA SELECCIONAR UN SOLO SERVICIO Y SU OPCIÓN CORRESPONDIENTE) */}
+      {/* MODAL DE RESERVA SEPARADO */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
           <div className="bg-[#FDFBF7] w-full max-w-2xl rounded-3xl shadow-2xl border border-[#EFECE6] p-6 sm:p-8 relative my-8 max-h-[90vh] overflow-y-auto">
@@ -505,7 +527,7 @@ export default function Page() {
             <div className="text-center space-y-2 mb-8 pr-10">
               <span className="text-xs uppercase tracking-[0.3em] text-[#8C7355] font-bold">Agenda en Línea</span>
               <h2 className="text-2xl sm:text-3xl font-serif text-[#3F3A36]">Reserva tu Cita</h2>
-              <p className="text-[#6B635B] font-light text-xs">Completa los pasos para registrar tu turno en el sistema.</p>
+              <p className="text-[#6B635B] font-light text-xs">Selecciona tu tratamiento independiente y completa tus datos.</p>
             </div>
 
             {successMsg && (
@@ -522,15 +544,14 @@ export default function Page() {
 
             <div className="space-y-6">
               
-              {/* 1. Selección Individual de Servicio y Opción */}
               <div className="space-y-4">
                 <div className="border-b border-[#FAF8F5] pb-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">1. Selecciona el Tratamiento y Opción</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">1. Selecciona el Servicio y Opción</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Tratamiento</label>
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Servicio Independiente</label>
                     <select
                       value={selectedService}
                       onChange={(e) => setSelectedService(e.target.value)}
@@ -559,7 +580,7 @@ export default function Page() {
                 </div>
 
                 <div className="bg-[#FAF8F5] p-3 rounded-xl border border-[#EFECE6] flex items-center justify-between text-xs">
-                  <span className="text-[#6B635B]">Precio del servicio seleccionado:</span>
+                  <span className="text-[#6B635B]">Valor del servicio:</span>
                   <span className="font-serif font-bold text-[#4E443F]">{currentPriceAgendador.toLocaleString('es-PY')} Gs</span>
                 </div>
               </div>
@@ -643,7 +664,7 @@ export default function Page() {
                 </div>
 
                 <p className="text-[11px] text-[#8C7355] italic text-center">
-                  * Para confirmar el turno se requiere abonar una seña de Gs. 50.000 (no reembolsable) Cami Isla].
+                  * Para confirmar el turno se requiere abonar una seña de Gs. 50.000 (no reembolsable).
                 </p>
 
                 <button
@@ -680,19 +701,19 @@ export default function Page() {
 
             <div className="space-y-4 text-xs sm:text-sm text-[#6B635B] font-light leading-relaxed bg-[#FAF8F5] p-6 rounded-2xl border border-[#EFECE6]">
               <p className="flex items-start gap-2.5">
-                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Para confirmar la cita, se deberá abonar una <strong>reserva de Gs. 50.000</strong> Cami Isla].
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Para confirmar la cita, se deberá abonar una <strong>reserva de Gs. 50.000</strong>.
               </p>
               <p className="flex items-start gap-2.5">
-                <span className="text-[#C5A880] font-bold mt-0.5">•</span> El monto abonado en concepto de reserva <strong>no es reembolsable</strong> Cami Isla].
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> El monto abonado en concepto de reserva <strong>no es reembolsable</strong>.
               </p>
               <p className="flex items-start gap-2.5">
-                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Si necesitás cancelar o reprogramar tu cita, solicitamos avisar <strong>con al menos 24 horas de anticipación</strong> Cami Isla].
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Si necesitás cancelar o reprogramar tu cita, solicitamos avisar <strong>con al menos 24 horas de anticipación</strong>.
               </p>
               <p className="flex items-start gap-2.5">
-                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Las cancelaciones con menos de 24 horas o inasistencia implican la <strong>pérdida de los Gs. 50.000</strong> Cami Isla].
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Las cancelaciones con menos de 24 horas o inasistencia implican la <strong>pérdida de los Gs. 50.000</strong>.
               </p>
               <p className="flex items-start gap-2.5">
-                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Se establece un <strong>tiempo máximo de tolerancia de 15 minutos</strong> desde el horario reservado Cami Isla].
+                <span className="text-[#C5A880] font-bold mt-0.5">•</span> Se establece un <strong>tiempo máximo de tolerancia de 15 minutos</strong> desde el horario reservado.
               </p>
             </div>
 
