@@ -24,16 +24,16 @@ const SERVICES = [
   },
   {
     id: 'regeneracion_estrias',
-    name: 'Estimulación de Colágeno (Estrías)',
+    name: 'Regeneración de Estrías',
     category: 'BIOESTIMULACIÓN',
-    description: 'Tratamiento orientado a mejorar la textura y profundidad de las estrías estimulando la producción natural de colágeno.',
+    description: 'Tratamiento orientado a mejorar la textura y profundidad de las estrías mediante la regeneración de la piel.',
     zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
   },
   {
     id: 'regeneracion_cicatrices',
-    name: 'Estimulación de Colágeno (Cicatrices)',
+    name: 'Regeneración de Cicatrices',
     category: 'BIOESTIMULACIÓN',
-    description: 'Inducción de colágeno para mejorar la textura, relieve y aspecto general de las cicatrices.',
+    description: 'Técnica avanzada para mejorar la textura, relieve y aspecto general de las cicatrices.',
     zonesText: 'Rostro, cuerpo, espalda, extremidades'
   },
   {
@@ -54,7 +54,7 @@ const SERVICES = [
     id: 'eliminacion_acrocordones',
     name: 'Eliminación de Acrocordones',
     category: 'ELECTROCAUTERIO / PLASMA',
-    description: 'Extracción rápida y limpia de pequeños fibromas blandos o acrocordones (verruguitas de cuello/axilas).',
+    description: 'Extracción rápida y limpia de pequeños fibromas blandos o acrocordones.',
     zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
   }
 ]
@@ -68,11 +68,11 @@ const PRICING_DATA: Record<string, { type: 'sessions' | 'zones', options: Record
     type: 'sessions',
     options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
   },
-  'Estimulación de Colágeno (Estrías)': {
+  'Regeneración de Estrías': {
     type: 'sessions',
     options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
   },
-  'Estimulación de Colágeno (Cicatrices)': {
+  'Regeneración de Cicatrices': {
     type: 'sessions',
     options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
   },
@@ -268,7 +268,7 @@ export default function Page() {
             Realza tu belleza natural y recupera la confianza en tu piel
           </h1>
           <p className="text-base sm:text-lg text-[#6B635B] font-light max-w-lg">
-            Tratamientos especializados e individualizados de camuflaje, bioestimulación y remoción estética en Asunción.
+            Tratamientos especializados e individualizados de camuflaje, regeneración y remoción estética en Asunción.
           </p>
           <div className="flex flex-wrap gap-4 pt-2">
             <button
