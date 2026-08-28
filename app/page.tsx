@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -74,10 +75,11 @@ export default function Home() {
             </div>
             <div className="flex justify-center">
               <div className="relative w-72 h-96 sm:w-80 sm:h-[420px] rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-[#e8ded1]">
-                <img
+                <Image
                   src="/cami.jpg"
                   alt="Camila Isla - Cosmetóloga"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
             </div>
@@ -144,7 +146,6 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Servicio 1 */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-4">
                 <span className="text-xs uppercase tracking-widest text-[#b88686] font-semibold">Técnica Avanzada</span>
@@ -167,7 +168,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Servicio 2 */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-4">
                 <span className="text-xs uppercase tracking-widest text-[#b88686] font-semibold">Regeneración Cutánea</span>
@@ -190,7 +190,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Servicio 3 */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-4">
                 <span className="text-xs uppercase tracking-widest text-[#b88686] font-semibold">Tecnología Plasma Pen</span>
@@ -225,13 +224,16 @@ export default function Home() {
             <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
           </div>
           <div className="flex justify-center">
-            <div className="max-w-xl rounded-2xl overflow-hidden shadow-lg border border-[#e6dfd5]">
-              <img
-                src="/antes-despues.jpg"
-                alt="Antes y Después Camuflaje de Estrías"
-                className="w-full h-auto object-cover"
-              />
-              <div className="p-4 bg-[#faf8f5] text-center text-sm font-medium text-[#4a3b32]">
+            <div className="max-w-xl w-full rounded-2xl overflow-hidden shadow-lg border border-[#e6dfd5] bg-gray-50">
+              <div className="relative w-full h-[350px] sm:h-[420px]">
+                <Image
+                  src="/resultado.jpg"
+                  alt="Antes y Después Camuflaje de Estrías"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <div className="p-4 bg-[#faf8f5] text-center text-sm font-medium text-[#4a3b32] border-t border-[#e6dfd5]">
                 Camuflaje de estrías — Resultado visible después de 2 sesiones.
               </div>
             </div>
