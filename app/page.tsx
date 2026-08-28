@@ -409,7 +409,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER CON TUS ENLACES EXACTOS DE INSTAGRAM Y WHATSAPP */}
+      {/* FOOTER CON EL ENLACE EXACTO DE WHATSAPP Y EL DE INSTAGRAM */}
       <footer id="contacto" className="bg-[#2c2c2c] text-[#d6d6d6] py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
           <div className="space-y-3">
