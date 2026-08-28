@@ -13,6 +13,13 @@ const SERVICES = [
     name: 'Camuflaje de Estrías',
     category: 'ESTÉTICA CORPORAL',
     description: 'Procedimiento estético que busca disimular visualmente las estrías aplicando pigmentos seleccionados según el tono de piel.',
+    technology: 'Se emplea un dermógrafo de precisión, que permite implantar pigmentos específicos en la piel de manera controlada, buscando uniformar el color de la estría con la zona circundante.',
+    benefits: [
+      'Reduce visualmente el contraste de las estrías.',
+      'Ayuda a obtener una apariencia más uniforme de la piel.',
+      'El pigmento se adapta al tono de piel de cada persona.',
+      'Es una alternativa estética para estrías ya estabilizadas.'
+    ],
     zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
   },
   {
@@ -20,41 +27,55 @@ const SERVICES = [
     name: 'Camuflaje de Cicatrices',
     category: 'ESTÉTICA CORPORAL',
     description: 'Técnica especializada para neutralizar y difuminar visualmente la diferencia de color en cicatrices.',
+    technology: 'Se emplea dermógrafo y pigmentos específicos para neutralizar el tono de la cicatriz igualándolo al tejido circundante.',
+    benefits: [
+      'Neutraliza y difumina la diferencia de color en las cicatrices.',
+      'Mejora notablemente la integración visual del tejido afectado.',
+      'Aporta una apariencia más homogénea y cuidada.'
+    ],
     zonesText: 'Abdomen, piernas, glúteos, caderas, rostro, brazos, espalda'
   },
   {
     id: 'regeneracion_estrias',
     name: 'Regeneración de Estrías',
     category: 'BIOESTIMULACIÓN',
-    description: 'Tratamiento orientado a mejorar la textura y profundidad de las estrías mediante la regeneración de la piel.',
+    description: 'Tratamiento orientado a mejorar la textura y apariencia de las estrías estimulando el proceso natural de regeneración de la piel, sin utilizar pigmentos para cubrirlas.',
+    technology: 'Se trabaja mediante una técnica de bioestimulación controlada de la piel, destinada a favorecer la producción natural de colágeno y elastina.',
+    benefits: [
+      'Favorece la regeneración de la piel.',
+      'Estimula la producción natural de colágeno.',
+      'Puede mejorar progresivamente la textura de las estrías.',
+      'Ayuda a que la piel tenga una apariencia más uniforme.',
+      'No depende de un pigmento para conseguir el resultado.'
+    ],
     zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
   },
   {
     id: 'regeneracion_cicatrices',
     name: 'Regeneración de Cicatrices',
     category: 'BIOESTIMULACIÓN',
-    description: 'Técnica avanzada para mejorar la textura, relieve y aspecto general de las cicatrices.',
+    description: 'Técnica avanzada para mejorar la textura, relieve y aspecto general de las cicatrices mediante bioestimulación.',
+    technology: 'Técnicas de bioestimulação cutánea para activar la reparación celular, mejorando el relieve y la flexibilidad del tejido.',
+    benefits: [
+      'Mejora la textura, relieve y flexibilidad de la cicatriz.',
+      'Estimula la renovación de los tejidos profundos.',
+      'Favorece una apariencia de la piel mucho más suave y uniforme.'
+    ],
     zonesText: 'Rostro, cuerpo, espalda, extremidades'
   },
   {
-    id: 'eliminacion_lunares',
-    name: 'Eliminación de Lunares',
+    id: 'eliminacion_lesiones',
+    name: 'Eliminación de Lunares, Verrugas y Acrocordones',
     category: 'ELECTROCAUTERIO / PLASMA',
-    description: 'Remoción estética precisa de lunares benignos mediante tecnología de calor controlado y anestesia tópica.',
-    zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
-  },
-  {
-    id: 'eliminacion_verrugas',
-    name: 'Eliminación de Verrugas',
-    category: 'ELECTROCAUTERIO / PLASMA',
-    description: 'Eliminación segura y estética de verrugas cutáneas por zonas corporales.',
-    zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
-  },
-  {
-    id: 'eliminacion_acrocordones',
-    name: 'Eliminación de Acrocordones',
-    category: 'ELECTROCAUTERIO / PLASMA',
-    description: 'Extracción rápida y limpia de pequeños fibromas blandos o acrocordones.',
+    description: 'Procedimiento dirigido a la remoción estética de pequeñas lesiones cutáneas benignas, previa valoración profesional.',
+    technology: 'Se utiliza tecnología de plasma (Plasma Pen / Jato de Plasma), que permite trabajar con alta precisión sobre la lesión produciendo una acción controlada.',
+    benefits: [
+      'Alta precisión sobre pequeñas lesiones.',
+      'Tratamiento localizado en la zona específica.',
+      'Procedimiento mínimamente invasivo.',
+      'Favorece una recuperación progresiva de la piel.',
+      'Puede mejorar considerablemente la apariencia estética de la zona.'
+    ],
     zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
   }
 ]
@@ -76,31 +97,7 @@ const PRICING_DATA: Record<string, { type: 'sessions' | 'zones', options: Record
     type: 'sessions',
     options: { '1 Sesión': 350000, '2 Sesiones': 500000, '3 Sesiones': 850000 }
   },
-  'Eliminación de Lunares': {
-    type: 'zones',
-    options: {
-      'Cuello y escote': 200000,
-      'Rostro': 250000,
-      'Zona íntima (pelvis e ingle)': 350000,
-      'Manos o pies': 150000,
-      'Espalda': 250000,
-      'Cabeza': 200000,
-      'Piernas': 150000
-    }
-  },
-  'Eliminación de Verrugas': {
-    type: 'zones',
-    options: {
-      'Cuello y escote': 200000,
-      'Rostro': 250000,
-      'Zona íntima (pelvis e ingle)': 350000,
-      'Manos o pies': 150000,
-      'Espalda': 250000,
-      'Cabeza': 200000,
-      'Piernas': 150000
-    }
-  },
-  'Eliminación de Acrocordones': {
+  'Eliminación de Lunares, Verrugas y Acrocordones': {
     type: 'zones',
     options: {
       'Cuello y escote': 200000,
@@ -132,6 +129,7 @@ export default function Page() {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isPoliciesOpen, setIsPoliciesOpen] = useState(false)
+  const [isContraindicationsOpen, setIsContraindicationsOpen] = useState(false)
 
   const [clientName, setClientName] = useState('')
   const [clientPhone, setClientPhone] = useState('')
@@ -235,11 +233,17 @@ export default function Page() {
             Cami Isla Studio
           </a>
 
-          <nav className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-widest font-medium text-[#6B635B]">
+          <nav className="hidden md:flex items-center space-x-6 text-sm uppercase tracking-widest font-medium text-[#6B635B]">
             <a href="#inicio" className="hover:text-[#3F3A36] transition-colors">Inicio</a>
             <a href="#sobre-mi" className="hover:text-[#3F3A36] transition-colors">Sobre Mí</a>
             <a href="#servicios" className="hover:text-[#3F3A36] transition-colors">Servicios</a>
             <a href="#cotizador" className="hover:text-[#3F3A36] transition-colors">Cotizador</a>
+            <button 
+              onClick={() => setIsContraindicationsOpen(true)}
+              className="hover:text-[#3F3A36] transition-colors uppercase tracking-widest text-sm font-medium text-[#6B635B] bg-transparent border-none cursor-pointer"
+            >
+              Contraindicaciones
+            </button>
             <button 
               onClick={() => setIsPoliciesOpen(true)}
               className="hover:text-[#3F3A36] transition-colors uppercase tracking-widest text-sm font-medium text-[#6B635B] bg-transparent border-none cursor-pointer"
@@ -312,7 +316,7 @@ export default function Page() {
               Hola, soy Camila Isla, Licenciada en Cosmetología.
             </p>
             <p>
-              Me especializo en tratamientos estéticos avanzados con un enfoque altamente profesional y personalizado. Cada procedimiento cuenta con su protocolo específico y cotización detallada según la zona o sesiones requeridas.
+              Me especializo en tratamientos estéticos avanzados con un enfoque altamente profesional y personalizado. Cada procedimiento cuenta con su protocolo específico, tecnología adecuada y beneficios detallados para asegurar resultados óptimos.
             </p>
             <div className="p-4 bg-[#F3EDE2]/60 rounded-2xl border border-[#E9E1D4] text-[#4E443F] text-sm font-medium">
               ✨ Atención personalizada en Barrio Salvador del Mundo, Asunción (Overava 674).
@@ -329,47 +333,70 @@ export default function Page() {
                 <span className="text-[#C5A880] font-bold">✓</span> Estrictos protocolos de higiene, bioseguridad y confort.
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-[#C5A880] font-bold">✓</span> Cotizaciones diferenciadas y transparentes por cada servicio.
+                <span className="text-[#C5A880] font-bold">✓</span> Evaluación previa y cotizaciones transparentes.
               </li>
             </ul>
           </div>
         </div>
       </section>
 
-      {/* NUESTROS SERVICIOS INDEPENDIENTES */}
+      {/* DETALLE DE SERVICIOS (TECNOLOGÍA Y BENEFICIOS) */}
       <section id="servicios" className="max-w-7xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Nuestros Servicios</h2>
-          <p className="text-[#6B635B] font-light">Tratamientos totalmente independientes con cotizaciones específicas.</p>
+          <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Nuestros Servicios y Beneficios</h2>
+          <p className="text-[#6B635B] font-light">Conoce la tecnología aplicada y los beneficios principales de cada tratamiento.</p>
           <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {SERVICES.map((s) => (
-            <div key={s.id} className="bg-white rounded-3xl border border-[#EFECE6] shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-between space-y-6">
-              <div className="space-y-4">
+        <div className="space-y-16">
+          {SERVICES.map((s, index) => (
+            <div key={s.id} className="bg-white rounded-3xl border border-[#EFECE6] shadow-sm p-8 sm:p-10 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+              
+              <div className="space-y-4 lg:col-span-1 border-b lg:border-b-0 lg:border-r border-[#EFECE6] pb-6 lg:pb-0 lg:pr-8">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C7355] bg-[#F3EDE2] px-3 py-1 rounded-full">
                   {s.category}
                 </span>
-                <h3 className="text-xl font-serif text-[#3F3A36]">{s.name}</h3>
+                <h3 className="text-2xl font-serif text-[#3F3A36]">{s.name}</h3>
                 <p className="text-sm text-[#6B635B] font-light leading-relaxed">{s.description}</p>
+                <div className="pt-2">
+                  <span className="text-xs font-bold text-[#4E443F] uppercase block mb-1">Zonas Aplicables:</span>
+                  <p className="text-xs text-[#7A7067] bg-[#FAF8F5] p-3 rounded-xl border border-[#EFECE6]">{s.zonesText}</p>
+                </div>
               </div>
 
-              <div className="space-y-4 pt-4 border-t border-[#F5F2EC]">
-                <div className="text-xs text-[#7A7067] bg-[#FAF8F5] p-3 rounded-xl border border-[#EFECE6]">
-                  <strong className="text-[#4E443F]">Zonas / Áreas:</strong> {s.zonesText}
+              <div className="space-y-6 lg:col-span-2">
+                <div className="space-y-2">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#8C7355]">Tecnología Utilizada</h4>
+                  <p className="text-sm text-[#3F3A36] font-light bg-[#FAF8F5] p-4 rounded-2xl border border-[#EFECE6] leading-relaxed">
+                    {s.technology}
+                  </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedService(s.name)
-                    setIsModalOpen(true)
-                  }}
-                  className="w-full block text-center bg-[#4E443F] hover:bg-[#3F3A36] text-white py-3 rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
-                >
-                  Agendar Turno
-                </button>
+
+                <div className="space-y-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#8C7355]">Beneficios Principales</h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {s.benefits.map((benefit, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs text-[#6B635B] bg-[#FDFBF7] p-3 rounded-xl border border-[#EFECE6]">
+                        <span className="text-[#C5A880] font-bold">✓</span> {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="pt-2 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedService(s.name)
+                      setIsModalOpen(true)
+                    }}
+                    className="bg-[#4E443F] hover:bg-[#3F3A36] text-white px-6 py-3 rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
+                  >
+                    Agendar este servicio
+                  </button>
+                </div>
               </div>
+
             </div>
           ))}
         </div>
@@ -379,7 +406,7 @@ export default function Page() {
       <section id="cotizador" className="max-w-4xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-12">
           <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Cotizador Interactivo</h2>
-          <p className="text-[#6B635B] font-light">Calcula el valor exacto según el tratamiento independiente y su zona o sesiones.</p>
+          <p className="text-[#6B635B] font-light">Calcula el valor exacto según el tratamiento y su zona o sesiones.</p>
           <div className="w-16 h-0.5 bg-[#C5A880] mx-auto"></div>
         </div>
 
@@ -512,7 +539,7 @@ export default function Page() {
         </div>
       </footer>
 
-      {/* MODAL DE RESERVA SEPARADO */}
+      {/* MODAL DE RESERVA */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
           <div className="bg-[#FDFBF7] w-full max-w-2xl rounded-3xl shadow-2xl border border-[#EFECE6] p-6 sm:p-8 relative my-8 max-h-[90vh] overflow-y-auto">
@@ -527,7 +554,7 @@ export default function Page() {
             <div className="text-center space-y-2 mb-8 pr-10">
               <span className="text-xs uppercase tracking-[0.3em] text-[#8C7355] font-bold">Agenda en Línea</span>
               <h2 className="text-2xl sm:text-3xl font-serif text-[#3F3A36]">Reserva tu Cita</h2>
-              <p className="text-[#6B635B] font-light text-xs">Selecciona tu tratamiento independiente y completa tus datos.</p>
+              <p className="text-[#6B635B] font-light text-xs">Selecciona tu servicio y completa tus datos de contacto.</p>
             </div>
 
             {successMsg && (
@@ -551,7 +578,7 @@ export default function Page() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Servicio Independiente</label>
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Servicio</label>
                     <select
                       value={selectedService}
                       onChange={(e) => setSelectedService(e.target.value)}
@@ -676,6 +703,71 @@ export default function Page() {
                 </button>
               </form>
 
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE CONTRAINDICACIONES Y EVALUACIÓN PREVIA */}
+      {isContraindicationsOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <div className="bg-[#FDFBF7] w-full max-w-2xl rounded-3xl shadow-2xl border border-[#EFECE6] p-6 sm:p-8 relative my-8 max-h-[90vh] overflow-y-auto">
+            
+            <button 
+              onClick={() => setIsContraindicationsOpen(false)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#FAF8F5] border border-[#D4C5B9] text-[#3F3A36] flex items-center justify-center hover:bg-[#EFECE6] transition-colors font-bold cursor-pointer"
+            >
+              ✕
+            </button>
+
+            <div className="text-center space-y-2 mb-6 pr-10">
+              <span className="text-xs uppercase tracking-[0.3em] text-[#8C7355] font-bold">Seguridad y Cuidado de la Piel</span>
+              <h2 className="text-2xl sm:text-3xl font-serif text-[#3F3A36]">Contraindicaciones Generales</h2>
+            </div>
+
+            <div className="space-y-6 text-xs sm:text-sm text-[#6B635B] font-light leading-relaxed">
+              
+              <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#EFECE6] space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">1. Camuflaje de Estrías con Tinta</h3>
+                <p className="italic text-[11px] text-[#8C7355]">Idea clave: El camuflaje debe realizarse sobre una piel sana y estrías ya estabilizadas.</p>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2"><span>•</span> Embarazo o lactancia, según criterio profesional.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Infecciones activas, heridas, dermatitis o irritación en la zona.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Estrías recientes, inflamadas o todavía rojizas.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Tendencia marcada a formar queloides o cicatrices hipertróficas.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Alergia conocida a pigmentos, anestésicos tópicos u otros productos.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Trastornos de coagulación o uso de anticoagulantes sin autorización médica.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Diabetes no controlada o condiciones que dificulten la cicatrización.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Tratamientos recientes con isotretinoína, láser o peelings profundos.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Exposición solar intensa o piel recientemente bronceada.</li>
+                </ul>
+              </div>
+
+              <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#EFECE6] space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">2. Eliminación con Jato Plasma (Lunares, Verrugas y Acrocordones)</h3>
+                <p className="italic text-[11px] text-[#8C7355] font-semibold">⚠️ No se debe eliminar un lunar únicamente por criterio estético sin haber determinado previamente que se trata de una lesión benigna.</p>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2"><span>•</span> Lesión de origen desconocido o sospechosa de malignidad.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Lunares que hayan cambiado de tamaño, forma, color, bordes o presenten sangrado.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Falta de evaluación médica previa en lesiones pigmentadas.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Infección, inflamación o heridas activas en la zona.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Tendencia a desarrollar queloides o cicatrices anormales.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Problemas de coagulación o tratamiento anticoagulante.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Embarazo, cuando se considere prudente postergar el procedimiento.</li>
+                  <li className="flex items-start gap-2"><span>•</span> Dispositivos electrónicos implantados, según fabricante.</li>
+                </ul>
+              </div>
+
+            </div>
+
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setIsContraindicationsOpen(false)}
+                className="bg-[#4E443F] hover:bg-[#3F3A36] text-white px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
+              >
+                Cerrar
+              </button>
             </div>
 
           </div>
