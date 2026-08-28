@@ -132,7 +132,7 @@ export default function Home() {
       return;
     }
 
-    // Inserción mapeada exactamente a los nombres de tus columnas en Supabase
+    // Inserción mapeada exactamente a los nombres de columnas de tu base de datos
     const { error } = await supabase.from('bookings').insert([{
       client_name: clientName,
       client_phone: clientPhone,
@@ -144,7 +144,7 @@ export default function Home() {
     }]);
 
     if (error) {
-      alert('Hubo un error al registrar la reserva. Intente de nuevo.');
+      alert('Error de Supabase: ' + error.message);
       console.error(error);
     } else {
       setBookingConfirmed(true);
