@@ -1,434 +1,413 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
+import React, { useState } from 'react';
 
-const SERVICES = [
-  {
-    id: 'camuflaje_estrias',
-    name: 'Camuflaje de Estrías',
-    duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80',
-    description: 'Técnica especializada para unificar el tono de la piel y disimular estrías de forma permanente.',
-    benefits: ['Resultados naturales y duraderos', 'Estimula la producción de colágeno local', 'Técnica segura y con pigmentos hipoalergénicos'],
-    gallery: [
-      'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80'
-    ]
-  },
-  {
-    id: 'regeneracion_estrias',
-    name: 'Regeneración de Estrías',
-    duration: '60 min',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
-    description: 'Tratamiento enfocado en mejorar la textura y profundidad de la piel afectada por estrías.',
-    benefits: ['Mejora notablemente la textura de la piel', 'Favorece la elasticidad natural', 'Compatible con cualquier tipo de piel'],
-    gallery: [
-      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80'
-    ]
-  },
-  {
-    id: 'camuflaje_cicatrices',
-    name: 'Camuflaje de Cicatrices',
-    duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
-    description: 'Pigmentación milimétrica para integrar cicatrices al tono natural de tu piel.',
-    benefits: ['Disimula marcas quirúrgicas o accidentales', 'Acabado estético sumamente natural', 'Procedimiento ambulatorio'],
-    gallery: [
-      'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80'
-    ]
-  },
-  {
-    id: 'regeneracion_cicatrices',
-    name: 'Regeneración de Cicatrices',
-    duration: '60 min',
-    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
-    description: 'Protocolo de estimulación profunda para suavizar el relieve y rigidez de las cicatrices.',
-    benefits: ['Suaviza cicatrices hipertróficas', 'Aumenta la flexibilidad de los tejidos', 'Promueve la sanación estética'],
-    gallery: [
-      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80'
-    ]
-  },
-  {
-    id: 'verrugas',
-    name: 'Eliminación de Verrugas',
-    duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=80',
-    description: 'Remoción segura y limpia de verrugas bajo estrictos estándares de bioseguridad.',
-    benefits: ['Procedimiento rápido y controlado', 'Mínimas molestias', 'Cuidado estético de la zona tratada'],
-    gallery: [
-      'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=600&q=80'
-    ]
-  },
-  {
-    id: 'lunares',
-    name: 'Eliminación de Lunares',
-    duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80',
-    description: 'Evaluación y extracción estética de lunares benignos con excelente resultado visual.',
-    benefits: ['Evaluación profesional previa', 'Técnica limpia sin marcas notorias', 'Recuperación rápida'],
-    gallery: [
-      'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80'
-    ]
-  },
-  {
-    id: 'acrocordones',
-    name: 'Eliminación de Acrocordones',
-    duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
-    description: 'Eliminación indolora de pequeños fibromas blandos en cuello, axilas u otras zonas.',
-    benefits: ['Resultados inmediatos', 'Sin tiempo de recuperación prolongado', 'Piel limpia y sin imperfecciones'],
-    gallery: [
-      'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80'
-    ]
-  }
-]
+export default function Home() {
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
-const BODY_ZONES = [
-  'Rostro',
-  'Cuello y Escote',
-  'Abdomen',
-  'Glúteos',
-  'Piernas',
-  'Espalda'
-]
-
-const TIME_SLOTS = [
-  '09:00', '10:00', '11:00', '12:00', 
-  '14:00', '15:00', '16:00', '17:00', '18:00'
-]
-
-export default function Page() {
-  const [selectedServices, setSelectedServices] = useState<string[]>([SERVICES[0].name])
-  const [selectedBodyZones, setSelectedBodyZones] = useState<string[]>([BODY_ZONES[0]])
-  const [selectedDate, setSelectedDate] = useState('')
-  const [bookedTimes, setBookedTimes] = useState<string[]>([])
-  const [selectedTime, setSelectedTime] = useState('')
-  const [appointmentStatus, setAppointmentStatus] = useState<'confirmed' | 'pending'>('confirmed')
-  
-  const [clientName, setClientName] = useState('')
-  const [clientPhone, setClientPhone] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [successMsg, setSuccessMsg] = useState('')
-  const [errorMsg, setErrorMsg] = useState('')
-
-  useEffect(() => {
-    if (!selectedDate) return
-    
-    async function fetchBookings() {
-      try {
-        const { data, error } = await supabase
-          .from('appointments')
-          .select('time_slot')
-          .eq('date', selectedDate)
-
-        if (error) {
-          console.error('Error de Supabase al buscar citas:', error.message)
-          setBookedTimes([])
-          return
-        }
-
-        if (data) {
-          setBookedTimes(data.map((item: any) => item.time_slot))
-        }
-      } catch (err) {
-        console.error('Error inesperado:', err)
-        setBookedTimes([])
-      }
-    }
-
-    fetchBookings()
-  }, [selectedDate])
-
-  const toggleService = (serviceName: string) => {
-    setSelectedServices(prev => 
-      prev.includes(serviceName) 
-        ? prev.filter(s => s !== serviceName)
-        : [...prev, serviceName]
-    )
-  }
-
-  const toggleBodyZone = (zone: string) => {
-    setSelectedBodyZones(prev => 
-      prev.includes(zone) 
-        ? prev.filter(z => z !== zone)
-        : [...prev, zone]
-    )
-  }
-
-  const handleBooking = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (selectedServices.length === 0 || selectedBodyZones.length === 0 || !selectedDate || !selectedTime || !clientName || !clientPhone) {
-      setErrorMsg('Por favor selecciona al menos un servicio, una zona, y completa todos los campos.')
-      return
-    }
-
-    setLoading(true)
-    setErrorMsg('')
-    setSuccessMsg('')
-
-    try {
-      const { error } = await supabase.from('appointments').insert([
-        {
-          service_name: selectedServices.join(', '),
-          body_zone: selectedBodyZones.join(', '),
-          date: selectedDate,
-          time_slot: selectedTime,
-          client_name: clientName,
-          client_phone: clientPhone,
-          status: appointmentStatus
-        }
-      ])
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      setSuccessMsg(`¡Cita guardada con estado: ${appointmentStatus === 'confirmed' ? 'Confirmada' : 'Pendiente'}!`)
-      setClientName('')
-      setClientPhone('')
-      setSelectedTime('')
-      setBookedTimes((prev) => [...prev, selectedTime])
-    } catch (err: any) {
-      console.error('Error al insertar:', err)
-      setErrorMsg(`Error al guardar en Supabase: ${err.message || 'Verifica la estructura de tu tabla'}`)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const openBookingModal = (serviceName: string) => {
+    setSelectedService(serviceName);
+    setModalOpen(true);
+  };
 
   return (
-    <main className="min-h-screen bg-neutral-50 text-neutral-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto space-y-12">
-        
-        {/* Cabecera */}
-        <div className="text-center space-y-3 border-b border-neutral-200 pb-8">
-          <span className="text-xs uppercase tracking-[0.3em] text-pink-600 font-bold">Estética Avanzada</span>
-          <h1 className="text-4xl sm:text-5xl font-light tracking-tight text-neutral-900">
-            Cami Isla <span className="font-semibold text-pink-600">Studio</span>
-          </h1>
-          <p className="text-neutral-600 max-w-lg mx-auto text-sm sm:text-base">
-            Selecciona tus tratamientos, zonas corporales, estado de la cita y agenda en línea.
-          </p>
+    <div className="min-h-screen bg-[#faf8f5] text-[#2c2c2c] font-sans selection:bg-[#e8c8c8] selection:text-[#2c2c2c]">
+      {/* HEADER / NAVBAR */}
+      <header className="sticky top-0 z-50 bg-[#faf8f5]/90 backdrop-blur-md border-b border-[#e6dfd5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <span className="text-xl sm:text-2xl font-serif tracking-wide text-[#4a3b32]">
+              Cami Isla Studio
+            </span>
+          </div>
+          <nav className="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-medium text-[#6b5b52]">
+            <a href="#inicio" className="hover:text-[#b88686] transition-colors">Inicio</a>
+            <a href="#sobre-mi" className="hover:text-[#b88686] transition-colors">Sobre Mí</a>
+            <a href="#servicios" className="hover:text-[#b88686] transition-colors">Servicios</a>
+            <a href="#precios" className="hover:text-[#b88686] transition-colors">Precios</a>
+            <a href="#contacto" className="hover:text-[#b88686] transition-colors">Contacto</a>
+          </nav>
+          <div>
+            <a
+              href="https://wa.me/595981000000?text=Hola%20Cami,%20quiero%20agendar%20una%20cita."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#d4a373] hover:bg-[#bc8a5f] text-white px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-all shadow-sm flex items-center space-x-2"
+            >
+              <span>Reservar Cita</span>
+            </a>
+          </div>
         </div>
+      </header>
 
-        {successMsg && (
-          <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-2xl text-center text-sm font-medium shadow-md">
-            {successMsg}
-          </div>
-        )}
-
-        {errorMsg && (
-          <div className="p-4 bg-rose-50 border border-rose-300 text-rose-800 rounded-2xl text-center text-sm font-medium shadow-md">
-            {errorMsg}
-          </div>
-        )}
-
-        {/* 1. Selección Múltiple de Servicios */}
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">1. Selecciona tus Tratamientos (Múltiples)</h2>
-            <span className="text-xs text-pink-600 font-bold">Seleccionados: {selectedServices.length}</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {SERVICES.map((s) => {
-              const isSelected = selectedServices.includes(s.name)
-              return (
-                <div
-                  key={s.id}
-                  onClick={() => toggleService(s.name)}
-                  className={`group rounded-3xl border overflow-hidden cursor-pointer transition-all duration-300 bg-white shadow-sm hover:shadow-md flex flex-col justify-between ${
-                    isSelected
-                      ? 'border-pink-500 ring-2 ring-pink-500/20 bg-pink-50/20'
-                      : 'border-neutral-200 hover:border-neutral-300'
-                  }`}
+      {/* HERO SECTION */}
+      <section id="inicio" className="relative py-20 lg:py-32 bg-gradient-to-b from-[#f4ece1] to-[#faf8f5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6 text-center lg:text-left">
+              <span className="inline-block bg-[#e8ded1] text-[#6b5b52] text-xs uppercase tracking-widest px-3 py-1 rounded-full font-semibold">
+                Estética Avanzada y Reparadora
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#4a3b32] leading-tight">
+                Realza tu belleza natural y recupera la confianza en tu piel
+              </h1>
+              <p className="text-lg text-[#6b5b52] font-light max-w-xl mx-auto lg:mx-0">
+                Especialista en camuflaje de estrías, cicatrices y eliminación estética de lesiones cutáneas con tecnología de vanguardia en Asunción.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
+                <a
+                  href="#servicios"
+                  className="bg-[#4a3b32] text-white hover:bg-[#352a23] px-8 py-3.5 rounded-full font-medium transition-all text-center"
                 >
-                  <div className="relative h-48 w-full overflow-hidden bg-neutral-100">
-                    <img 
-                      src={s.image} 
-                      alt={s.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-neutral-800 shadow-sm z-10">
-                      {s.duration}
-                    </div>
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-pink-600 shadow-sm z-10">
-                      {isSelected ? '✓ Seleccionado' : '+ Agregar'}
-                    </div>
-                  </div>
-
-                  <div className="p-6 space-y-3">
-                    <h3 className="font-bold text-lg text-neutral-900 group-hover:text-pink-600 transition-colors">
-                      {s.name}
-                    </h3>
-                    <p className="text-sm text-neutral-600 line-clamp-2">
-                      {s.description}
-                    </p>
-                  </div>
-                </div>
-              )
-            })}
+                  Ver Tratamientos
+                </a>
+                <a
+                  href="https://maps.app.goo.gl/xMz8NTiREFEubY9c7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-[#b8a394] text-[#4a3b32] hover:bg-[#f0ebe3] px-8 py-3.5 rounded-full font-medium transition-all text-center flex items-center justify-center space-x-2"
+                >
+                  <span>Cómo Llegar (Overava 674)</span>
+                </a>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div className="relative w-72 h-96 sm:w-80 sm:h-[420px] rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-[#e8ded1]">
+                <img
+                  src="/IMG_1402.JPG.jpg"
+                  alt="Camila Isla - Cosmetóloga"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* 2. Selección Múltiple de Zonas del Cuerpo */}
-        <div className="space-y-6 bg-white border border-neutral-200 p-6 sm:p-10 rounded-3xl shadow-sm">
-          <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
-            <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-800">2. Zonas del Cuerpo a Tratar (Múltiples)</h2>
-            <span className="text-xs text-pink-600 font-bold">Seleccionadas: {selectedBodyZones.length}</span>
+      {/* SOBRE MÍ SECTION */}
+      <section id="sobre-mi" className="py-20 bg-white border-y border-[#f0ebe3]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#4a3b32]">Sobre Cami Isla Studio</h2>
+            <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div className="space-y-4 text-[#6b5b52] leading-relaxed">
+              <p className="text-lg font-medium text-[#4a3b32]">
+                Hola, soy Camila Isla, Licenciada en Cosmetología.
+              </p>
+              <p>
+                Me especializo en tratamientos estéticos avanzados con un enfoque altamente profesional, riguroso y personalizado para cada paciente. Mi objetivo principal es brindarte un espacio seguro donde puedas mejorar la salud y apariencia de tu piel.
+              </p>
+              <p>
+                Cuento con especialización avanzada en camuflaje de estrías y cicatrices, así como en la eliminación estética y segura de lunares, verrugas y acrocordones mediante tecnología de punta.
+              </p>
+              <div className="pt-4">
+                <span className="inline-block bg-[#f4ece1] text-[#4a3b32] px-4 py-2 rounded-lg text-sm font-medium">
+                  ✨ Atención personalizada en Barrio Salvador del Mundo, Asunción.
+                </span>
+              </div>
+            </div>
+            <div className="bg-[#f9f6f0] p-8 rounded-2xl border border-[#e8ded1] space-y-6 shadow-sm">
+              <h3 className="text-xl font-serif text-[#4a3b32]">¿Por qué elegirnos?</h3>
+              <ul className="space-y-3 text-sm text-[#6b5b52]">
+                <li className="flex items-start space-x-3">
+                  <span className="text-[#d4a373] font-bold">✓</span>
+                  <span>Profesional titulada y especializada en el área.</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-[#d4a373] font-bold">✓</span>
+                  <span>Estrictos protocolos de higiene, bioseguridad y confort.</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-[#d4a373] font-bold">✓</span>
+                  <span>Evaluación previa detallada para garantizar resultados óptimos.</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-[#d4a373] font-bold">✓</span>
+                  <span>Tecnología y pigmentos seguros para tu piel.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICIOS SECTION */}
+      <section id="servicios" className="py-20 bg-[#faf8f5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#4a3b32]">Nuestros Tratamientos Especializados</h2>
+            <p className="text-[#6b5b52] max-w-2xl mx-auto">Soluciones profesionales diseñadas para cuidar, regenerar y embellecer tu piel.</p>
+            <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {BODY_ZONES.map((zone) => {
-              const isSelected = selectedBodyZones.includes(zone)
-              return (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Servicio 1 */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="space-y-4">
+                <span className="text-xs uppercase tracking-widest text-[#b88686] font-semibold">Técnica Avanzada</span>
+                <h3 className="text-2xl font-serif text-[#4a3b32]">Camuflaje de Estrías</h3>
+                <p className="text-sm text-[#6b5b52] leading-relaxed">
+                  Procedimiento estético que busca disimular visualmente las estrías mediante la aplicación de pigmentos seleccionados de acuerdo con el tono de piel del paciente.
+                </p>
+                <div className="space-y-2 pt-2 text-xs text-[#555] bg-[#faf8f5] p-3 rounded-xl">
+                  <p><strong>Duración:</strong> ~30 minutos</p>
+                  <p><strong>Zonas:</strong> Abdomen, piernas, glúteos, caderas, busto.</p>
+                </div>
+              </div>
+              <div className="pt-6">
                 <button
-                  type="button"
-                  key={zone}
-                  onClick={() => toggleBodyZone(zone)}
-                  className={`p-4 rounded-2xl border text-sm font-semibold transition-all text-left flex items-center justify-between ${
-                    isSelected
-                      ? 'border-pink-500 bg-pink-50 text-pink-900 ring-1 ring-pink-500/20'
-                      : 'border-neutral-200 bg-neutral-50 text-neutral-700 hover:border-neutral-300'
-                  }`}
+                  onClick={() => openBookingModal('Camuflaje de Estrías')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-3 rounded-xl text-sm font-medium transition-all"
                 >
-                  <span>{zone}</span>
-                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${isSelected ? 'bg-pink-600 text-white' : 'border border-neutral-300 text-transparent'}`}>✓</span>
+                  Consultar / Reservar
                 </button>
-              )
-            })}
+              </div>
+            </div>
+
+            {/* Servicio 2 */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="space-y-4">
+                <span className="text-xs uppercase tracking-widest text-[#b88686] font-semibold">Regeneración Cutánea</span>
+                <h3 className="text-2xl font-serif text-[#4a3b32]">Regeneración de Estrías con Colágeno</h3>
+                <p className="text-sm text-[#6b5b52] leading-relaxed">
+                  Tratamiento orientado a mejorar la textura y apariencia de las estrías estimulando el proceso natural de regeneración y producción de colágeno y elastina.
+                </p>
+                <div className="space-y-2 pt-2 text-xs text-[#555] bg-[#faf8f5] p-3 rounded-xl">
+                  <p><strong>Enfoque:</strong> Bioestimulación controlada</p>
+                  <p><strong>Resultado:</strong> Textura uniforme sin pigmentos</p>
+                </div>
+              </div>
+              <div className="pt-6">
+                <button
+                  onClick={() => openBookingModal('Regeneración de Estrías con Colágeno')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-3 rounded-xl text-sm font-medium transition-all"
+                >
+                  Consultar / Reservar
+                </button>
+              </div>
+            </div>
+
+            {/* Servicio 3 */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="space-y-4">
+                <span className="text-xs uppercase tracking-widest text-[#b88686] font-semibold">Tecnología Plasma Pen</span>
+                <h3 className="text-2xl font-serif text-[#4a3b32]">Eliminación de Lunares y Verrugas</h3>
+                <p className="text-sm text-[#6b5b52] leading-relaxed">
+                  Remoción estética de pequeñas lesiones cutáneas benignas y acrocordones mediante tecnología de plasma, con alta precisión y acción localizada.
+                </p>
+                <div className="space-y-2 pt-2 text-xs text-[#555] bg-[#faf8f5] p-3 rounded-xl">
+                  <p><strong>Duración:</strong> 10 a 15 min (según cantidad)</p>
+                  <p><strong>Nota:</strong> Requiere evaluación previa obligatoria</p>
+                </div>
+              </div>
+              <div className="pt-6">
+                <button
+                  onClick={() => openBookingModal('Eliminación de Lunares y Verrugas')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-3 rounded-xl text-sm font-medium transition-all"
+                >
+                  Consultar / Reservar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* 3. Formulario de Reserva, Horarios y Estado */}
-        <form onSubmit={handleBooking} className="space-y-8 bg-white border border-neutral-200 p-6 sm:p-10 rounded-3xl shadow-sm">
-          <h3 className="text-lg font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-4">
-            3. Fecha, Horario, Estado y Datos de Contacto
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Fecha de la Cita</label>
-              <input
-                type="date"
-                min={new Date().toISOString().split('T')[0]}
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 focus:bg-white"
+      {/* ANTES Y DESPUÉS SECTION */}
+      <section className="py-20 bg-white border-y border-[#f0ebe3]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-3xl font-serif text-[#4a3b32]">Resultados Reales</h2>
+            <p className="text-[#6b5b52]">Así se ve la evolución de nuestros tratamientos profesionales.</p>
+            <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
+          </div>
+          <div className="flex justify-center">
+            <div className="max-w-xl rounded-2xl overflow-hidden shadow-lg border border-[#e6dfd5]">
+              <img
+                src="/IMG_1403.JPG.jpeg"
+                alt="Antes y Después Camuflaje de Estrías"
+                className="w-full h-auto object-cover"
               />
-            </div>
-
-            <div className="space-y-3">
-              <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Horarios Disponibles</label>
-              {!selectedDate ? (
-                <div className="h-[58px] flex items-center px-4 bg-neutral-50 border border-neutral-300 rounded-2xl text-sm text-neutral-500 italic">
-                  Selecciona una fecha primero
-                </div>
-              ) : (
-                <div className="grid grid-cols-3 gap-2">
-                  {TIME_SLOTS.map((time) => {
-                    const isBooked = bookedTimes.includes(time)
-                    const isSelected = selectedTime === time
-
-                    return (
-                      <button
-                        type="button"
-                        key={time}
-                        disabled={isBooked}
-                        onClick={() => setSelectedTime(time)}
-                        className={`py-3 text-xs sm:text-sm rounded-xl font-semibold transition-all ${
-                          isBooked
-                            ? 'bg-neutral-100 text-neutral-400 line-through cursor-not-allowed border border-neutral-200'
-                            : isSelected
-                            ? 'bg-pink-600 text-white shadow-md shadow-pink-600/30 border border-pink-600'
-                            : 'bg-neutral-50 border border-neutral-300 text-neutral-700 hover:border-pink-500 hover:bg-white'
-                        }`}
-                      >
-                        {time}
-                      </button>
-                    )
-                  })}
-                </div>
-              )}
+              <div className="p-4 bg-[#faf8f5] text-center text-sm font-medium text-[#4a3b32]">
+                Camuflaje de estrías — Resultado visible después de 2 sesiones.
+              </div>
             </div>
           </div>
-
-          {/* Selector de Estado de la Cita */}
-          <div className="space-y-3 pt-4 border-t border-neutral-100">
-            <label className="text-sm font-bold uppercase tracking-wider text-neutral-700">Estado Inicial de la Cita</label>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                type="button"
-                onClick={() => setAppointmentStatus('confirmed')}
-                className={`p-4 rounded-2xl border text-sm font-bold flex items-center justify-center gap-2 transition-all ${
-                  appointmentStatus === 'confirmed'
-                    ? 'bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm'
-                    : 'bg-neutral-50 border-neutral-200 text-neutral-600 hover:border-neutral-300'
-                }`}
-              >
-                <span>🟢</span> Confirmada
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setAppointmentStatus('pending')}
-                className={`p-4 rounded-2xl border text-sm font-bold flex items-center justify-center gap-2 transition-all ${
-                  appointmentStatus === 'pending'
-                    ? 'bg-amber-50 border-amber-500 text-amber-800 shadow-sm'
-                    : 'bg-neutral-50 border-neutral-200 text-neutral-600 hover:border-neutral-300'
-                }`}
-              >
-                <span>⏳</span> Pendiente de Confirmación
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-100">
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-wider text-neutral-600 font-bold">Tu Nombre y Apellido</label>
-              <input
-                type="text"
-                placeholder="Ej. María Gómez"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 text-sm"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-wider text-neutral-600 font-bold">Teléfono / WhatsApp</label>
-              <input
-                type="tel"
-                placeholder="Ej. 0981 123 456"
-                value={clientPhone}
-                onChange={(e) => setClientPhone(e.target.value)}
-                className="w-full bg-neutral-50 border border-neutral-300 rounded-2xl p-4 text-neutral-900 focus:outline-none focus:border-pink-500 text-sm"
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold rounded-2xl shadow-lg shadow-pink-600/20 transition-all duration-300 disabled:opacity-50 text-base"
-          >
-            {loading ? 'Procesando Reserva...' : 'Confirmar y Guardar Cita'}
-          </button>
-        </form>
-
-        <div className="text-center pb-6">
-          <a
-            href="https://wa.me/595981123456"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-neutral-700 hover:text-emerald-600 text-sm font-semibold transition-colors py-3 px-6 rounded-2xl bg-white border border-neutral-200 shadow-sm"
-          >
-            <span>💬</span> ¿Tienes dudas o necesitas atención personalizada? Escríbenos por WhatsApp
-          </a>
         </div>
+      </section>
 
-      </div>
-    </main>
-  )
+      {/* PRECIOS Y PAQUETES */}
+      <section id="precios" className="py-20 bg-[#f9f6f0]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#4a3b32]">Inversión en tu Piel</h2>
+            <p className="text-[#6b5b52]">Planes accesibles y paquetes diseñados para obtener los mejores resultados.</p>
+            <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-2xl border border-[#e6dfd5] text-center space-y-4 shadow-sm">
+              <h3 className="text-lg font-serif text-[#4a3b32]">1 Sesión</h3>
+              <p className="text-3xl font-bold text-[#b88686]">350.000 Gs</p>
+              <p className="text-xs text-[#777]">Ideal para una primera prueba o zona localizada.</p>
+              <button
+                onClick={() => openBookingModal('Paquete 1 Sesión')}
+                className="w-full bg-[#f4ece1] hover:bg-[#e8ded1] text-[#4a3b32] py-2.5 rounded-xl text-sm font-medium transition-all"
+              >
+                Agendar
+              </button>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl border-2 border-[#d4a373] text-center space-y-4 shadow-md relative">
+              <span className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#d4a373] text-white text-[10px] uppercase tracking-widest px-3 py-1 rounded-full font-semibold">
+                Más Elegido
+              </span>
+              <h3 className="text-lg font-serif text-[#4a3b32]">2 Sesiones</h3>
+              <p className="text-3xl font-bold text-[#b88686]">500.000 Gs</p>
+              <p className="text-xs text-[#777]">Perfecto para continuidad y retoques iniciales.</p>
+              <button
+                onClick={() => openBookingModal('Paquete 2 Sesiones')}
+                className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-sm font-medium transition-all"
+              >
+                Agendar
+              </button>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl border border-[#e6dfd5] text-center space-y-4 shadow-sm">
+              <h3 className="text-lg font-serif text-[#4a3b32]">3 Sesiones</h3>
+              <p className="text-3xl font-bold text-[#b88686]">850.000 Gs</p>
+              <p className="text-xs text-[#777]">Tratamiento completo recomendado para mayor cobertura.</p>
+              <button
+                onClick={() => openBookingModal('Paquete 3 Sesiones')}
+                className="w-full bg-[#f4ece1] hover:bg-[#e8ded1] text-[#4a3b32] py-2.5 rounded-xl text-sm font-medium transition-all"
+              >
+                Agendar
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIOS */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-3xl font-serif text-[#4a3b32]">Lo que dicen nuestras clientas</h2>
+            <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
+          </div>
+          <div className="bg-[#faf8f5] p-8 sm:p-10 rounded-2xl border border-[#e6dfd5] shadow-sm relative">
+            <p className="text-lg italic text-[#555] mb-6">
+              &quot;Buenas Tardes. Quedó súper bien la eliminación que me habías hecho. A los 7 días ya estaba súper bien ya 😆😆😆&quot;
+            </p>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-full bg-[#d4a373] flex items-center justify-center text-white font-bold">
+                ✓
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-[#4a3b32]">Clienta Verificada</p>
+                <p className="text-xs text-[#777]">Reseña vía WhatsApp</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* POLÍTICAS DE RESERVA */}
+      <section className="py-16 bg-[#f4ece1] border-t border-[#e6dfd5]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <h3 className="text-2xl font-serif text-[#4a3b32] text-center">Políticas de Reserva y Citas</h3>
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#e6dfd5] text-sm text-[#6b5b52] space-y-3 leading-relaxed">
+            <p>• Para confirmar la cita, se deberá abonar una <strong>reserva de Gs. 50.000</strong>.</p>
+            <p>• El monto abonado en concepto de reserva <strong>no es reembolsable</strong>.</p>
+            <p>• Si necesitás cancelar o reprogramar tu cita, solicitamos avisar <strong>con al menos 24 horas de anticipación</strong> para reagendar según disponibilidad.</p>
+            <p>• Las cancelaciones con menos de 24 horas o inasistencia implican la pérdida de los Gs. 50.000.</p>
+            <p>• Se establece un <strong>tiempo máximo de tolerancia de 15 minutos</strong> desde el horario reservado.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER & CONTACTO */}
+      <footer id="contacto" className="bg-[#2c2c2c] text-[#d6d6d6] py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="space-y-4">
+            <h4 className="text-xl font-serif text-white">Cami Isla Studio</h4>
+            <p className="text-sm text-[#aaa]">
+              Licenciada en Cosmetología especializada en estética reparadora y corporal en Asunción.
+            </p>
+          </div>
+          <div className="space-y-4">
+            <h4 className="text-lg font-serif text-white">Ubicación</h4>
+            <p className="text-sm text-[#aaa]">
+              Overava 674, Barrio Salvador del Mundo<br />
+              Asunción, Paraguay
+            </p>
+            <p>
+              <a
+                href="https://maps.app.goo.gl/xMz8NTiREFEubY9c7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#d4a373] hover:underline text-sm font-medium"
+              >
+                Abrir en Google Maps →
+              </a>
+            </p>
+          </div>
+          <div className="space-y-4">
+            <h4 className="text-lg font-serif text-white">Contacto y Reservas</h4>
+            <p className="text-sm text-[#aaa]">Escríbenos directamente por WhatsApp para coordinar turnos y consultas.</p>
+            <a
+              href="https://wa.me/595981000000?text=Hola%20Cami,%20quiero%20consultar%20sobre%20tus%20servicios."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#d4a373] text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#bc8a5f] transition-all"
+            >
+              Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 mt-12 border-t border-[#444] text-center text-xs text-[#888]">
+          © {new Date().getFullYear()} Cami Isla Studio. Todos los derechos reservados.
+        </div>
+      </footer>
+
+      {/* MODAL DE RESERVA RÁPIDA */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white max-w-md w-full rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+            <div className="flex justify-between items-center">
+              <h3 className="text-xl font-serif text-[#4a3b32]">Reservar Cita</h3>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600 text-xl font-bold"
+              >
+                ✕
+              </button>
+            </div>
+            <p className="text-sm text-[#6b5b52]">
+              Estás a un paso de agendar tu turno para <strong>{selectedService}</strong>. Para confirmar la cita se requiere una seña de <strong>50.000 Gs</strong>.
+            </p>
+            <div className="space-y-3 pt-2">
+              <a
+                href={`https://wa.me/595981000000?text=Hola%20Cami,%20quiero%20agendar%20turno%20para%20${encodeURIComponent(selectedService || '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-white text-center py-3 rounded-xl font-medium transition-all shadow-sm"
+              >
+                Continuar por WhatsApp
+              </a>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="block w-full bg-gray-100 hover:bg-gray-200 text-[#4a3b32] text-center py-3 rounded-xl font-medium transition-all"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
