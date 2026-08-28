@@ -26,14 +26,28 @@ export default function Home() {
         'mediana': { price: '500.000 Gs', desc: 'Cicatriz mediana (ej. quirúrgica estándar)' },
         'grande': { price: '700.000 Gs', desc: 'Cicatriz extensa / compleja' }
       },
-      'regeneracion-colageno': {
-        'localizada': { price: '300.000 Gs', desc: 'Zona localizada (ej. vientre bajo o cartucheras)' },
-        'amplia': { price: '500.000 Gs', desc: 'Zona amplia (glúteos o piernas completas)' }
+      'regeneracion-estrias': {
+        'localizada': { price: '300.000 Gs', desc: 'Zona localizada de estrías (por sesión)' },
+        'amplia': { price: '500.000 Gs', desc: 'Zona amplia de estrías (glúteos o piernas)' }
       },
-      'eliminacion-lesiones': {
-        '1-3': { price: '200.000 Gs', desc: 'De 1 a 3 lesiones (lunares / verrugas / acrocordones)' },
-        '4-7': { price: '350.000 Gs', desc: 'De 4 a 7 lesiones' },
-        'mas-7': { price: '500.000 Gs', desc: 'Más de 7 lesiones (paquete completo)' }
+      'regeneracion-cicatrices': {
+        'localizada': { price: '350.000 Gs', desc: 'Regeneración en cicatriz localizada' },
+        'amplia': { price: '600.000 Gs', desc: 'Regeneración en cicatrices múltiples / extensas' }
+      },
+      'eliminacion-lunares': {
+        '1-3': { price: '200.000 Gs', desc: 'De 1 a 3 lunares' },
+        '4-7': { price: '350.000 Gs', desc: 'De 4 a 7 lunares' },
+        'mas-7': { price: '500.000 Gs', desc: 'Más de 7 lunares' }
+      },
+      'eliminacion-verrugas': {
+        '1-3': { price: '200.000 Gs', desc: 'De 1 a 3 verrugas' },
+        '4-7': { price: '350.000 Gs', desc: 'De 4 a 7 verrugas' },
+        'mas-7': { price: '500.000 Gs', desc: 'Más de 7 verrugas' }
+      },
+      'eliminacion-acrocordones': {
+        '1-3': { price: '180.000 Gs', desc: 'De 1 a 3 acrocordones' },
+        '4-7': { price: '300.000 Gs', desc: 'De 4 a 7 acrocordones' },
+        'mas-7': { price: '450.000 Gs', desc: 'Más de 7 acrocordones' }
       }
     };
 
@@ -48,7 +62,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] text-[#2c2c2c] font-sans selection:bg-[#e8c8c8] selection:text-[#2c2c2c]">
+    <div className="min-h-screen bg-[#faf8f5] text-[#2c2c2c] font-sans selection:bg-[#e8c8c8] selection:text-[#2c2c2c] relative">
       {/* HEADER / NAVBAR */}
       <header className="sticky top-0 z-50 bg-[#faf8f5]/90 backdrop-blur-md border-b border-[#e6dfd5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -138,7 +152,7 @@ export default function Home() {
                 Me especializo en tratamientos estéticos avanzados con un enfoque altamente profesional, riguroso y personalizado para cada paciente. Mi objetivo principal es brindarte un espacio seguro donde puedas mejorar la salud y apariencia de tu piel.
               </p>
               <p>
-                Cuento con especialización avanzada en camuflaje de estrías y cicatrices, así como en la eliminación estética y segura de lunares, verrugas y acrocordones mediante tecnología de punta.
+                Cuento con especialización avanzada en camuflaje de estrías y cicatrices, regeneración cutánea y eliminación segura de lunares, verrugas y acrocordones.
               </p>
               <div className="pt-4">
                 <span className="inline-block bg-[#f4ece1] text-[#4a3b32] px-4 py-2 rounded-lg text-sm font-medium">
@@ -159,7 +173,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-start space-x-3">
                   <span className="text-[#d4a373] font-bold">✓</span>
-                  <span>Tarifas personalizadas según la zona y el tipo de tratamiento.</span>
+                  <span>Tarifas transparentes adaptadas por zona corporal.</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <span className="text-[#d4a373] font-bold">✓</span>
@@ -175,23 +189,22 @@ export default function Home() {
       <section id="servicios" className="py-20 bg-[#faf8f5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl sm:text-4xl font-serif text-[#4a3b32]">Nuestros Tratamientos</h2>
-            <p className="text-[#6b5b52] max-w-2xl mx-auto">Servicios especializados por separado. Cada tarifa se calcula según la parte del cuerpo a tratar.</p>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#4a3b32]">Nuestros Servicios</h2>
+            <p className="text-[#6b5b52] max-w-2xl mx-auto">Tratamientos totalmente separados y especializados para cada necesidad de tu piel.</p>
             <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* 1. Camuflaje de Estrías */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
-                <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Técnica Avanzada</span>
+                <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Estética Corporal</span>
                 <h3 className="text-xl font-serif text-[#4a3b32]">Camuflaje de Estrías</h3>
                 <p className="text-xs text-[#6b5b52] leading-relaxed">
-                  Disimula visualmente las estrías aplicando pigmentos adaptados al tono exacto de tu piel.
+                  Disimula visualmente las estrías aplicando pigmentos adaptados al tono exacto de tu piel por zonas corporales.
                 </p>
                 <div className="space-y-1.5 pt-2 text-[11px] text-[#555] bg-[#faf8f5] p-3 rounded-xl">
-                  <p><strong>Duración:</strong> ~30 a 60 min</p>
-                  <p><strong>Tarifa:</strong> Según zona corporal (Glúteos, caderas, abdomen, piernas)</p>
+                  <p><strong>Zonas:</strong> Glúteos, caderas, abdomen, piernas, busto</p>
                 </div>
               </div>
               <div className="pt-6">
@@ -210,11 +223,10 @@ export default function Home() {
                 <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Reparación Cutánea</span>
                 <h3 className="text-xl font-serif text-[#4a3b32]">Camuflaje de Cicatrices</h3>
                 <p className="text-xs text-[#6b5b52] leading-relaxed">
-                  Técnica especializada para unificar el color y disimular cicatrices en diferentes partes del cuerpo.
+                  Técnica especializada para unificar el color y disimular marcas o cicatrices quirúrgicas o accidentales.
                 </p>
                 <div className="space-y-1.5 pt-2 text-[11px] text-[#555] bg-[#faf8f5] p-3 rounded-xl">
-                  <p><strong>Enfoque:</strong> Corrección de discromías</p>
-                  <p><strong>Tarifa:</strong> Según tamaño y extensión de la cicatriz</p>
+                  <p><strong>Zonas:</strong> Pequeñas, medianas o extensas</p>
                 </div>
               </div>
               <div className="pt-6">
@@ -227,22 +239,21 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 3. Regeneración de Estrías con Colágeno */}
+            {/* 3. Regeneración de Estrías */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
                 <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Bioestimulación</span>
-                <h3 className="text-xl font-serif text-[#4a3b32]">Regeneración con Colágeno</h3>
+                <h3 className="text-xl font-serif text-[#4a3b32]">Regeneración de Estrías</h3>
                 <p className="text-xs text-[#6b5b52] leading-relaxed">
-                  Tratamiento para mejorar la textura y elasticidad de la piel estimulando colágeno de forma natural.
+                  Tratamiento profundo para mejorar la textura, profundidad y elasticidad de la piel con colágeno.
                 </p>
                 <div className="space-y-1.5 pt-2 text-[11px] text-[#555] bg-[#faf8f5] p-3 rounded-xl">
-                  <p><strong>Resultado:</strong> Textura y firmeza uniforme</p>
-                  <p><strong>Tarifa:</strong> Según zona a tratar</p>
+                  <p><strong>Zonas:</strong> Áreas localizadas o amplias</p>
                 </div>
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Regeneración de Estrías con Colágeno')}
+                  onClick={() => openBookingModal('Regeneración de Estrías')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
                 >
                   Consultar / Cotizar
@@ -250,22 +261,87 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 4. Eliminación de Lunares y Verrugas */}
+            {/* 4. Regeneración de Cicatrices */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
-                <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Tecnología Plasma Pen</span>
-                <h3 className="text-xl font-serif text-[#4a3b32]">Eliminación de Lunares y Verrugas</h3>
+                <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Tratamiento Avanzado</span>
+                <h3 className="text-xl font-serif text-[#4a3b32]">Regeneración de Cicatrices</h3>
                 <p className="text-xs text-[#6b5b52] leading-relaxed">
-                  Remoción estética segura de pequeñas lesiones benignas y acrocordones por área o cantidad.
+                  Mejora visible de la textura de la piel en zonas con cicatrices para suavizar su relieve y aspecto.
                 </p>
                 <div className="space-y-1.5 pt-2 text-[11px] text-[#555] bg-[#faf8f5] p-3 rounded-xl">
-                  <p><strong>Duración:</strong> 10 a 15 min</p>
-                  <p><strong>Tarifa:</strong> Según cantidad y zona corporal</p>
+                  <p><strong>Zonas:</strong> Localizadas o múltiples</p>
                 </div>
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Eliminación de Lunares y Verrugas')}
+                  onClick={() => openBookingModal('Regeneración de Cicatrices')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                >
+                  Consultar / Cotizar
+                </button>
+              </div>
+            </div>
+
+            {/* 5. Eliminación de Lunares */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="space-y-3">
+                <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Tecnología Segura</span>
+                <h3 className="text-xl font-serif text-[#4a3b32]">Eliminación de Lunares</h3>
+                <p className="text-xs text-[#6b5b52] leading-relaxed">
+                  Remoción estética y controlada de lunares benignos con equipo especializado.
+                </p>
+                <div className="space-y-1.5 pt-2 text-[11px] text-[#555] bg-[#faf8f5] p-3 rounded-xl">
+                  <p><strong>Tarifa:</strong> Paquetes por cantidad de lesiones</p>
+                </div>
+              </div>
+              <div className="pt-6">
+                <button
+                  onClick={() => openBookingModal('Eliminación de Lunares')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                >
+                  Consultar / Cotizar
+                </button>
+              </div>
+            </div>
+
+            {/* 6. Eliminación de Verrugas */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="space-y-3">
+                <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Plasma Pen / Lesiones</span>
+                <h3 className="text-xl font-serif text-[#4a3b32]">Eliminación de Verrugas</h3>
+                <p className="text-xs text-[#6b5b52] leading-relaxed">
+                  Extracción higiénica y estética de verrugas cutáneas sin marcas invasivas.
+                </p>
+                <div className="space-y-1.5 pt-2 text-[11px] text-[#555] bg-[#faf8f5] p-3 rounded-xl">
+                  <p><strong>Tarifa:</strong> Paquetes por cantidad de lesiones</p>
+                </div>
+              </div>
+              <div className="pt-6">
+                <button
+                  onClick={() => openBookingModal('Eliminación de Verrugas')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                >
+                  Consultar / Cotizar
+                </button>
+              </div>
+            </div>
+
+            {/* 7. Eliminación de Acrocordones */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#e6dfd5] flex flex-col justify-between hover:shadow-md transition-shadow md:col-span-2 lg:col-span-1">
+              <div className="space-y-3">
+                <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Cuidado de la Piel</span>
+                <h3 className="text-xl font-serif text-[#4a3b32]">Eliminación de Acrocordones</h3>
+                <p className="text-xs text-[#6b5b52] leading-relaxed">
+                  Remoción rápida y sin dolor de pequeños fibromas blandos (acrocordones) en cuello, axilas u otras zonas.
+                </p>
+                <div className="space-y-1.5 pt-2 text-[11px] text-[#555] bg-[#faf8f5] p-3 rounded-xl">
+                  <p><strong>Tarifa:</strong> Paquetes por cantidad de lesiones</p>
+                </div>
+              </div>
+              <div className="pt-6">
+                <button
+                  onClick={() => openBookingModal('Eliminación de Acrocordones')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
                 >
                   Consultar / Cotizar
@@ -276,12 +352,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COTIZADOR INTERACTIVO POR PARTE DEL CUERPO */}
+      {/* COTIZADOR INTERACTIVO SEPARADO POR PARTE DEL CUERPO */}
       <section id="cotizador" className="py-20 bg-white border-y border-[#f0ebe3]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-12">
-            <h2 className="text-3xl font-serif text-[#4a3b32]">Cotizador Aproximado por Servicio y Zona</h2>
-            <p className="text-[#6b5b52]">Selecciona el tratamiento y la parte del cuerpo para conocer la tarifa estimada.</p>
+            <h2 className="text-3xl font-serif text-[#4a3b32]">Cotizador Interactivo por Zona y Tratamiento</h2>
+            <p className="text-[#6b5b52]">Selecciona el tratamiento específico y la parte del cuerpo para conocer el estimado.</p>
             <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
           </div>
 
@@ -289,7 +365,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Selector de Servicio */}
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-[#4a3b32]">1. Selecciona el Servicio:</label>
+                <label className="block text-sm font-medium text-[#4a3b32]">1. Selecciona el Tratamiento:</label>
                 <select
                   value={calcService}
                   onChange={(e) => {
@@ -297,21 +373,24 @@ export default function Home() {
                     setCalcService(s);
                     if (s === 'camuflaje-estrias') setCalcZone('gluteos');
                     else if (s === 'camuflaje-cicatrices') setCalcZone('pequeña');
-                    else if (s === 'regeneracion-colageno') setCalcZone('localizada');
-                    else if (s === 'eliminacion-lesiones') setCalcZone('1-3');
+                    else if (s.includes('regeneracion')) setCalcZone('localizada');
+                    else if (s.includes('eliminacion')) setCalcZone('1-3');
                   }}
                   className="w-full bg-white border border-[#d6ccbe] rounded-xl p-3 text-sm text-[#4a3b32] focus:outline-none focus:ring-2 focus:ring-[#d4a373]"
                 >
                   <option value="camuflaje-estrias">Camuflaje de Estrías</option>
                   <option value="camuflaje-cicatrices">Camuflaje de Cicatrices</option>
-                  <option value="regeneracion-colageno">Regeneración de Estrías con Colágeno</option>
-                  <option value="eliminacion-lesiones">Eliminación de Lunares y Verrugas</option>
+                  <option value="regeneracion-estrias">Regeneración de Estrías</option>
+                  <option value="regeneracion-cicatrices">Regeneración de Cicatrices</option>
+                  <option value="eliminacion-lunares">Eliminación de Lunares</option>
+                  <option value="eliminacion-verrugas">Eliminación de Verrugas</option>
+                  <option value="eliminacion-acrocordones">Eliminación de Acrocordones</option>
                 </select>
               </div>
 
-              {/* Selector de Parte / Zona */}
+              {/* Selector de Parte / Zona o Cantidad */}
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-[#4a3b32]">2. Selecciona la Parte del Cuerpo / Extensión:</label>
+                <label className="block text-sm font-medium text-[#4a3b32]">2. Selecciona la Parte del Cuerpo / Cantidad:</label>
                 <select
                   value={calcZone}
                   onChange={(e) => setCalcZone(e.target.value)}
@@ -333,17 +412,23 @@ export default function Home() {
                       <option value="grande">Cicatriz extensa / compleja</option>
                     </>
                   )}
-                  {calcService === 'regeneracion-colageno' && (
+                  {calcService === 'regeneracion-estrias' && (
                     <>
                       <option value="localizada">Zona localizada</option>
                       <option value="amplia">Zona amplia</option>
                     </>
                   )}
-                  {calcService === 'eliminacion-lesiones' && (
+                  {calcService === 'regeneracion-cicatrices' && (
                     <>
-                      <option value="1-3">1 a 3 lesiones</option>
-                      <option value="4-7">4 a 7 lesiones</option>
-                      <option value="mas-7">Más de 7 lesiones</option>
+                      <option value="localizada">Zona localizada</option>
+                      <option value="amplia">Zonas múltiples / extensas</option>
+                    </>
+                  )}
+                  {(calcService === 'eliminacion-lunares' || calcService === 'eliminacion-verrugas' || calcService === 'eliminacion-acrocordones') && (
+                    <>
+                      <option value="1-3">De 1 a 3 unidades</option>
+                      <option value="4-7">De 4 a 7 unidades</option>
+                      <option value="mas-7">Más de 7 unidades</option>
                     </>
                   )}
                 </select>
@@ -355,7 +440,7 @@ export default function Home() {
               <div className="space-y-1 text-center sm:text-left">
                 <span className="text-xs uppercase tracking-widest text-[#b88686] font-semibold">Cotización Estimada</span>
                 <p className="text-lg font-serif text-[#4a3b32]">{currentEstimate.desc}</p>
-                <p className="text-xs text-[#777]">Tarifa calculada según parte del cuerpo / requerimiento.</p>
+                <p className="text-xs text-[#777]">Tarifa calculada según zona o cantidad seleccionada.</p>
               </div>
               <div className="text-center sm:text-right space-y-2">
                 <span className="text-3xl font-bold text-[#b88686]">{currentEstimate.price}</span>
@@ -480,6 +565,19 @@ export default function Home() {
           © {new Date().getFullYear()} Cami Isla Studio. Todos los derechos reservados.
         </div>
       </footer>
+
+      {/* BOTÓN FLOTANTE DE INSTAGRAM DE CAMILA */}
+      <a
+        href="https://www.instagram.com/camila_isla_studio"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center z-50"
+        aria-label="Instagram de Camila"
+      >
+        <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </a>
 
       {/* MODAL DE RESERVA RÁPIDA */}
       {modalOpen && (
