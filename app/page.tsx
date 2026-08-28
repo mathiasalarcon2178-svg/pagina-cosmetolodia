@@ -4,14 +4,22 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 export default function Home() {
-  const [selectedService, setSelectedService] = useState<string | null>(null);
+  // Estados para el sistema de reservas integrado
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState('Camuflaje de Estrías');
+  const [bookingStep, setBookingStep] = useState(1); // 1: Datos y Horario, 2: Confirmación y Pago
   
+  // Form states
+  const [clientName, setClientName] = useState('');
+  const [clientPhone, setClientPhone] = useState('');
+  const [clientDate, setClientDate] = useState('');
+  const [clientTime, setClientTime] = useState('10:00');
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+
   // Cotizador states
   const [calcService, setCalcService] = useState('camuflaje-estrias');
   const [calcZone, setCalcZone] = useState('gluteos');
 
-  // Pricing matrix estimation per body part
   const getEstimatedPrice = (service: string, zone: string) => {
     const prices: Record<string, Record<string, { price: string; desc: string }>> = {
       'camuflaje-estrias': {
@@ -50,15 +58,25 @@ export default function Home() {
         'mas-7': { price: '450.000 Gs', desc: 'Más de 7 acrocordones' }
       }
     };
-
     return prices[service]?.[zone] || { price: 'A cotizar', desc: 'Evaluación previa requerida' };
   };
 
   const currentEstimate = getEstimatedPrice(calcService, calcZone);
 
-  const openBookingModal = (serviceName: string) => {
+  const openModal = (serviceName: string) => {
     setSelectedService(serviceName);
+    setBookingStep(1);
+    setBookingConfirmed(false);
     setModalOpen(true);
+  };
+
+  const handleBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!clientName || !clientPhone || !clientDate) {
+      alert('Por favor complete todos los campos obligatorios.');
+      return;
+    }
+    setBookingConfirmed(true);
   };
 
   return (
@@ -79,14 +97,12 @@ export default function Home() {
             <a href="#contacto" className="hover:text-[#b88686] transition-colors">Contacto</a>
           </nav>
           <div>
-            <a
-              href="https://wa.me/595981000000?text=Hola%20Cami,%20quiero%20agendar%20una%20cita."
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => openModal('Consulta General / Cita')}
               className="bg-[#d4a373] hover:bg-[#bc8a5f] text-white px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-all shadow-sm flex items-center space-x-2"
             >
               <span>Reservar Cita</span>
-            </a>
+            </button>
           </div>
         </div>
       </header>
@@ -106,12 +122,12 @@ export default function Home() {
                 Especialista en camuflaje de estrías, cicatrices y eliminación estética de lesiones cutáneas con tecnología de vanguardia en Asunción.
               </p>
               <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
-                <a
-                  href="#servicios"
-                  className="bg-[#4a3b32] text-white hover:bg-[#352a23] px-8 py-3.5 rounded-full font-medium transition-all text-center"
+                <button
+                  onClick={() => openModal('Camuflaje de Estrías')}
+                  className="bg-[#4a3b32] text-white hover:bg-[#352a23] px-8 py-3.5 rounded-full font-medium transition-all text-center shadow-sm"
                 >
-                  Ver Tratamientos
-                </a>
+                  Reservar Turno Ahora
+                </button>
                 <a
                   href="https://maps.app.goo.gl/xMz8NTiREFEubY9c7"
                   target="_blank"
@@ -209,10 +225,10 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Camuflaje de Estrías')}
-                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                  onClick={() => openModal('Camuflaje de Estrías')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
-                  Consultar / Cotizar
+                  Agendar Turno
                 </button>
               </div>
             </div>
@@ -231,10 +247,10 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Camuflaje de Cicatrices')}
-                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                  onClick={() => openModal('Camuflaje de Cicatrices')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
-                  Consultar / Cotizar
+                  Agendar Turno
                 </button>
               </div>
             </div>
@@ -253,10 +269,10 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Regeneración de Estrías')}
-                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                  onClick={() => openModal('Regeneración de Estrías')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
-                  Consultar / Cotizar
+                  Agendar Turno
                 </button>
               </div>
             </div>
@@ -275,10 +291,10 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Regeneración de Cicatrices')}
-                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                  onClick={() => openModal('Regeneración de Cicatrices')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
-                  Consultar / Cotizar
+                  Agendar Turno
                 </button>
               </div>
             </div>
@@ -297,10 +313,10 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Eliminación de Lunares')}
-                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                  onClick={() => openModal('Eliminación de Lunares')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
-                  Consultar / Cotizar
+                  Agendar Turno
                 </button>
               </div>
             </div>
@@ -319,10 +335,10 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Eliminación de Verrugas')}
-                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                  onClick={() => openModal('Eliminación de Verrugas')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
-                  Consultar / Cotizar
+                  Agendar Turno
                 </button>
               </div>
             </div>
@@ -341,10 +357,10 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openBookingModal('Eliminación de Acrocordones')}
-                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all"
+                  onClick={() => openModal('Eliminación de Acrocordones')}
+                  className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
-                  Consultar / Cotizar
+                  Agendar Turno
                 </button>
               </div>
             </div>
@@ -446,7 +462,7 @@ export default function Home() {
                 <span className="text-3xl font-bold text-[#b88686]">{currentEstimate.price}</span>
                 <div>
                   <button
-                    onClick={() => openBookingModal(`${calcService.replace(/-/g, ' ')} (${calcZone})`)}
+                    onClick={() => openModal(`${calcService.replace(/-/g, ' ')} (${calcZone})`)}
                     className="bg-[#4a3b32] hover:bg-[#352a23] text-white px-6 py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                   >
                     Reservar con esta cotización
@@ -501,7 +517,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-[#4a3b32]">Clienta Verificada</p>
-                <p className="text-xs text-[#777]">Reseña vía WhatsApp</p>
+                <p className="text-xs text-[#777]">Reseña verificada</p>
               </div>
             </div>
           </div>
@@ -549,16 +565,18 @@ export default function Home() {
             </p>
           </div>
           <div className="space-y-4">
-            <h4 className="text-lg font-serif text-white">Contacto y Reservas</h4>
-            <p className="text-sm text-[#aaa]">Escríbenos directamente por WhatsApp para coordinar turnos y cotizaciones.</p>
-            <a
-              href="https://wa.me/595981000000?text=Hola%20Cami,%20quiero%20consultar%20sobre%20tus%20servicios."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-[#d4a373] text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#bc8a5f] transition-all"
-            >
-              Contactar por WhatsApp
-            </a>
+            <h4 className="text-lg font-serif text-white">Contacto y Consultas</h4>
+            <p className="text-sm text-[#aaa]">Canales oficiales de atención directa.</p>
+            <div className="space-y-2">
+              <a
+                href="https://wa.me/595981000000?text=Hola%20Cami,%20quiero%20consultar%20sobre%20tus%20servicios."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-[#d4a373] text-white px-5 py-2 rounded-full text-xs font-medium hover:bg-[#bc8a5f] transition-all"
+              >
+                Escribir por WhatsApp
+              </a>
+            </div>
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 mt-12 border-t border-[#444] text-center text-xs text-[#888]">
@@ -579,12 +597,15 @@ export default function Home() {
         </svg>
       </a>
 
-      {/* MODAL DE RESERVA RÁPIDA */}
+      {/* MODAL DE RESERVA INTEGRADA EN LA WEB */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white max-w-md w-full rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
-            <div className="flex justify-between items-center">
-              <h3 className="text-xl font-serif text-[#4a3b32]">Reservar Cita</h3>
+          <div className="bg-white max-w-lg w-full rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+            <div className="flex justify-between items-center border-b border-[#f0ebe3] pb-4">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Cami Isla Studio</span>
+                <h3 className="text-xl font-serif text-[#4a3b32]">Sistema de Reservas</h3>
+              </div>
               <button
                 onClick={() => setModalOpen(false)}
                 className="text-gray-400 hover:text-gray-600 text-xl font-bold"
@@ -592,25 +613,97 @@ export default function Home() {
                 ✕
               </button>
             </div>
-            <p className="text-sm text-[#6b5b52]">
-              Estás a un paso de agendar tu turno para <strong>{selectedService}</strong>. Para confirmar la cita se requiere una seña de <strong>50.000 Gs</strong>.
-            </p>
-            <div className="space-y-3 pt-2">
-              <a
-                href={`https://wa.me/595981000000?text=Hola%20Cami,%20quiero%20agendar%20turno%20para%20${encodeURIComponent(selectedService || '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-white text-center py-3 rounded-xl font-medium transition-all shadow-sm"
-              >
-                Continuar por WhatsApp
-              </a>
-              <button
-                onClick={() => setModalOpen(false)}
-                className="block w-full bg-gray-100 hover:bg-gray-200 text-[#4a3b32] text-center py-3 rounded-xl font-medium transition-all"
-              >
-                Cancelar
-              </button>
-            </div>
+
+            {!bookingConfirmed ? (
+              <form onSubmit={handleBookingSubmit} className="space-y-4">
+                <div className="bg-[#f9f6f0] p-3 rounded-xl text-xs text-[#6b5b52]">
+                  <p className="font-semibold text-[#4a3b32]">Tratamiento seleccionado:</p>
+                  <p className="text-[#b88686] font-medium">{selectedService}</p>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-xs font-medium text-[#4a3b32]">Nombre y Apellido *</label>
+                  <input
+                    type="text"
+                    required
+                    value={clientName}
+                    onChange={(e) => setClientName(e.target.value)}
+                    placeholder="Ej. María Gómez"
+                    className="w-full bg-[#faf8f5] border border-[#d6ccbe] rounded-xl p-2.5 text-xs text-[#4a3b32] focus:outline-none focus:ring-2 focus:ring-[#d4a373]"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-xs font-medium text-[#4a3b32]">Número de Teléfono / WhatsApp *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={clientPhone}
+                    onChange={(e) => setClientPhone(e.target.value)}
+                    placeholder="Ej. 0981 123 456"
+                    className="w-full bg-[#faf8f5] border border-[#d6ccbe] rounded-xl p-2.5 text-xs text-[#4a3b32] focus:outline-none focus:ring-2 focus:ring-[#d4a373]"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="block text-xs font-medium text-[#4a3b32]">Fecha deseada *</label>
+                    <input
+                      type="date"
+                      required
+                      value={clientDate}
+                      onChange={(e) => setClientDate(e.target.value)}
+                      className="w-full bg-[#faf8f5] border border-[#d6ccbe] rounded-xl p-2.5 text-xs text-[#4a3b32] focus:outline-none focus:ring-2 focus:ring-[#d4a373]"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="block text-xs font-medium text-[#4a3b32]">Horario preferido *</label>
+                    <select
+                      value={clientTime}
+                      onChange={(e) => setClientTime(e.target.value)}
+                      className="w-full bg-[#faf8f5] border border-[#d6ccbe] rounded-xl p-2.5 text-xs text-[#4a3b32] focus:outline-none focus:ring-2 focus:ring-[#d4a373]"
+                    >
+                      <option value="09:00">09:00 HS</option>
+                      <option value="10:30">10:30 HS</option>
+                      <option value="13:00">13:00 HS</option>
+                      <option value="15:00">15:00 HS</option>
+                      <option value="17:00">17:00 HS</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-3 rounded-xl text-xs font-medium tracking-wide transition-all shadow-sm"
+                  >
+                    Confirmar Solicitud de Reserva
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="space-y-4 text-center py-4">
+                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+                  ✓
+                </div>
+                <h4 className="text-lg font-serif text-[#4a3b32]">¡Solicitud Registrada con Éxito!</h4>
+                <p className="text-xs text-[#6b5b52] leading-relaxed">
+                  Gracias <strong>{clientName}</strong>. Tu turno para <strong>{selectedService}</strong> el día <strong>{clientDate}</strong> a las <strong>{clientTime}</strong> ha sido pre-agendado.
+                </p>
+                <div className="bg-[#f9f6f0] p-4 rounded-xl text-left space-y-2 text-xs text-[#6b5b52] border border-[#e8ded1]">
+                  <p className="font-semibold text-[#4a3b32]">Instrucciones para la seña:</p>
+                  <p>Para dejar fija tu cita, recordá abonar la seña de <strong>Gs. 50.000</strong> a través de transferencia bancaria (ueno) o giro y enviar el comprobante.</p>
+                </div>
+                <div className="pt-2">
+                  <button
+                    onClick={() => setModalOpen(false)}
+                    className="w-full bg-[#d4a373] hover:bg-[#bc8a5f] text-white py-3 rounded-xl text-xs font-medium transition-all"
+                  >
+                    Finalizar y Cerrar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
