@@ -226,16 +226,12 @@ export default function Home() {
               <p className="text-sm text-[#6b5b52] leading-relaxed">
                 Licenciada en Cosmetología especializada en estética reparadora y corporal en Asunción. Apasionada por devolverle la seguridad a cada paciente a través de técnicas avanzadas, aparatología de vanguardia y resultados naturales visibles desde la primera sesión.
               </p>
-              <p className="text-sm text-[#6b5b52] leading-relaxed">
-                Cada procedimiento se realiza bajo estrictos estándares de bioseguridad, adaptándose por completo a las necesidades de tu tipo de piel.
-              </p>
             </div>
             <div className="bg-[#f9f6f0] p-8 rounded-2xl border border-[#e6dfd5] text-xs text-[#6b5b52] space-y-4 shadow-sm">
               <p className="font-semibold text-[#4a3b32] text-sm">✨ Compromiso profesional:</p>
               <p>• Evaluación personalizada previa a cada sesión para garantizar la efectividad.</p>
               <p>• Insumos, pigmentos y aparatología de máxima calidad dermatológica.</p>
               <p>• Espacio clínico esterilizado, privado y confortable en Asunción.</p>
-              <p>• Seguimiento continuo de la evolución del tratamiento.</p>
             </div>
           </div>
         </div>
@@ -273,16 +269,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GALERÍA / RESULTADOS ANTES Y DESPUÉS */}
+      {/* GALERÍA */}
       <section id="resultados" className="py-20 bg-white border-y border-[#f0ebe3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
             <span className="text-xs uppercase tracking-widest text-[#b88686] font-semibold">Transformaciones Reales</span>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#4a3b32]">Galería de Resultados</h2>
             <div className="w-16 h-0.5 bg-[#d4a373] mx-auto"></div>
-            <p className="text-sm text-[#6b5b52] max-w-xl mx-auto">
-              Conocé el antes y después de pacientes que confiaron en nuestros tratamientos estéticos avanzados.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -410,20 +403,19 @@ export default function Home() {
           <div className="bg-white p-8 rounded-2xl border border-[#e6dfd5] text-sm text-[#6b5b52] space-y-4 shadow-sm">
             <p>• Para confirmar la cita, se deberá abonar una <strong>reserva de Gs. {policies.deposit}</strong>.</p>
             <p>• El monto abonado en concepto de reserva <strong>no es reembolsable</strong>.</p>
-            <p>• Si necesitás cancelar o reprogramar tu cita, solicitamos avisar <strong>con al menos {policies.noticeHours} horas de anticipación</strong> para reagendar según disponibilidad.</p>
-            <p>• Las cancelaciones con menos de {policies.noticeHours} horas o inasistencia implican la pérdida de los Gs. {policies.deposit}.</p>
+            <p>• Si necesitás cancelar o reprogramar tu cita, solicitamos avisar <strong>con al menos {policies.noticeHours} horas de anticipación</strong>.</p>
             <p>• Se establece un <strong>tiempo máximo de tolerancia de {policies.toleranceMinutes} minutos</strong> desde el horario reservado.</p>
           </div>
         </div>
       </section>
 
-      {/* FOOTER EXACTO CON MAPA Y REDES */}
+      {/* FOOTER CON LOS ENLACES REALES DE WHATSAPP E INSTAGRAM */}
       <footer id="contacto" className="bg-[#2c2c2c] text-[#d6d6d6] py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
           <div className="space-y-3">
             <h3 className="text-xl font-serif text-white">Cami Isla Studio</h3>
             <p className="text-xs text-gray-300 leading-relaxed">
-              Licenciada en Cosmetología especializada en estética reparadora y corporal en Asunción.
+              Estética avanzada y reparadora en Asunción.
             </p>
           </div>
           <div className="space-y-3">
@@ -432,7 +424,7 @@ export default function Home() {
               Overava 674, Barrio Salvador del Mundo<br />Asunción, Paraguay
             </p>
             <a 
-              href="https://maps.google.com/?q=Overava+674,+Asunción" 
+              href="https://maps.app.goo.gl/9y5HnJkS2J1v4K4F7" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="inline-block text-xs text-[#d4a373] underline font-medium pt-1"
@@ -444,7 +436,7 @@ export default function Home() {
             <h3 className="text-lg font-serif text-white">Contacto y Consultas</h3>
             <p className="text-xs text-gray-300">Canales oficiales de atención directa.</p>
             <a
-              href="https://wa.me/595981000000"
+              href="https://wa.me/595981267438"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#d4a373] hover:bg-[#bc8a5f] text-white px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-sm inline-block"
@@ -460,10 +452,10 @@ export default function Home() {
             href="https://www.instagram.com/camiilastudio"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform"
+            className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform font-bold"
             aria-label="Instagram"
           >
-            📸
+            ig
           </a>
         </div>
       </footer>
