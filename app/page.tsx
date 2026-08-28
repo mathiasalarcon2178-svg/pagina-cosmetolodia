@@ -409,7 +409,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER CON EL ENLACE EXACTO DE WHATSAPP Y EL DE INSTAGRAM */}
+      {/* FOOTER CON EL ENLACE UNIVERSAL DE WHATSAPP Y EL DE INSTAGRAM */}
       <footer id="contacto" className="bg-[#2c2c2c] text-[#d6d6d6] py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
           <div className="space-y-3">
@@ -436,7 +436,7 @@ export default function Home() {
             <h3 className="text-lg font-serif text-white">Contacto y Consultas</h3>
             <p className="text-xs text-gray-300">Canales oficiales de atención directa.</p>
             <a
-              href="https://wa.me/message/3KYVZSN3f3MKC1"
+              href="https://wa.me/5959XXXXXXXX"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#d4a373] hover:bg-[#bc8a5f] text-white px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-sm inline-block"
