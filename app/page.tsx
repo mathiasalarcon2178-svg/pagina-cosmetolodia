@@ -4,10 +4,9 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 export default function Home() {
-  // Estados para el sistema de reservas integrado
+  // Estados para el sistema de reservas integrado con selección múltiple
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState('Camuflaje de Estrías');
-  const [bookingStep, setBookingStep] = useState(1); // 1: Datos y Horario, 2: Confirmación y Pago
+  const [selectedServices, setSelectedServices] = useState<string[]>(['Camuflaje de Estrías']);
   
   // Form states
   const [clientName, setClientName] = useState('');
@@ -63,11 +62,20 @@ export default function Home() {
 
   const currentEstimate = getEstimatedPrice(calcService, calcZone);
 
-  const openModal = (serviceName: string) => {
-    setSelectedService(serviceName);
-    setBookingStep(1);
+  const openModalWithService = (serviceName: string) => {
+    setSelectedServices([serviceName]);
     setBookingConfirmed(false);
     setModalOpen(true);
+  };
+
+  const toggleServiceSelection = (serviceName: string) => {
+    if (selectedServices.includes(serviceName)) {
+      if (selectedServices.length > 1) {
+        setSelectedServices(selectedServices.filter(s => s !== serviceName));
+      }
+    } else {
+      setSelectedServices([...selectedServices, serviceName]);
+    }
   };
 
   const handleBookingSubmit = (e: React.FormEvent) => {
@@ -98,7 +106,7 @@ export default function Home() {
           </nav>
           <div>
             <button
-              onClick={() => openModal('Consulta General / Cita')}
+              onClick={() => openModalWithService('Camuflaje de Estrías')}
               className="bg-[#d4a373] hover:bg-[#bc8a5f] text-white px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-all shadow-sm flex items-center space-x-2"
             >
               <span>Reservar Cita</span>
@@ -123,7 +131,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
                 <button
-                  onClick={() => openModal('Camuflaje de Estrías')}
+                  onClick={() => openModalWithService('Camuflaje de Estrías')}
                   className="bg-[#4a3b32] text-white hover:bg-[#352a23] px-8 py-3.5 rounded-full font-medium transition-all text-center shadow-sm"
                 >
                   Reservar Turno Ahora
@@ -225,7 +233,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openModal('Camuflaje de Estrías')}
+                  onClick={() => openModalWithService('Camuflaje de Estrías')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
                   Agendar Turno
@@ -247,7 +255,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openModal('Camuflaje de Cicatrices')}
+                  onClick={() => openModalWithService('Camuflaje de Cicatrices')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
                   Agendar Turno
@@ -269,7 +277,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openModal('Regeneración de Estrías')}
+                  onClick={() => openModalWithService('Regeneración de Estrías')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
                   Agendar Turno
@@ -291,7 +299,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openModal('Regeneración de Cicatrices')}
+                  onClick={() => openModalWithService('Regeneración de Cicatrices')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
                   Agendar Turno
@@ -313,7 +321,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openModal('Eliminación de Lunares')}
+                  onClick={() => openModalWithService('Eliminación de Lunares')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
                   Agendar Turno
@@ -335,7 +343,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openModal('Eliminación de Verrugas')}
+                  onClick={() => openModalWithService('Eliminación de Verrugas')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
                   Agendar Turno
@@ -357,7 +365,7 @@ export default function Home() {
               </div>
               <div className="pt-6">
                 <button
-                  onClick={() => openModal('Eliminación de Acrocordones')}
+                  onClick={() => openModalWithService('Eliminación de Acrocordones')}
                   className="w-full bg-[#4a3b32] hover:bg-[#352a23] text-white py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                 >
                   Agendar Turno
@@ -462,7 +470,7 @@ export default function Home() {
                 <span className="text-3xl font-bold text-[#b88686]">{currentEstimate.price}</span>
                 <div>
                   <button
-                    onClick={() => openModal(`${calcService.replace(/-/g, ' ')} (${calcZone})`)}
+                    onClick={() => openModalWithService(`${calcService.replace(/-/g, ' ')} (${calcZone})`)}
                     className="bg-[#4a3b32] hover:bg-[#352a23] text-white px-6 py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm"
                   >
                     Reservar con esta cotización
@@ -597,10 +605,10 @@ export default function Home() {
         </svg>
       </a>
 
-      {/* MODAL DE RESERVA INTEGRADA EN LA WEB */}
+      {/* MODAL DE RESERVA INTEGRADA CON SELECCIÓN MÚLTIPLE */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white max-w-lg w-full rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+          <div className="bg-white max-w-lg w-full rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-[#f0ebe3] pb-4">
               <div>
                 <span className="text-[10px] uppercase tracking-widest text-[#b88686] font-semibold">Cami Isla Studio</span>
@@ -616,9 +624,31 @@ export default function Home() {
 
             {!bookingConfirmed ? (
               <form onSubmit={handleBookingSubmit} className="space-y-4">
-                <div className="bg-[#f9f6f0] p-3 rounded-xl text-xs text-[#6b5b52]">
-                  <p className="font-semibold text-[#4a3b32]">Tratamiento seleccionado:</p>
-                  <p className="text-[#b88686] font-medium">{selectedService}</p>
+                <div className="space-y-2">
+                  <label className="block text-xs font-medium text-[#4a3b32]">
+                    Selecciona uno o más tratamientos de interés:
+                  </label>
+                  <div className="grid grid-cols-1 gap-2 bg-[#f9f6f0] p-3 rounded-xl border border-[#e8ded1] max-h-40 overflow-y-auto text-xs text-[#6b5b52]">
+                    {[
+                      'Camuflaje de Estrías',
+                      'Camuflaje de Cicatrices',
+                      'Regeneración de Estrías',
+                      'Regeneración de Cicatrices',
+                      'Eliminación de Lunares',
+                      'Eliminación de Verrugas',
+                      'Eliminación de Acrocordones'
+                    ].map((service) => (
+                      <label key={service} className="flex items-center space-x-2 cursor-pointer hover:text-[#4a3b32]">
+                        <input
+                          type="checkbox"
+                          checked={selectedServices.includes(service)}
+                          onChange={() => toggleServiceSelection(service)}
+                          className="rounded text-[#d4a373] focus:ring-[#d4a373]"
+                        />
+                        <span>{service}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="space-y-1">
@@ -688,11 +718,13 @@ export default function Home() {
                 </div>
                 <h4 className="text-lg font-serif text-[#4a3b32]">¡Solicitud Registrada con Éxito!</h4>
                 <p className="text-xs text-[#6b5b52] leading-relaxed">
-                  Gracias <strong>{clientName}</strong>. Tu turno para <strong>{selectedService}</strong> el día <strong>{clientDate}</strong> a las <strong>{clientTime}</strong> ha sido pre-agendado.
+                  Gracias <strong>{clientName}</strong>. Tu turno para los servicios de: <br />
+                  <span className="text-[#b88686] font-medium">{selectedServices.join(', ')}</span><br />
+                  el día <strong>{clientDate}</strong> a las <strong>{clientTime}</strong> ha sido pre-agendado.
                 </p>
                 <div className="bg-[#f9f6f0] p-4 rounded-xl text-left space-y-2 text-xs text-[#6b5b52] border border-[#e8ded1]">
                   <p className="font-semibold text-[#4a3b32]">Instrucciones para la seña:</p>
-                  <p>Para dejar fija tu cita, recordá abonar la seña de <strong>Gs. 50.000</strong> a través de transferencia bancaria (ueno) o giro y enviar el comprobante.</p>
+                  <p>Para dejar fija tu cita, recordá abonar la seña única de <strong>Gs. 50.000</strong> a través de transferencia bancaria (ueno) o giro y enviar el comprobante.</p>
                 </div>
                 <div className="pt-2">
                   <button
