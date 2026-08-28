@@ -55,7 +55,7 @@ const SERVICES = [
     name: 'Regeneración de Cicatrices',
     category: 'BIOESTIMULACIÓN',
     description: 'Técnica avanzada para mejorar la textura, relieve y aspecto general de las cicatrices mediante bioestimulación.',
-    technology: 'Técnicas de bioestimulação cutánea para activar la reparación celular, mejorando el relieve y la flexibilidad del tejido.',
+    technology: 'Técnicas de bioestimulación cutánea para activar la reparación celular, mejorando el relieve y la flexibilidad del tejido.',
     benefits: [
       'Mejora la textura, relieve y flexibilidad de la cicatriz.',
       'Estimula la renovación de los tejidos profundos.',
@@ -528,7 +528,7 @@ export default function Page() {
               Atención de lunes a sábados de 10:00 a 19:00 hs.
             </p>
             <a
-              href="https://wa.me/595981123456"
+              href="https://wa.me/595971301339"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-[#C5A880] hover:bg-[#B3966E] text-white px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors"
@@ -681,7 +681,7 @@ export default function Page() {
                       <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Teléfono / WhatsApp</label>
                       <input
                         type="tel"
-                        placeholder="Ej. 0981 123 456"
+                        placeholder="Ej. 0971 301 339"
                         value={clientPhone}
                         onChange={(e) => setClientPhone(e.target.value)}
                         className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-xl p-3 text-xs text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
