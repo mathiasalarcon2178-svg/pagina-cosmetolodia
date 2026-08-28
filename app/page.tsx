@@ -13,7 +13,7 @@ const SERVICES = [
     name: 'Camuflaje de Estrías',
     category: 'ESTÉTICA CORPORAL',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80',
+    image: '/resultado.jpg',
     description: 'Disimula visualmente las estrías aplicando pigmentos adaptados al tono exacto de tu piel por zonas corporales.',
     zonesText: 'Glúteos, caderas, abdomen, piernas, busto'
   },
@@ -22,7 +22,7 @@ const SERVICES = [
     name: 'Camuflaje de Cicatrices',
     category: 'REPARACIÓN CUTÁNEA',
     duration: '90 min',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
+    image: '/resultado.jpg',
     description: 'Técnica especializada para unificar el color y disimular marcas o cicatrices quirúrgicas o accidentales.',
     zonesText: 'Pequeñas, medianas o extensas'
   },
@@ -31,7 +31,7 @@ const SERVICES = [
     name: 'Regeneración de Estrías',
     category: 'BIOESTIMULACIÓN',
     duration: '60 min',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
+    image: '/resultado.jpg',
     description: 'Tratamiento profundo para mejorar la textura, profundidad y elasticidad de la piel con colágeno.',
     zonesText: 'Áreas localizadas o amplias'
   },
@@ -40,7 +40,7 @@ const SERVICES = [
     name: 'Regeneración de Cicatrices',
     category: 'TRATAMIENTO AVANZADO',
     duration: '60 min',
-    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
+    image: '/resultado.jpg',
     description: 'Mejora visible de la textura de la piel en zonas con cicatrices para suavizar su relieve y aspecto.',
     zonesText: 'Localizadas o múltiples'
   },
@@ -49,7 +49,7 @@ const SERVICES = [
     name: 'Eliminación de Lunares',
     category: 'TECNOLOGÍA SEGURA',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80',
+    image: '/resultado.jpg',
     description: 'Remoción estética y controlada de lunares benignos con equipo especializado.',
     zonesText: 'Paquetes por cantidad de lesiones'
   },
@@ -58,7 +58,7 @@ const SERVICES = [
     name: 'Eliminación de Verrugas',
     category: 'PLASMA PEN / LESIONES',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=80',
+    image: '/resultado.jpg',
     description: 'Extracción higiénica y estética de verrugas cutáneas sin marcas invasivas.',
     zonesText: 'Paquetes por cantidad de lesiones'
   },
@@ -67,7 +67,7 @@ const SERVICES = [
     name: 'Eliminación de Acrocordones',
     category: 'CUIDADO DE LA PIEL',
     duration: '30 min',
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
+    image: '/resultado.jpg',
     description: 'Remoción rápida y sin dolor de pequeños fibromas blandos (acrocordones) en cuello, axilas u otras zonas.',
     zonesText: 'Paquetes por cantidad de lesiones'
   }
@@ -108,7 +108,6 @@ export default function Page() {
   const [bookedTimes, setBookedTimes] = useState<string[]>([])
   const [selectedTime, setSelectedTime] = useState('')
   
-  // Estados para cotizador interactivo
   const [cotizadorService, setCotizadorService] = useState(SERVICES[0].name)
   const [cotizadorZone, setCotizadorZone] = useState('Glúteos')
 
@@ -118,7 +117,6 @@ export default function Page() {
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Actualizar zonas disponibles al cambiar el servicio del cotizador
   useEffect(() => {
     const zonesKeys = Object.keys(PRICING_DATA[cotizadorService]?.zones || {})
     if (zonesKeys.length > 0) {
@@ -265,7 +263,7 @@ export default function Page() {
         <div className="relative flex justify-center">
           <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-[#F3EDE2] max-w-md w-full">
             <img 
-              src="https://images.unsplash.com/photo-1594824813576-9d0b6740ff3f?auto=format&fit=crop&w=800&q=80" 
+              src="/cami.jpg" 
               alt="Camila Isla - Licenciada en Cosmetología"
               className="w-full h-[450px] object-cover"
             />
@@ -425,7 +423,7 @@ export default function Page() {
         <div className="bg-white rounded-3xl border border-[#EFECE6] overflow-hidden shadow-sm max-w-2xl mx-auto">
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1512290900672-135835928d15?auto=format&fit=crop&w=800&q=80" 
+              src="/resultado.jpg" 
               alt="Resultado de Camuflaje de Estrías"
               className="w-full h-[400px] object-cover"
             />
@@ -487,7 +485,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* SECCIÓN DE RESERVA (FORMULARIO CONECTADO A SUPABASE) */}
+      {/* SECCIÓN DE RESERVA */}
       <section id="reserva" className="max-w-4xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-12">
           <span className="text-xs uppercase tracking-[0.3em] text-[#8C7355] font-bold">Agenda en Línea</span>
@@ -510,7 +508,6 @@ export default function Page() {
 
         <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#EFECE6] shadow-sm space-y-8">
           
-          {/* 1. Selección de Servicios */}
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-[#FAF8F5] pb-3">
               <h3 className="text-sm font-bold uppercase tracking-wider text-[#3F3A36]">1. Selecciona Tratamiento(s)</h3>
@@ -539,7 +536,6 @@ export default function Page() {
             </div>
           </div>
 
-          {/* 2. Fecha y Hora */}
           <form onSubmit={handleBooking} className="space-y-8 pt-6 border-t border-[#EFECE6]">
             <h3 className="text-sm font-bold uppercase tracking-wider text-[#3F3A36]">2. Fecha y Horario Disponible</h3>
 
@@ -590,7 +586,6 @@ export default function Page() {
               </div>
             </div>
 
-            {/* 3. Datos Personales */}
             <div className="pt-6 border-t border-[#EFECE6] space-y-6">
               <h3 className="text-sm font-bold uppercase tracking-wider text-[#3F3A36]">3. Tus Datos de Contacto</h3>
 
