@@ -13,7 +13,6 @@ const SERVICES = [
     name: 'Camuflaje de Estrías',
     category: 'ESTÉTICA CORPORAL',
     duration: '30-90 min',
-    image: '/resultado.jpg',
     description: 'Procedimiento estético que busca disimular visualmente las estrías aplicando pigmentos seleccionados de acuerdo al tono de piel.',
     zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
   },
@@ -22,7 +21,6 @@ const SERVICES = [
     name: 'Estimulación de Colágeno (Estrías)',
     category: 'BIOESTIMULACIÓN',
     duration: '60 min',
-    image: '/resultado.jpg',
     description: 'Tratamiento orientado a mejorar la textura y apariencia de las estrías estimulando la producción natural de colágeno y elastina.',
     zonesText: 'Abdomen, piernas, glúteos, caderas, busto'
   },
@@ -31,15 +29,11 @@ const SERVICES = [
     name: 'Eliminación de Lunares, Verrugas y Acrocordones',
     category: 'ELECTROCAUTERIO / PLASMA',
     duration: '10-15 min',
-    image: '/resultado.jpg',
     description: 'Remoción estética de pequeñas lesiones cutáneas benignas de forma precisa, mediante calor controlado y anestesia tópica.',
     zonesText: 'Cuello y escote, rostro, zona íntima, manos/pies, espalda, cabeza, piernas'
   }
 ]
 
-// Precios basados en los mensajes de Cami:
-// - Estrías/Colágeno (por sesiones): 1 ses: 350k, 2 ses: 500k, 3 ses: 850k
-// - Lunares/Verrugas/Acrocordones (por zona corporal): Cuello y escote 200k, Rostro 250k, Zona íntima 350k, Manos/pies 150k, Espalda 250k, Cabeza 200k, Piernas 150k
 const PRICING_DATA: Record<string, { type: 'sessions' | 'zones', options: Record<string, number> }> = {
   'Camuflaje de Estrías': {
     type: 'sessions',
@@ -69,7 +63,10 @@ const TIME_SLOTS = [
 ]
 
 export default function Page() {
-  const [selectedServices, setSelectedServices] = useState<string[]>([SERVICES[0].name])
+  // Servicio seleccionado individualmente para el agendador
+  const [selectedService, setSelectedService] = useState<string>(SERVICES[0].name)
+  const [selectedOption, setSelectedOption] = useState<string>('1 Sesión')
+
   const [selectedDate, setSelectedDate] = useState('')
   const [bookedTimes, setBookedTimes] = useState<string[]>([])
   const [selectedTime, setSelectedTime] = useState('')
@@ -78,10 +75,8 @@ export default function Page() {
   const [cotizadorService, setCotizadorService] = useState(SERVICES[0].name)
   const [cotizadorOption, setCotizadorOption] = useState('1 Sesión')
 
-  // Modal state
+  // Modals state
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  // Modal policies state
   const [isPoliciesOpen, setIsPoliciesOpen] = useState(false)
 
   const [clientName, setClientName] = useState('')
@@ -89,6 +84,14 @@ export default function Page() {
   const [loading, setLoading] = useState(false)
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
+
+  // Actualizar opciones del agendador al cambiar de servicio
+  useEffect(() => {
+    const optionKeys = Object.keys(PRICING_DATA[selectedService]?.options || {})
+    if (optionKeys.length > 0) {
+      setSelectedOption(optionKeys[0])
+    }
+  }, [selectedService])
 
   // Actualizar opciones del cotizador al cambiar de servicio
   useEffect(() => {
@@ -126,17 +129,9 @@ export default function Page() {
     fetchBookings()
   }, [selectedDate])
 
-  const toggleService = (serviceName: string) => {
-    setSelectedServices(prev => 
-      prev.includes(serviceName) 
-        ? prev.filter(s => s !== serviceName)
-        : [...prev, serviceName]
-    )
-  }
-
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (selectedServices.length === 0 || !selectedDate || !selectedTime || !clientName || !clientPhone) {
+    if (!selectedService || !selectedOption || !selectedDate || !selectedTime || !clientName || !clientPhone) {
       setErrorMsg('Por favor completa todos los campos obligatorios para agendar tu turno.')
       return
     }
@@ -147,8 +142,8 @@ export default function Page() {
 
     try {
       const payload = {
-        service_name: selectedServices.join(', '),
-        body_zone: cotizadorOption,
+        service_name: selectedService,
+        body_zone: selectedOption,
         date: selectedDate,
         time_slot: selectedTime,
         client_name: clientName,
@@ -175,8 +170,11 @@ export default function Page() {
     }
   }
 
-  const currentPrice = PRICING_DATA[cotizadorService]?.options[cotizadorOption] || 0
-  const isPricingByZone = PRICING_DATA[cotizadorService]?.type === 'zones'
+  const currentPriceCotizador = PRICING_DATA[cotizadorService]?.options[cotizadorOption] || 0
+  const isCotizadorByZone = PRICING_DATA[cotizadorService]?.type === 'zones'
+
+  const currentPriceAgendador = PRICING_DATA[selectedService]?.options[selectedOption] || 0
+  const isAgendadorByZone = PRICING_DATA[selectedService]?.type === 'zones'
 
   return (
     <main className="min-h-screen bg-[#FDFBF7] text-[#3F3A36] selection:bg-[#D4B59E]/30 font-sans">
@@ -321,7 +319,7 @@ export default function Page() {
                 <button
                   type="button"
                   onClick={() => {
-                    setSelectedServices([s.name])
+                    setSelectedService(s.name)
                     setIsModalOpen(true)
                   }}
                   className="w-full block text-center bg-[#4E443F] hover:bg-[#3F3A36] text-white py-3 rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
@@ -359,7 +357,7 @@ export default function Page() {
 
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-wider text-[#6B635B]">
-                {isPricingByZone ? '2. Selecciona la Zona Corporal:' : '2. Selecciona la Cantidad de Sesiones:'}
+                {isCotizadorByZone ? '2. Selecciona la Zona Corporal:' : '2. Selecciona la Cantidad de Sesiones:'}
               </label>
               <select
                 value={cotizadorOption}
@@ -378,12 +376,12 @@ export default function Page() {
               <span className="text-[10px] font-bold tracking-widest text-[#8C7355] uppercase block mb-1">Inversión Estimada</span>
               <h4 className="text-lg font-serif text-[#3F3A36]">{cotizadorOption} — {cotizadorService}</h4>
               <p className="text-xs text-[#7A7067] font-light">
-                {isPricingByZone ? 'Precio por zona específica de tratamiento.' : 'Paquete de sesiones recomendadas.'}
+                {isCotizadorByZone ? 'Precio por zona específica de tratamiento.' : 'Paquete de sesiones recomendadas.'}
               </p>
             </div>
             <div className="text-right">
               <span className="text-3xl font-serif font-normal text-[#4E443F]">
-                {currentPrice.toLocaleString('es-PY')} Gs
+                {currentPriceCotizador.toLocaleString('es-PY')} Gs
               </span>
             </div>
           </div>
@@ -392,7 +390,8 @@ export default function Page() {
             <button
               type="button"
               onClick={() => {
-                setSelectedServices([cotizadorService])
+                setSelectedService(cotizadorService)
+                setSelectedOption(cotizadorOption)
                 setIsModalOpen(true)
               }}
               className="inline-block bg-[#4E443F] hover:bg-[#3F3A36] text-white px-8 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
@@ -403,7 +402,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* RESULTADOS REALES */}
+      {/* RESULTADOS REALES (CORREGIDO CONTENEDOR DE IMAGEN) */}
       <section className="max-w-5xl mx-auto px-6 py-20 border-t border-[#EFECE6]">
         <div className="text-center space-y-3 mb-16">
           <h2 className="text-3xl sm:text-4xl font-serif text-[#3F3A36]">Resultados Reales</h2>
@@ -412,11 +411,11 @@ export default function Page() {
         </div>
 
         <div className="bg-white rounded-3xl border border-[#EFECE6] overflow-hidden shadow-sm max-w-2xl mx-auto">
-          <div className="relative">
+          <div className="w-full bg-[#FAF8F5] flex items-center justify-center p-4">
             <img 
               src="/resultado.jpg" 
-              alt="Resultado de Camuflaje de Estrías"
-              className="w-full h-[400px] object-cover"
+              alt="Resultado de Camuflaje de Estrías Antes y Después"
+              className="w-full h-auto max-h-[500px] object-contain rounded-2xl"
             />
           </div>
           <div className="p-6 text-center bg-[#FAF8F5] border-t border-[#EFECE6]">
@@ -491,7 +490,7 @@ export default function Page() {
         </div>
       </footer>
 
-      {/* MODAL DE RESERVA EMERGENTE */}
+      {/* MODAL DE RESERVA EMERGENTE (CORREGIDO PARA SELECCIONAR UN SOLO SERVICIO Y SU OPCIÓN CORRESPONDIENTE) */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
           <div className="bg-[#FDFBF7] w-full max-w-2xl rounded-3xl shadow-2xl border border-[#EFECE6] p-6 sm:p-8 relative my-8 max-h-[90vh] overflow-y-auto">
@@ -523,32 +522,45 @@ export default function Page() {
 
             <div className="space-y-6">
               
-              {/* 1. Selección de Servicios */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between border-b border-[#FAF8F5] pb-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">1. Tratamiento(s)</h3>
-                  <span className="text-xs text-[#8C7355] font-bold">{selectedServices.length} seleccionado(s)</span>
+              {/* 1. Selección Individual de Servicio y Opción */}
+              <div className="space-y-4">
+                <div className="border-b border-[#FAF8F5] pb-2">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F3A36]">1. Selecciona el Tratamiento y Opción</h3>
                 </div>
 
-                <div className="grid grid-cols-1 gap-2">
-                  {SERVICES.map((s) => {
-                    const isSelected = selectedServices.includes(s.name)
-                    return (
-                      <button
-                        type="button"
-                        key={s.id}
-                        onClick={() => toggleService(s.name)}
-                        className={`p-3 rounded-2xl border text-left text-xs font-medium transition-all flex items-center justify-between cursor-pointer ${
-                          isSelected
-                            ? 'border-[#4E443F] bg-[#FAF8F5] text-[#3F3A36] shadow-sm'
-                            : 'border-[#EFECE6] bg-white text-[#6B635B] hover:border-[#D4C5B9]'
-                        }`}
-                      >
-                        <span>{s.name}</span>
-                        <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${isSelected ? 'bg-[#4E443F] text-white' : 'border border-[#D4C5B9] text-transparent'}`}>✓</span>
-                      </button>
-                    )
-                  })}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">Tratamiento</label>
+                    <select
+                      value={selectedService}
+                      onChange={(e) => setSelectedService(e.target.value)}
+                      className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-xl p-3 text-xs text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
+                    >
+                      {SERVICES.map((s) => (
+                        <option key={s.name} value={s.name}>{s.name}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#6B635B]">
+                      {isAgendadorByZone ? 'Zona Corporal' : 'Sesiones'}
+                    </label>
+                    <select
+                      value={selectedOption}
+                      onChange={(e) => setSelectedOption(e.target.value)}
+                      className="w-full bg-[#FAF8F5] border border-[#D4C5B9] rounded-xl p-3 text-xs text-[#3F3A36] focus:outline-none focus:border-[#4E443F]"
+                    >
+                      {Object.keys(PRICING_DATA[selectedService]?.options || {}).map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="bg-[#FAF8F5] p-3 rounded-xl border border-[#EFECE6] flex items-center justify-between text-xs">
+                  <span className="text-[#6B635B]">Precio del servicio seleccionado:</span>
+                  <span className="font-serif font-bold text-[#4E443F]">{currentPriceAgendador.toLocaleString('es-PY')} Gs</span>
                 </div>
               </div>
 
@@ -631,7 +643,7 @@ export default function Page() {
                 </div>
 
                 <p className="text-[11px] text-[#8C7355] italic text-center">
-                  * Para confirmar el turno se requiere abonar una seña de Gs. 50.000 (no reembolsable).
+                  * Para confirmar el turno se requiere abonar una seña de Gs. 50.000 (no reembolsable) Cami Isla].
                 </p>
 
                 <button
