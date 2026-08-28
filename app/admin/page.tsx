@@ -17,7 +17,6 @@ export default function AdminPage() {
     toleranceMinutes: '15'
   });
 
-  // Estado para bloquear nuevo horario
   const [newBlockDate, setNewBlockDate] = useState('');
   const [newBlockTime, setNewBlockTime] = useState('09:00');
 
@@ -32,22 +31,30 @@ export default function AdminPage() {
   };
 
   async function loadAdminData() {
-    // Cargar reservas
-    const { data: bData } = await supabase.from('bookings').select('*').order('date', { ascending: true });
-    if (bData) setBookings(bData);
+    try {
+      // Cargar reservas
+      const { data: bData, error: bError } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (!bError && bData) setBookings(bData);
 
-    // Cargar bloqueos
-    const { data: sData } = await supabase.from('blocked_slots').select('*');
-    if (sData) setBlockedSlots(sData);
+      // Cargar bloqueos
+      const { data: sData } = await supabase.from('blocked_slots').select('*');
+      if (sData) setBlockedSlots(sData);
 
-    // Cargar políticas
-    const { data: pData } = await supabase.from('site_policies').select('*').eq('id', 1).single();
-    if (pData) {
-      setPolicies({
-        deposit: pData.deposit,
-        noticeHours: pData.notice_hours,
-        toleranceMinutes: pData.tolerance_minutes
-      });
+      // Cargar políticas
+      const { data: pData } = await supabase.from('site_policies').select('*').eq('id', 1).single();
+      if (pData) {
+        setPolicies({
+          deposit: pData.deposit,
+          noticeHours: pData.notice_hours,
+          toleranceMinutes: pData.tolerance_minutes
+        });
+      }
+    } catch (err) {
+      console.error("Error al cargar datos del admin:", err);
     }
   }
 
@@ -175,7 +182,12 @@ export default function AdminPage() {
 
         {/* RESERVAS RECIBIDAS */}
         <div className="bg-white p-6 rounded-2xl border border-[#e6dfd5] shadow-sm space-y-4">
-          <h2 className="text-xl font-serif text-[#4a3b32]">Reservas de Clientes</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-serif text-[#4a3b32]">Reservas de Clientes</h2>
+            <button onClick={loadAdminData} className="text-xs text-[#b88686] hover:underline">
+              🔄 Actualizar lista
+            </button>
+          </div>
           {bookings.length === 0 ? (
             <p className="text-xs text-[#6b5b52]">No hay reservas registradas todavía.</p>
           ) : (
