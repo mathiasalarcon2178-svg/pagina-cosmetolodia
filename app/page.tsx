@@ -409,7 +409,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER CON LOS ENLACES REALES DE WHATSAPP E INSTAGRAM */}
+      {/* FOOTER CON TUS ENLACES EXACTOS DE INSTAGRAM Y WHATSAPP */}
       <footer id="contacto" className="bg-[#2c2c2c] text-[#d6d6d6] py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
           <div className="space-y-3">
@@ -436,7 +436,7 @@ export default function Home() {
             <h3 className="text-lg font-serif text-white">Contacto y Consultas</h3>
             <p className="text-xs text-gray-300">Canales oficiales de atención directa.</p>
             <a
-              href="https://wa.me/595981267438"
+              href="https://wa.me/message/3KYVZSN3f3MKC1"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#d4a373] hover:bg-[#bc8a5f] text-white px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-sm inline-block"
@@ -449,7 +449,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-4">
           <p>© {new Date().getFullYear()} Cami Isla Studio. Todos los derechos reservados.</p>
           <a
-            href="https://www.instagram.com/camiilastudio"
+            href="https://www.instagram.com/camisla_studio?igsi=MTVwemZ6azQ0b3hiZg=="
             target="_blank"
             rel="noopener noreferrer"
             className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform font-bold"
