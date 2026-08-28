@@ -75,7 +75,7 @@ export default function Home() {
             <div className="flex justify-center">
               <div className="relative w-72 h-96 sm:w-80 sm:h-[420px] rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-[#e8ded1]">
                 <img
-                  src="/IMG_1402.JPG.jpg"
+                  src="/cami.jpg"
                   alt="Camila Isla - Cosmetóloga"
                   className="w-full h-full object-cover"
                 />
@@ -227,7 +227,7 @@ export default function Home() {
           <div className="flex justify-center">
             <div className="max-w-xl rounded-2xl overflow-hidden shadow-lg border border-[#e6dfd5]">
               <img
-                src="/IMG_1403.JPG.jpeg"
+                src="/antes-despues.jpg"
                 alt="Antes y Después Camuflaje de Estrías"
                 className="w-full h-auto object-cover"
               />
